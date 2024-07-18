@@ -1,7 +1,7 @@
 import { CarOutlined, TruckOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { AnimatePresence, motion } from "framer-motion";
-import { stages, P2PServices } from "../../../lib/constants";
+import { P2PServices } from "../../../lib/constants";
 
 const Services = ({ setStage, setService }) => {
   return (
@@ -22,7 +22,7 @@ const Services = ({ setStage, setService }) => {
           <Button
             className="hover:text-cmu-red! hover:border-cmu-red"
             onClick={() => {
-              setStage(stages.FIND_A_RIDE);
+              //   setStage(stages.FIND_A_RIDE);
               setService(P2PServices.FIND_A_RIDE);
             }}
           >
@@ -32,7 +32,7 @@ const Services = ({ setStage, setService }) => {
           <Button
             className="hover:text-cmu-red! hover:border-cmu-red"
             onClick={() => {
-              setStage(stages.REQUEST_A_UHAUL);
+              //   setStage(stages.REQUEST_A_UHAUL);
               setService(P2PServices.REQUEST_A_UHAUL);
             }}
           >

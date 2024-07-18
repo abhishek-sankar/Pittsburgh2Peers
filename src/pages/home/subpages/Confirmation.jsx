@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useContext } from "react";
 import { RegistrationContext } from "../../../middleware/RegistrationContext";
+import { Result, Button } from "antd";
 
 const Confirmation = () => {
   const registrationContext = useContext(RegistrationContext);
@@ -40,8 +41,17 @@ const Confirmation = () => {
       transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] }}
       key={"confirmation-container"}
     >
-      That's it! Thanks for registering with us. We have found 4 others arriving
-      within a 2 hour interval from when you land. Let's get you all connected!
+      <Result
+        status="success"
+        title="That's it!"
+        subTitle="Thanks for registering with us. We have found 4 others arriving within a 2 hour interval from when you land. Let's get you all connected!"
+        extra={[
+          <Button type="primary" key="meet-similar-slots">
+            Let's go
+          </Button>,
+          <Button key="buy">Share with friends</Button>,
+        ]}
+      />
     </motion.div>
   );
 };

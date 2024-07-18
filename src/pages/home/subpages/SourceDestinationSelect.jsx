@@ -14,7 +14,7 @@ const SourceDestinationSelect = () => {
   return (
     <AnimatePresence>
       <motion.div
-        className="flex flex-col items-center p-4 gap-4"
+        className="flex flex-col items-center p-8 gap-4"
         key="source-destination-container"
       >
         {service === P2PServices.FIND_A_RIDE ? (

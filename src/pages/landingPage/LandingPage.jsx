@@ -14,7 +14,7 @@ const LandingPage = ({ setIsSignedIn }) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 justify-center items-center mt-8 p-4">
+    <div className="flex flex-col gap-4 justify-center items-center md:mt-8 p-8">
       <p className="pb-4 border-b border-cmu-red">
         Take a breath. Moving into Pittsburgh is gonna be easy, now that you're
         here.
@@ -30,13 +30,13 @@ const LandingPage = ({ setIsSignedIn }) => {
         students.
       </p>
       <div className="flex flex-col w-full justify-start p-4 gap-4">
-        <p className="cursor-pointer hover:text-cmu-red transition-all duration-500 ease-in-out">
+        <p className="hover:text-cmu-red transition-all duration-500 ease-in-out">
           <CarOutlined className="pr-4" />
           Find a ride from the airport
         </p>
 
         <motion.p
-          className="cursor-pointer hover:text-cmu-red transition-all duration-500 ease-in-out"
+          className="hover:text-cmu-red transition-all duration-500 ease-in-out"
           onClick={handleAnimation}
           initial={{ opacity: 1 }}
           animate={{ opacity: isAnimating ? 0.5 : 1 }}
