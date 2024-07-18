@@ -37,6 +37,7 @@ const Home = () => {
     setGivenName,
     setName,
     setEmail,
+    contactConsent,
   } = registrationContext || {};
 
   useEffect(() => {
@@ -90,7 +91,7 @@ const Home = () => {
       case stages.REQUEST_DETAILS:
         return false;
       case stages.CONTACT_INFO:
-        return false;
+        return !contactConsent;
       case stages.CONFIRMATION:
         return false;
       default:

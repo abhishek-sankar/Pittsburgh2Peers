@@ -1,13 +1,24 @@
-import { Input } from "antd";
+import { Input, Checkbox } from "antd";
 import { motion } from "framer-motion";
 import { useContext, useState } from "react";
 import { RegistrationContext } from "../../../middleware/RegistrationContext";
 
 const ContactInfo = () => {
   const registrationContext = useContext(RegistrationContext);
-  const { email, setEmail, phoneNumber, setPhoneNumber } = registrationContext;
+  const {
+    email,
+    setEmail,
+    phoneNumber,
+    setPhoneNumber,
+    contactConsent,
+    setContactConsent,
+  } = registrationContext;
   const [phoneError, setPhoneError] = useState("");
   const [emailError, setEmailError] = useState("");
+
+  const handleCheckboxChange = (e) => {
+    setContactConsent(e.target.checked);
+  };
 
   const validatePhone = (value) => {
     if (!value) {
@@ -83,6 +94,10 @@ const ContactInfo = () => {
           className="w-full max-w-sm"
         />
         {emailError && <div className="text-red-500 text-xs">{emailError}</div>}
+        <Checkbox onChange={handleCheckboxChange} checked={contactConsent}>
+          Consent to share contact details with other students who arrive the
+          same day as you
+        </Checkbox>
       </div>
     </motion.div>
   );

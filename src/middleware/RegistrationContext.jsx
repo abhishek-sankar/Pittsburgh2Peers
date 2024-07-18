@@ -19,6 +19,7 @@ export const P2PRegistrationContext = ({ children }) => {
   const [destination, setDestination] = useState("");
   const [requireDriver, setRequireDriver] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [contactConsent, setContactConsent] = useState(true);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -80,6 +81,8 @@ export const P2PRegistrationContext = ({ children }) => {
         setRequireDriver,
         phoneNumber,
         setPhoneNumber,
+        contactConsent,
+        setContactConsent,
       }}
     >
       {children}

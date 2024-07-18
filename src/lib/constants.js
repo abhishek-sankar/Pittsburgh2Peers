@@ -64,3 +64,19 @@ export const P2PServices = {
   FIND_A_RIDE: "find_a_ride",
   REQUEST_A_UHAUL: "request_uhaul",
 };
+
+export const sampleNames = [
+  "Adriana C. Ocampo Uria",
+  "Albert Einstein",
+  "Anna K. Behrensmeyer",
+  "Blaise Pascal",
+  "Caroline Herschel",
+  "Cecilia Payne-Gaposchkin",
+  "Chien-Shiung Wu",
+  "Dorothy Hodgkin",
+  "Edmond Halley",
+  "Edwin Powell Hubble",
+  "Elizabeth Blackburn",
+  "Enrico Fermi",
+  "Erwin Schroedinger",
+];
