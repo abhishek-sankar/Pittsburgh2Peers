@@ -10,22 +10,24 @@ const ArrivalDetails = ({
 }) => {
   const format = "h:mm A";
   return (
-    <motion.div>
+    <motion.div className="p-4">
       <motion.div
-        className="flex flex-col items-center p-4 gap-4"
+        className="flex flex-col items-center p-4 gap-4 text-base"
         key="arrival-details-container"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] }}
       >
-        When do you{" "}
-        {service === P2PServices.FIND_A_RIDE
-          ? "reach Pittsburgh"
-          : service === P2PServices.REQUEST_A_UHAUL
-          ? "need the UHaul"
-          : null}
-        ?
+        <p>
+          When do you{" "}
+          {service === P2PServices.FIND_A_RIDE
+            ? "reach Pittsburgh"
+            : service === P2PServices.REQUEST_A_UHAUL
+            ? "need the UHaul"
+            : null}
+          ?
+        </p>
         <DatePicker
           value={selectedDate}
           onChange={handleDateChange}
@@ -41,13 +43,15 @@ const ArrivalDetails = ({
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] }}
       >
-        What time do you{" "}
-        {service === P2PServices.FIND_A_RIDE
-          ? "reach Pittsburgh"
-          : service === P2PServices.REQUEST_A_UHAUL
-          ? "need the UHaul"
-          : null}
-        ? (EST)
+        <p>
+          What time do you{" "}
+          {service === P2PServices.FIND_A_RIDE
+            ? "reach Pittsburgh"
+            : service === P2PServices.REQUEST_A_UHAUL
+            ? "need the UHaul"
+            : null}
+          ? (EST)
+        </p>
         <TimePicker
           value={selectedTime}
           onChange={handleTimeChange}

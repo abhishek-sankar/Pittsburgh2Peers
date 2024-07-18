@@ -8,8 +8,8 @@ export const P2PRegistrationContext = ({ children }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [lookingFor, setLookingFor] = useState(LookingFor.RIDE);
-  const [numberOfPeople, setNumberOfPeople] = useState(0);
-  const [numberOfTrolleys, setNumberOfTrolleys] = useState(0);
+  const [numberOfPeople, setNumberOfPeople] = useState(null);
+  const [numberOfTrolleys, setNumberOfTrolleys] = useState(null);
   const [service, setService] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

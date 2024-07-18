@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 const FindARide = () => {
   return (
     <motion.div
-      className="flex flex-col items-center p-4"
+      className="flex flex-col items-center p-8"
       key="find-a-ride-container"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

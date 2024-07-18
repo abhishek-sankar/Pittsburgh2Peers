@@ -57,7 +57,7 @@ const ContactInfo = () => {
 
   return (
     <motion.div
-      className="flex flex-col justify-center gap-4 items-center p-4"
+      className="flex flex-col justify-center gap-4 items-center p-8"
       key="contact-info-container"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -71,7 +71,7 @@ const ContactInfo = () => {
           onChange={handlePhoneChange}
           onBlur={handlePhoneBlur}
           allowClear
-          className="w-4/5 max-w-sm"
+          className="w-full max-w-sm"
         />
         {phoneError && <div className="text-red-500 text-xs">{phoneError}</div>}
         <Input
@@ -80,7 +80,7 @@ const ContactInfo = () => {
           onChange={handleEmailChange}
           onBlur={handleEmailBlur}
           allowClear
-          className="w-4/5 max-w-sm"
+          className="w-full max-w-sm"
         />
         {emailError && <div className="text-red-500 text-xs">{emailError}</div>}
       </div>

@@ -1,6 +1,6 @@
 import { Radio } from "antd";
 import { motion } from "framer-motion";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { RegistrationContext } from "../../../middleware/RegistrationContext";
 import { P2PServices } from "../../../lib/constants";
 const RequestDetails = () => {
@@ -15,10 +15,17 @@ const RequestDetails = () => {
     setRequireDriver,
   } = registrationContext;
 
+  const [numberOfPeopleSelection, setNumberOfPeopleSelection] = useState(
+    numberOfPeople < 4 ? numberOfPeople : 4
+  );
+  const [numberOfTrolleysSelection, setNumberOfTrolleysSelection] = useState(
+    numberOfTrolleys < 8 ? numberOfTrolleys : "More than 8"
+  );
+
   if (service === P2PServices.FIND_A_RIDE) {
     return (
       <motion.div
-        className="flex flex-col items-center p-4 gap-4"
+        className="flex flex-col items-center p-8 gap-4"
         key="request-details-container"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -28,15 +35,32 @@ const RequestDetails = () => {
         <div className="flex flex-col justify-center gap-4 items-center">
           <div>You'd be a group of how many people?</div>
           <Radio.Group
-            value={numberOfPeople}
+            value={numberOfPeopleSelection}
             buttonStyle="solid"
-            onChange={(e) => setNumberOfPeople(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value === 4) {
+                setNumberOfPeople(null);
+                setNumberOfPeopleSelection(4);
+              } else {
+                setNumberOfPeople(e.target.value);
+                setNumberOfPeopleSelection(e.target.value);
+              }
+            }}
           >
             <Radio.Button value={1}>1</Radio.Button>
             <Radio.Button value={2}>2</Radio.Button>
             <Radio.Button value={3}>3</Radio.Button>
             <Radio.Button value={4}>4 or more</Radio.Button>
           </Radio.Group>
+          {numberOfPeopleSelection === 4 ? (
+            <input
+              type="number"
+              placeholder="Enter number of people"
+              value={numberOfPeople}
+              onChange={(e) => setNumberOfPeople(e.target.value)}
+              className="w-full p-2 border text-sm focus:outline-cmu-red rounded"
+            />
+          ) : null}
         </div>
         {numberOfPeople !== 0 ? (
           <motion.div
@@ -47,9 +71,17 @@ const RequestDetails = () => {
           >
             <div>And a total of how many trolleys?</div>
             <Radio.Group
-              value={numberOfTrolleys}
+              value={numberOfTrolleysSelection}
               buttonStyle="solid"
-              onChange={(e) => setNumberOfTrolleys(e.target.value)}
+              onChange={(e) => {
+                if (e.target.value === "More than 8") {
+                  setNumberOfTrolleys(null);
+                  setNumberOfTrolleysSelection("More than 8");
+                } else {
+                  setNumberOfTrolleys(e.target.value);
+                  setNumberOfTrolleysSelection(e.target.value);
+                }
+              }}
             >
               <Radio.Button value={2}>2</Radio.Button>
               <Radio.Button value={4}>4</Radio.Button>
@@ -60,6 +92,15 @@ const RequestDetails = () => {
         ) : null}
         {/* {numberOfTrolleys != 0 ? ( */}
         {/* <div className="h-20"></div> */}
+        {numberOfTrolleysSelection === "More than 8" ? (
+          <input
+            type="number"
+            placeholder="Enter number of trolleys"
+            value={numberOfTrolleys}
+            onChange={(e) => setNumberOfTrolleys(e.target.value)}
+            className="w-full p-2 border text-sm focus:outline-cmu-red rounded"
+          />
+        ) : null}
       </motion.div>
     );
   }

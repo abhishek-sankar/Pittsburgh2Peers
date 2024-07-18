@@ -48,7 +48,7 @@ const Home = () => {
   }, [stage, setStage]);
 
   const validateServiceSelection = useCallback(() => {
-    return (
+    return !(
       service === P2PServices.FIND_A_RIDE ||
       service === P2PServices.REQUEST_A_UHAUL
     );
