@@ -1,0 +1,8 @@
+{
+	"appService.zipIgnorePattern": [
+		"node_modules{,/**}",
+		".vscode{,/**}"
+	],
+	"appService.defaultWebAppToDeploy": "/subscriptions/c99e2ae6-aaaa-4fe2-b5f5-0cceda0f0530/microsoft.web/sites/subscriptions/c99e2ae6-aaaa-4fe2-b5f5-0cceda0f0530/resourceGroups/abhishek-sankar-ml-fcds-p6/providers/Microsoft.Web/sites/pittsburgh2peers",
+	"appService.deploySubpath": "build"
+}
