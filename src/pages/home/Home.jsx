@@ -37,6 +37,10 @@ const Home = () => {
     setGivenName,
     setName,
     setEmail,
+    numberOfPeople,
+    numberOfTrolleys,
+    source,
+    destination,
     contactConsent,
   } = registrationContext || {};
 
@@ -74,6 +78,14 @@ const Home = () => {
     return false;
   };
 
+  const validateRequestDetails = () => {
+    return !(numberOfPeople && numberOfTrolleys);
+  };
+
+  const validateSourceDestination = () => {
+    return !(source && destination);
+  };
+
   const isNextDisabled = () => {
     switch (stage) {
       case stages.HOMEPAGE:
@@ -89,7 +101,9 @@ const Home = () => {
       case stages.LOOKING_FOR:
         return false;
       case stages.REQUEST_DETAILS:
-        return false;
+        return validateRequestDetails();
+      case stages.SOURCE_DESTINATION:
+        return validateSourceDestination();
       case stages.CONTACT_INFO:
         return !contactConsent;
       case stages.CONFIRMATION:
@@ -102,7 +116,13 @@ const Home = () => {
   const renderStage = () => {
     switch (stage) {
       case stages.HOMEPAGE:
-        return <Services setStage={setStage} setService={setService} />;
+        return (
+          <Services
+            service={service}
+            setStage={setStage}
+            setService={setService}
+          />
+        );
       case stages.FIND_A_RIDE:
       case stages.REQUEST_A_UHAUL:
         return <FindARide />;
@@ -116,13 +136,6 @@ const Home = () => {
             service={service}
           />
         );
-      //   case stages.ARRIVAL_DETAILS_TIME:
-      //     return (
-      //       <ArrivalTime
-      //         selectedTime={selectedTime}
-      //         handleTimeChange={handleTimeChange}
-      //       />
-      //     );
       case stages.LOOKING_FOR:
         return <LookingFor onLookingForChange={onLookingForChange} />;
       case stages.REQUEST_DETAILS:

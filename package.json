@@ -23,6 +23,9 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.1",
     "react-scripts": "5.0.1",
+    "react-time-picker": "^7.0.0",
+    "serve": "^14.2.3",
+    "sonner": "^1.5.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss": "^3.4.6",
     "tailwindcss-animate": "^1.0.7",
@@ -30,7 +33,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && npm run generate:serve",
+    "generate:serve": "echo '{\"rewrites\": [{\"source\": \"**\", \"destination\": \"/index.html\"}]}' > build/serve.json",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build:css": "npx tailwindcss build src/App.css -o src/tailwind.css"

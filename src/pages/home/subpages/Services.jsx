@@ -3,7 +3,11 @@ import { Button } from "antd";
 import { AnimatePresence, motion } from "framer-motion";
 import { P2PServices } from "../../../lib/constants";
 
-const Services = ({ setStage, setService }) => {
+const Services = ({ service, setStage, setService }) => {
+  const handleServiceClick = (service) => {
+    setService(service);
+  };
+
   return (
     <AnimatePresence>
       <motion.div
@@ -20,21 +24,23 @@ const Services = ({ setStage, setService }) => {
         </div>
         <div className="flex flex-col md:flex-row gap-4 p-4">
           <Button
-            className="hover:text-cmu-red! hover:border-cmu-red"
-            onClick={() => {
-              //   setStage(stages.FIND_A_RIDE);
-              setService(P2PServices.FIND_A_RIDE);
-            }}
+            className={`${
+              service === P2PServices.FIND_A_RIDE
+                ? "text-cmu-red border-cmu-red"
+                : "hover:text-cmu-red hover:border-cmu-red"
+            }`}
+            onClick={() => handleServiceClick(P2PServices.FIND_A_RIDE)}
           >
             <CarOutlined />
             Find a ride
           </Button>
           <Button
-            className="hover:text-cmu-red! hover:border-cmu-red"
-            onClick={() => {
-              //   setStage(stages.REQUEST_A_UHAUL);
-              setService(P2PServices.REQUEST_A_UHAUL);
-            }}
+            className={`${
+              service === P2PServices.REQUEST_A_UHAUL
+                ? "text-cmu-red border-cmu-red"
+                : "hover:text-cmu-red hover:border-cmu-red"
+            }`}
+            onClick={() => handleServiceClick(P2PServices.REQUEST_A_UHAUL)}
           >
             <TruckOutlined />
             Request a UHaul

@@ -94,9 +94,13 @@ const ContactInfo = () => {
           className="w-full max-w-sm"
         />
         {emailError && <div className="text-red-500 text-xs">{emailError}</div>}
-        <Checkbox onChange={handleCheckboxChange} checked={contactConsent}>
-          Consent to share contact details with other students who arrive the
-          same day as you
+        <Checkbox
+          onChange={handleCheckboxChange}
+          checked={contactConsent}
+          className="max-w-sm"
+        >
+          I give consent to share contact details with other students matched
+          based on my arrival times.
         </Checkbox>
       </div>
     </motion.div>

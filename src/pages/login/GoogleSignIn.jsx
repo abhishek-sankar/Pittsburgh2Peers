@@ -17,13 +17,11 @@ const GoogleLoginButton = ({ setIsSignedIn }) => {
     setPicture(picture);
     setGivenName(given_name);
     setIsSignedIn(true);
-    console.log(name, email, picture);
   };
 
   const onFailure = (error) => {
     console.log("Login failed:", error);
     setIsSignedIn(false);
-    // Handle the failure case
   };
 
   return (

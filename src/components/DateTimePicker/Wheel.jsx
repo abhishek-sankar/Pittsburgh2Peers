@@ -9,6 +9,8 @@ export default function Wheel(props) {
   const slidesPerView = props.loop ? 9 : 1;
   const [sliderState, setSliderState] = React.useState(null);
   const size = useRef(0);
+  const setWheelAbsolute = props.setWheelAbsolute;
+
   const options = useRef({
     slides: {
       number: slides,
@@ -37,6 +39,13 @@ export default function Wheel(props) {
     },
     detailsChanged: (s) => {
       setSliderState(s.track.details);
+      const activeSlide = s.track.details.rel;
+      setWheelAbsolute(
+        // props.setValue
+        //   ? props.setValue(activeSlide, s.track.details.abs)
+        activeSlide,
+        s.track.details.abs
+      );
     },
     rubberband: !props.loop,
     mode: "free-snap",
@@ -49,6 +58,10 @@ export default function Wheel(props) {
   React.useEffect(() => {
     if (slider.current) setRadius(slider.current.size / 2);
   }, [slider]);
+
+  //   React.useEffect(() => {
+  //     console.log("Current Value: ", sliderState); // For debugging, or replace with a prop callback if needed
+  //   }, [sliderState]);
 
   function slideValues() {
     if (!sliderState) return [];

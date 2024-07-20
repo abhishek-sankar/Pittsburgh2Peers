@@ -9,6 +9,8 @@ import LandingPage from "./pages/landingPage/LandingPage";
 import { jwtDecode } from "jwt-decode";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Carpool from "./pages/carpool/Carpool";
+import AboutUs from "./pages/about/AboutUs";
+import Profile from "./pages/profile/Profile";
 
 const App = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -18,7 +20,18 @@ const App = () => {
       const decoded = jwtDecode(pittsburgh2peer.credential);
       const { exp } = decoded;
       setIsSignedIn(Date.now() < exp * 1000);
+      return Date.now() < exp * 1000;
     }
+  };
+
+  const checkIsSignedIn = () => {
+    const pittsburgh2peer = JSON.parse(localStorage.getItem("pittsburgh2peer"));
+    if (pittsburgh2peer) {
+      const decoded = jwtDecode(pittsburgh2peer.credential);
+      const { exp } = decoded;
+      return Date.now() < exp * 1000;
+    }
+    return false;
   };
 
   useEffect(() => {
@@ -39,13 +52,13 @@ const App = () => {
         }}
       >
         <P2PRegistrationContext>
-          <TopBar />
           <Router>
+            <TopBar />
             <Routes>
               <Route
                 path="/"
                 element={
-                  isSignedIn ? (
+                  checkIsSignedIn() ? (
                     <Home />
                   ) : (
                     <LandingPage setIsSignedIn={setIsSignedIn} />
@@ -55,7 +68,7 @@ const App = () => {
               <Route
                 path="/home"
                 element={
-                  isSignedIn ? (
+                  checkIsSignedIn() ? (
                     <Home />
                   ) : (
                     <LandingPage setIsSignedIn={setIsSignedIn} />
@@ -69,16 +82,27 @@ const App = () => {
               <Route
                 path="/carpool"
                 element={
-                  isSignedIn ? (
+                  checkIsSignedIn() ? (
                     <Carpool />
                   ) : (
                     <LandingPage setIsSignedIn={setIsSignedIn} />
                   )
                 }
               />
+              <Route
+                path="/profile"
+                element={
+                  checkIsSignedIn() ? (
+                    <Profile />
+                  ) : (
+                    <LandingPage setIsSignedIn={setIsSignedIn} />
+                  )
+                }
+              />
+              <Route path="/about" element={<AboutUs />} />
             </Routes>
+            <Footer />
           </Router>
-          <Footer />
         </P2PRegistrationContext>
       </ConfigProvider>
     </div>
