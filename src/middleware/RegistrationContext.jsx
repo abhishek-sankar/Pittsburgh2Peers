@@ -5,8 +5,8 @@ const RegistrationContext = React.createContext();
 export const P2PRegistrationContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [stage, setStage] = useState(stages.HOMEPAGE);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
   const [lookingFor, setLookingFor] = useState(LookingFor.RIDE);
   const [numberOfPeople, setNumberOfPeople] = useState(null);
   const [numberOfTrolleys, setNumberOfTrolleys] = useState(null);

@@ -57,6 +57,7 @@ const RequestDetails = () => {
               type="number"
               placeholder="Enter number of people"
               value={numberOfPeople}
+              min={0}
               onChange={(e) => setNumberOfPeople(e.target.value)}
               className="w-full p-2 border text-sm focus:outline-cmu-red rounded"
             />
@@ -96,6 +97,7 @@ const RequestDetails = () => {
           <input
             type="number"
             placeholder="Enter number of trolleys"
+            min={0}
             value={numberOfTrolleys}
             onChange={(e) => setNumberOfTrolleys(e.target.value)}
             className="w-full p-2 border text-sm focus:outline-cmu-red rounded"
