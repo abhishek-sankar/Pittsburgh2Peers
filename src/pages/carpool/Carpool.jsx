@@ -1,18 +1,47 @@
-import { sampleNames } from "../../lib/constants";
+import { useContext, useEffect } from "react";
+import {
+  createWhatsAppLink,
+  peopleLandingInSameTimeSlot,
+  sampleNames,
+} from "../../lib/constants";
+import { RegistrationContext } from "../../middleware/RegistrationContext";
+import { jwtDecode } from "jwt-decode";
 
 const Carpool = () => {
   const similarArrivalTimes = sampleNames;
+  const registrationContext = useContext(RegistrationContext);
+  const { name, setPicture, setGivenName, setName, setEmail, source } =
+    registrationContext;
+
+  useEffect(() => {
+    const pittsburgh2peer = JSON.parse(localStorage.getItem("pittsburgh2peer"));
+    if (pittsburgh2peer) {
+      const decoded = jwtDecode(pittsburgh2peer.credential);
+      const { name, email, picture, given_name } = decoded;
+      setName(name);
+      setEmail(email);
+      setPicture(picture);
+      setGivenName(given_name);
+    }
+  }, [setName, setEmail, setGivenName, setPicture]);
   return (
     <div className="flex flex-col justify-center items-center p-8">
       {similarArrivalTimes.length !== 0 ? (
-        <div className="flex flex-col w-full items-center">
+        <div className="flex flex-col w-full justify-center items-center">
           <h3 className="text-lg font-medium pb-8">
-            Here's a quick view of folks arriving. You can use the filters to
-            fine tune based on your needs
+            Here's a quick view of folks arriving in a timeslot near you. Click
+            any name to get in touch.
           </h3>
-          <div className="flex flex-col justify-start text-base w-full overflow-auto">
-            {similarArrivalTimes.map((sampleName) => (
-              <div className="text-base py-2 pr-2">{sampleName}</div>
+          <div className="flex flex-col gap-4 justify-center items-center text-base w-full overflow-auto">
+            {peopleLandingInSameTimeSlot.map(({ fullName, phone }) => (
+              <a
+                href={`${createWhatsAppLink({ phone, name, source })}`}
+                target="_blank"
+                rel="noreferrer"
+                className="text-base w-full hover:bg-cmu-red hover:text-white transition-all duration-300 py-2 p-4 max-w-sm border-slate-200 border "
+              >
+                {fullName}
+              </a>
             ))}
           </div>
         </div>

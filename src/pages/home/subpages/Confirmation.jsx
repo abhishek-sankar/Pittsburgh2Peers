@@ -1,8 +1,15 @@
 import { motion } from "framer-motion";
 import { useContext } from "react";
 import { RegistrationContext } from "../../../middleware/RegistrationContext";
-import { Result, Button } from "antd";
+import { Result, Button, Flex, Rate } from "antd";
 import { useNavigate } from "react-router-dom";
+import {
+  DislikeOutlined,
+  FrownOutlined,
+  LikeOutlined,
+  MehOutlined,
+  SmileOutlined,
+} from "@ant-design/icons";
 
 const Confirmation = () => {
   const registrationContext = useContext(RegistrationContext);
@@ -43,6 +50,15 @@ const Confirmation = () => {
       "https://api.whatsapp.com/send?text=https://pittsburgh2peers.azurewebsites.net/"
     );
   };
+
+  const customIcons = {
+    1: <FrownOutlined />,
+    2: <FrownOutlined />,
+    3: <MehOutlined />,
+    4: <SmileOutlined />,
+    5: <SmileOutlined />,
+  };
+
   return (
     <motion.div
       className="flex flex-col justify-center gap-4 items-center p-4"
@@ -55,6 +71,7 @@ const Confirmation = () => {
       <Result
         status="success"
         title="That's it!"
+        className="max-w-sm "
         subTitle="Thanks for registering with us. We have found 4 others arriving within a 2 hour interval from when you land. Let's get you all connected!"
         extra={[
           <Button type="primary" key="meet-similar-slots" onClick={handleGo}>
@@ -63,6 +80,13 @@ const Confirmation = () => {
           <Button key="share" onClick={shareWithFriends}>
             Share with friends
           </Button>,
+          <Flex gap="middle" vertical className="pt-8">
+            <p className="text-base">How was your experience?</p>
+            <Rate
+              defaultValue={3}
+              character={({ index = 0 }) => customIcons[index + 1]}
+            />
+          </Flex>,
         ]}
       />
     </motion.div>

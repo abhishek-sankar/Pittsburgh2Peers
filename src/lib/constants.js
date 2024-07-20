@@ -80,3 +80,44 @@ export const sampleNames = [
   "Enrico Fermi",
   "Erwin Schroedinger",
 ];
+
+export const otherSourceLocation = "I'm getting a bus / (Other)";
+export const sourceLocations = [
+  "Pittsburgh International Airport",
+  "Allegheny County Airport",
+  "Pittsburgh Union Station",
+  "Amtrak Station - PGH",
+  otherSourceLocation,
+];
+
+export const trolleyCounts = [2, 4, 6, "More than 8"];
+export const peopleCounts = [1, 2, 3, 4];
+
+export const peopleLandingInSameTimeSlot = [
+  { fullName: "Abhishek Sankar", phone: "+91 9846105644" },
+  { fullName: "Maria Curie", phone: "+91 9846105644" },
+  { fullName: "Isaac Newton", phone: "+91 9846105644" },
+  { fullName: "Galileo Galilei", phone: "+91 9846105644" },
+  { fullName: "Nikola Tesla", phone: "+91 9846105644" },
+];
+
+export const whatsappTextBaseUrl = "https://api.whatsapp.com/send?text=";
+export const createWhatsAppLink = ({ phone, name, source }) =>
+  `https://wa.me/${phone.replace(
+    /\s+/g,
+    ""
+  )}?text=Hi!, I'm ${name} and I noticed on P2P that we both arrive in ${source} at about the same time. Would you like to tag along to save money and maybe make new friends?`;
+
+export const baseApiUrl = "https://pittsburgh2peers.pythonanywhere.com";
+
+export const ENDPOINTS = {
+  POST_RegistrationSuccess: "/registrationSuccess",
+  POST_GenerateToken: "/generateToken",
+  POST_UserProfileComplete: "/userProfileComplete",
+  POST_UserEligibleForUHaulRequest: "/userEligibleForUHaulRequest",
+  POST_CarPoolRequest: "/carPoolRequest",
+  POST_UHaulRequest: "/uHaulRequest",
+  POST_GetAllCarPoolRequests: "/getAllCarPoolRequests",
+  POST_OfferCarPool: "/offerCarPool",
+  POST_GetMyCarPoolOffers: "/getMyCarPoolOffers",
+};

@@ -54,35 +54,39 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex flex-col items-start justify-center w-full gap-4 p-8">
-      <h2 className="text-xl font-bold">Hi {givenName},</h2>
-      <p>
-        You can setup contact info right here, be mindful to update it in case
-        it changes as you reach Pitt.
-      </p>
-      <Input
-        placeholder="Enter your name"
-        value={givenName}
-        onChange={(e) => setGivenName(e.target.value)}
-      />
-      <Input
-        placeholder="Enter your email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <Input
-        placeholder="Enter your phone number"
-        value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
-      />
-      <div className="flex flex-row justify-around gap-4 items-center">
-        <Button onClick={onSave}>Save</Button>
-        <Button onClick={logoutFromP2P} className="bg-red-500 text-white">
-          Logout
-        </Button>
+    <div className="flex flex-col items-center justify-center w-full gap-4 p-8 max-w-screen-lg">
+      <div className="flex flex-col items-start max-w-sm w-full gap-4 justify-center">
+        <h2 className="text-xl font-bold">Hi {givenName},</h2>
+        <p>
+          You can setup contact info right here, be mindful to update it in case
+          it changes as you reach Pitt.
+        </p>
       </div>
-      <Toaster />
-      {/* <Avatar src={picture} size={100} /> */}
+      <div className="flex flex-col items-start max-w-sm w-full gap-4 justify-center">
+        <Input
+          placeholder="Enter your name"
+          value={givenName}
+          onChange={(e) => setGivenName(e.target.value)}
+        />
+        <Input
+          placeholder="Enter your email"
+          value={email}
+          // onChange={(e) => setEmail(e.target.value)}
+          disabled
+        />
+        <Input
+          placeholder="Enter your phone number"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
+        <div className="flex flex-row justify-start gap-4 items-center">
+          <Button onClick={onSave}>Save</Button>
+          <Button onClick={logoutFromP2P} className="bg-red-500 text-white">
+            Logout
+          </Button>
+        </div>
+        <Toaster />
+      </div>
     </div>
   );
 };

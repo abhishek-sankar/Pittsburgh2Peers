@@ -2,6 +2,8 @@ import { Input, Checkbox } from "antd";
 import { motion } from "framer-motion";
 import { useContext, useState } from "react";
 import { RegistrationContext } from "../../../middleware/RegistrationContext";
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 
 const ContactInfo = () => {
   const registrationContext = useContext(RegistrationContext);
@@ -40,23 +42,23 @@ const ContactInfo = () => {
     }
   };
 
-  const handlePhoneChange = (e) => {
-    const value = e.target.value;
+  const handlePhoneChange = (value) => {
+    // const value = e.target.value;
     setPhoneNumber(value);
     if (phoneError) {
-      validatePhone(e.target.value);
+      validatePhone(value);
     }
     // validatePhone(value);
   };
 
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail(value);
-    if (emailError) {
-      validateEmail(e.target.value);
-    }
-    // validateEmail(value);
-  };
+  //   const handleEmailChange = (e) => {
+  //     const value = e.target.value;
+  //     setEmail(value);
+  //     if (emailError) {
+  //       validateEmail(e.target.value);
+  //     }
+  //     // validateEmail(value);
+  //   };
 
   const handlePhoneBlur = (e) => {
     validatePhone(e.target.value);
@@ -76,7 +78,7 @@ const ContactInfo = () => {
       transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] }}
     >
       <div className="flex flex-col justify-center gap-4 items-center w-full">
-        <Input
+        {/* <Input
           placeholder="Phone Number"
           value={phoneNumber}
           onChange={handlePhoneChange}
@@ -84,13 +86,21 @@ const ContactInfo = () => {
           allowClear
           className="w-full max-w-sm"
         />
-        {phoneError && <div className="text-red-500 text-xs">{phoneError}</div>}
+        {phoneError && <div className="text-red-500 text-xs">{phoneError}</div>} */}
+        <PhoneInput
+          placeholder="Enter phone number"
+          value={phoneNumber}
+          defaultCountry="US"
+          className="w-full border border-slate-300 p-2 max-w-sm text-sm"
+          onChange={handlePhoneChange}
+        />
         <Input
           placeholder="Email"
           value={email}
-          onChange={handleEmailChange}
-          onBlur={handleEmailBlur}
-          allowClear
+          //   onChange={handleEmailChange}
+          //   onBlur={handleEmailBlur}
+          //   allowClear
+          disabled
           className="w-full max-w-sm"
         />
         {emailError && <div className="text-red-500 text-xs">{emailError}</div>}

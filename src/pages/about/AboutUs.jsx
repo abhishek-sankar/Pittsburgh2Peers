@@ -3,6 +3,7 @@ import {
   AbhishekSankar,
   AdithiDange,
   AnirudhBelwadi,
+  HarshwardhanSinha,
   ShreyasSanghvi,
 } from "../../assets";
 import { LinkedinFilled } from "@ant-design/icons";
@@ -40,6 +41,12 @@ const AboutUs = () => {
       image: ShreyasSanghvi,
       linkedIn: "https://www.linkedin.com/in/shreyas-sanghvi",
       class: "Incoming MSBME Fall 24",
+    },
+    {
+      name: "Harshwardhan Sinha",
+      image: HarshwardhanSinha,
+      linkedIn: "https://www.linkedin.com/in/harshwardhansinha/",
+      class: "Incoming MSBA Fall 24",
     },
   ];
   return (

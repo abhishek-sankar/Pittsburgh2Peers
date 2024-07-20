@@ -103,7 +103,7 @@ export default function Wheel(props) {
       <div className="wheel__inner">
         <div className="wheel__slides" style={{ width: props.width + "px" }}>
           {slideValues().map(({ style, value }, idx) => (
-            <div className="wheel__slide" style={style} key={idx}>
+            <div className="wheel__slide select-none" style={style} key={idx}>
               <span>{value}</span>
             </div>
           ))}
