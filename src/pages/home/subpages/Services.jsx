@@ -78,6 +78,7 @@ const Services = ({ service, setStage, setService }) => {
           </Button>
           <Button
             size={"large"}
+            disabled
             className={`${
               service === P2PServices.REQUEST_A_UHAUL
                 ? "text-cmu-red border-cmu-red"
@@ -86,13 +87,13 @@ const Services = ({ service, setStage, setService }) => {
             onClick={() => handleServiceClick(P2PServices.REQUEST_A_UHAUL)}
           >
             <TruckOutlined />
-            Request a UHaul
+            Request a UHaul (Coming soon)
           </Button>
           {isUserEligibleForRequests ? (
-            <div className="border-t border-cmu-red pt-4">
+            <div className="border-t w-full max-w-sm border-cmu-red pt-4 md:border-0 md:pt-0">
               <Button
                 size={"large"}
-                className=""
+                className="w-full max-w-sm"
                 onClick={() => handleViewCarpool()}
               >
                 <UsergroupAddOutlined />
