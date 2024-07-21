@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { RegistrationContext } from "../middleware/RegistrationContext";
 import axios from "axios";
 import { ENDPOINTS, baseApiUrl } from "../lib/constants";
+import { Dropdown, Menu } from "antd";
+import { Toaster, toast } from "sonner";
+import mixpanel from "mixpanel-browser";
+import { MixpanelEvents } from "../lib/mixpanel";
 
 const TopBar = () => {
   const navigate = useNavigate();
@@ -19,6 +23,13 @@ const TopBar = () => {
   const registrationContext = useContext(RegistrationContext);
   const { setUserToken, email } = registrationContext;
 
+  const logoutFromP2P = () => {
+    localStorage.removeItem("pittsburgh2peer");
+    localStorage.removeItem("p2puserToken");
+    navigate("/landing");
+    toast("Logged out successfully");
+  };
+
   useEffect(() => {
     const generateTokenForEmail = async () => {
       const userData = {
@@ -31,6 +42,7 @@ const TopBar = () => {
         );
         const { token } = response.data;
         setUserToken(token);
+        localStorage.setItem("p2puserToken", token);
       } catch (error) {
         console.error("Error during token generation:", error);
       }
@@ -55,12 +67,20 @@ const TopBar = () => {
         >
           Home
         </p>
-        <p
-          className="cursor-pointer hover:text-cmu-red"
-          onClick={handleProfileClick}
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key="viewProfile" onClick={handleProfileClick}>
+                View Profile
+              </Menu.Item>
+              <Menu.Item key="logout" onClick={logoutFromP2P}>
+                Logout
+              </Menu.Item>
+            </Menu>
+          }
         >
-          Profile
-        </p>
+          <p className="cursor-pointer hover:text-cmu-red">Profile</p>
+        </Dropdown>
         <p
           className="cursor-pointer hover:text-cmu-red"
           onClick={handleAboutClick}
@@ -68,6 +88,7 @@ const TopBar = () => {
           About
         </p>
       </div>
+      <Toaster />
     </div>
   );
 };

@@ -8,11 +8,17 @@ import { RegistrationContext } from "../../middleware/RegistrationContext";
 import { jwtDecode } from "jwt-decode";
 
 const Carpool = () => {
-  const similarArrivalTimes = sampleNames;
   const registrationContext = useContext(RegistrationContext);
-  const { name, setPicture, setGivenName, setName, setEmail, source } =
-    registrationContext;
-
+  const {
+    name,
+    setPicture,
+    setGivenName,
+    setName,
+    setEmail,
+    source,
+    matchedUsers,
+  } = registrationContext;
+  const similarArrivalTimes = matchedUsers;
   useEffect(() => {
     const pittsburgh2peer = JSON.parse(localStorage.getItem("pittsburgh2peer"));
     if (pittsburgh2peer) {
@@ -52,7 +58,8 @@ const Carpool = () => {
             🤞
           </p>
           <p className="text-sm font-light py-4">
-            We'll notify you once someone does.
+            Please check back in a day. We're working on solutions to notify you
+            in the meanwhile.
           </p>
         </div>
       )}

@@ -1,12 +1,53 @@
-import { CarOutlined, TruckOutlined } from "@ant-design/icons";
+import {
+  CarOutlined,
+  TruckOutlined,
+  UsergroupAddOutlined,
+} from "@ant-design/icons";
 import { Button } from "antd";
 import { AnimatePresence, motion } from "framer-motion";
-import { P2PServices } from "../../../lib/constants";
+import { ENDPOINTS, P2PServices, baseApiUrl } from "../../../lib/constants";
+import { useContext, useEffect } from "react";
+import { RegistrationContext } from "../../../middleware/RegistrationContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import mixpanel from "mixpanel-browser";
+import { MixpanelEvents } from "../../../lib/mixpanel";
 
 const Services = ({ service, setStage, setService }) => {
   const handleServiceClick = (service) => {
+    mixpanel.track(MixpanelEvents.USER_SELECTED_SERVICE, { service: service });
     setService(service);
   };
+
+  const registrationContext = useContext(RegistrationContext);
+  const { isUserEligibleForRequests, email, setIsUserEligibleForRequests } =
+    registrationContext;
+
+  const navigate = useNavigate();
+  const handleViewCarpool = () => {
+    navigate("/carpool");
+  };
+
+  useEffect(() => {
+    const checkIsUserEligibleForRequests = async () => {
+      const checkEligibilityBody = {
+        token: localStorage.getItem("p2puserToken"),
+        email: email,
+      };
+      try {
+        const response = await axios.post(
+          baseApiUrl + ENDPOINTS.POST_UserProfileComplete,
+          checkEligibilityBody
+        );
+
+        setIsUserEligibleForRequests(response.data.eligible);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    checkIsUserEligibleForRequests();
+  }, [email, setIsUserEligibleForRequests]);
 
   return (
     <AnimatePresence>
@@ -47,6 +88,18 @@ const Services = ({ service, setStage, setService }) => {
             <TruckOutlined />
             Request a UHaul
           </Button>
+          {isUserEligibleForRequests ? (
+            <div className="border-t border-cmu-red pt-4">
+              <Button
+                size={"large"}
+                className=""
+                onClick={() => handleViewCarpool()}
+              >
+                <UsergroupAddOutlined />
+                View Carpool Mates
+              </Button>
+            </div>
+          ) : null}
         </div>
       </motion.div>
     </AnimatePresence>
