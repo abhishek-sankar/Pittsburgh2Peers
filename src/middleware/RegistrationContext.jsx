@@ -71,7 +71,6 @@ export const P2PRegistrationContext = ({ children }) => {
         carpoolRequestBody
       );
       const { errorCode } = response.data;
-      console.log(errorCode);
       const userMessage =
         errorCode === "0"
           ? "Succesfully raised a carpool request"

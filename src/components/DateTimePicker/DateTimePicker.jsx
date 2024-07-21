@@ -31,8 +31,6 @@ const DateTimePicker = ({
   useEffect(() => {
     setSelectedDate(currentDate);
     setSelectedTime(`${currentHour}:${currentMinutes}`);
-
-    console.log(currentDate, currentHour, currentMinutes);
   }, [
     currentDate,
     currentHour,

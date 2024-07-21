@@ -43,7 +43,6 @@ const RequestDetails = () => {
             value={numberOfPeopleSelection}
             buttonStyle="solid"
             onChange={(e) => {
-              console.log(e.target.value);
               if (e.target.value === 4) {
                 setNumberOfPeople(null);
                 setNumberOfPeopleSelection(4);
@@ -84,7 +83,6 @@ const RequestDetails = () => {
               value={numberOfTrolleysSelection}
               buttonStyle="solid"
               onChange={(e) => {
-                console.log(e.target.value);
                 if (e.target.value === "More than 8") {
                   setNumberOfTrolleys(null);
                   setNumberOfTrolleysSelection("More than 8");

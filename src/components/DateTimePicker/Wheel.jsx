@@ -59,10 +59,6 @@ export default function Wheel(props) {
     if (slider.current) setRadius(slider.current.size / 2);
   }, [slider]);
 
-  //   React.useEffect(() => {
-  //     console.log("Current Value: ", sliderState); // For debugging, or replace with a prop callback if needed
-  //   }, [sliderState]);
-
   function slideValues() {
     if (!sliderState) return [];
     const offset = props.loop ? 1 / 2 - 1 / slidesPerView / 2 : 0;

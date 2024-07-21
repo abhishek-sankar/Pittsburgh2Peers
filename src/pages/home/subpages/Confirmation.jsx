@@ -12,34 +12,6 @@ import {
 } from "@ant-design/icons";
 
 const Confirmation = () => {
-  const registrationContext = useContext(RegistrationContext);
-  const {
-    source,
-    destination,
-    service,
-    selectedDate,
-    numberOfPeople,
-    numberOfTrolleys,
-    name,
-    email,
-    picture,
-    givenName,
-    requireDriver,
-  } = registrationContext;
-
-  console.log(
-    source,
-    destination,
-    service,
-    selectedDate,
-    numberOfPeople,
-    numberOfTrolleys,
-    name,
-    email,
-    picture,
-    givenName,
-    requireDriver
-  );
   const navigate = useNavigate();
   const handleGo = () => {
     navigate("/carpool");
@@ -47,7 +19,7 @@ const Confirmation = () => {
 
   const shareWithFriends = () => {
     window.open(
-      "https://api.whatsapp.com/send?text=https://pittsburgh2peers.azurewebsites.net/"
+      "https://api.whatsapp.com/send?text=https://pittsburgh2peers.vercel.app//"
     );
   };
 
