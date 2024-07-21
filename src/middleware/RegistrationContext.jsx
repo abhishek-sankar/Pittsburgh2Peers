@@ -37,16 +37,10 @@ export const P2PRegistrationContext = ({ children }) => {
     useState(false);
 
   const handleDateChange = (date) => {
-    mixpanel.track(MixpanelEvents.USER_SELECTED_DATE, {
-      date: new Date(
-        new Date(date).setFullYear(new Date().getFullYear())
-      ).toLocaleDateString("en-GB"),
-    });
     setSelectedDate(date);
   };
 
   const handleTimeChange = (time) => {
-    mixpanel.track(MixpanelEvents.USER_SELECTED_TIME, { time: time });
     setSelectedTime(time);
   };
 

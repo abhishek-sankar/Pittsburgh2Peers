@@ -1,12 +1,16 @@
 import { InputNumber, Radio } from "antd";
 import { motion } from "framer-motion";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RegistrationContext } from "../../../middleware/RegistrationContext";
 import {
   P2PServices,
   peopleCounts,
   trolleyCounts,
 } from "../../../lib/constants";
+
+import mixpanel from "mixpanel-browser";
+import { MixpanelEvents } from "../../../lib/mixpanel";
+
 const RequestDetails = () => {
   const registrationContext = useContext(RegistrationContext);
   const {
@@ -18,6 +22,15 @@ const RequestDetails = () => {
     requireDriver,
     setRequireDriver,
   } = registrationContext;
+
+  useEffect(() => {
+    mixpanel.track(MixpanelEvents.USER_SELECTED_DATE, {
+      date: new Date(
+        new Date(date).setFullYear(new Date().getFullYear())
+      ).toLocaleDateString("en-GB"),
+    });
+    mixpanel.track(MixpanelEvents.USER_SELECTED_TIME, { time: time });
+  }, []);
 
   const [numberOfPeopleSelection, setNumberOfPeopleSelection] = useState(
     numberOfPeople < 4 ? numberOfPeople : 4
