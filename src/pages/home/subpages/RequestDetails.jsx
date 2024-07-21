@@ -21,15 +21,17 @@ const RequestDetails = () => {
     service,
     requireDriver,
     setRequireDriver,
+    selectedDate,
+    selectedTime,
   } = registrationContext;
 
   useEffect(() => {
     mixpanel.track(MixpanelEvents.USER_SELECTED_DATE, {
       date: new Date(
-        new Date(date).setFullYear(new Date().getFullYear())
+        new Date(selectedDate).setFullYear(new Date().getFullYear())
       ).toLocaleDateString("en-GB"),
     });
-    mixpanel.track(MixpanelEvents.USER_SELECTED_TIME, { time: time });
+    mixpanel.track(MixpanelEvents.USER_SELECTED_TIME, { time: selectedTime });
   }, []);
 
   const [numberOfPeopleSelection, setNumberOfPeopleSelection] = useState(
