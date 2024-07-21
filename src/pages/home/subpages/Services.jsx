@@ -28,24 +28,23 @@ const Services = ({ service, setStage, setService }) => {
     navigate("/carpool");
   };
 
-  useEffect(() => {
-    const checkIsUserEligibleForRequests = async () => {
-      const checkEligibilityBody = {
-        token: localStorage.getItem("p2puserToken"),
-        email: email,
-      };
-      try {
-        const response = await axios.post(
-          baseApiUrl + ENDPOINTS.POST_UserProfileComplete,
-          checkEligibilityBody
-        );
-
-        setIsUserEligibleForRequests(response.data.eligible);
-      } catch (error) {
-        console.log(error);
-      }
+  const checkIsUserEligibleForRequests = async () => {
+    const checkEligibilityBody = {
+      token: localStorage.getItem("p2puserToken"),
+      email: email,
     };
+    try {
+      const response = await axios.post(
+        baseApiUrl + ENDPOINTS.POST_UserProfileComplete,
+        checkEligibilityBody
+      );
 
+      setIsUserEligibleForRequests(response.data.eligible);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
     checkIsUserEligibleForRequests();
   }, [email, setIsUserEligibleForRequests]);
 

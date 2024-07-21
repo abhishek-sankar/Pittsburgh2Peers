@@ -9,9 +9,9 @@ import {
   getCountryCallingCode,
   formatPhoneNumber,
 } from "react-phone-number-input";
+import PhoneInput from "react-phone-number-input";
 import axios from "axios";
 import { ENDPOINTS, baseApiUrl } from "../../lib/constants";
-import PhoneInput from "react-phone-number-input";
 
 const Profile = () => {
   const registrationContext = useContext(RegistrationContext);

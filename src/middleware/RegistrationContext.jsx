@@ -30,7 +30,7 @@ export const P2PRegistrationContext = ({ children }) => {
   const [destination, setDestination] = useState(""); // destination location picked by the user
   const [requireDriver, setRequireDriver] = useState(null); // whether the user needs a driver for the Uhaul
   const [phoneNumber, setPhoneNumber] = useState(""); // the user input phone number
-  const [contactConsent, setContactConsent] = useState(true); // consent to share user data
+  const [contactConsent, setContactConsent] = useState(false); // consent to share user data
   const [userToken, setUserToken] = useState(""); // token to make api calls provided by the backend
   const [matchedUsers, setMatchedUsers] = useState([]);
   const [isUserEligibleForRequests, setIsUserEligibleForRequests] =
