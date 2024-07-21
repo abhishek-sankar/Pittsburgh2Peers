@@ -1,6 +1,6 @@
 # Pittsburgh 2 Peers
 
-![registration screens](public/registration-screens.png)
+![registration screens](./registration-screens.png)
 
 ### Motivation
 

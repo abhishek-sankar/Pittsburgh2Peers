@@ -3,6 +3,7 @@ import AnirudhBelwadi from "./images/Anirudh_Belwadi.jpeg";
 import AdithiDange from "./images/Adithi_Dange.jpg";
 import ShreyasSanghvi from "./images/Shreyas_Sanghvi.jpg";
 import HarshwardhanSinha from "./images/HarshwardhanSinha.jpg";
+import PittsburghMap from "./Pittsburgh-map.jpg";
 
 export {
   AbhishekSankar,
@@ -10,4 +11,5 @@ export {
   ShreyasSanghvi,
   AdithiDange,
   HarshwardhanSinha,
+  PittsburghMap,
 };

@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 const GoogleLoginButton = ({ setIsSignedIn }) => {
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const registrationContext = useContext(RegistrationContext);
-  const { setName, setEmail, setPicture, setGivenName } = registrationContext;
+  const { setName, setEmail, setPicture, setGivenName, setUserToken } =
+    registrationContext;
   const navigate = useNavigate();
 
   const onSuccess = async (response) => {
@@ -55,7 +56,8 @@ const GoogleLoginButton = ({ setIsSignedIn }) => {
         baseApiUrl + ENDPOINTS.POST_RegistrationSuccess,
         userData
       );
-      console.log("Registration successful:", response.data);
+      const { token } = response.data;
+      setUserToken(token);
     } catch (error) {
       console.error("Error during registration:", error);
     }
@@ -70,7 +72,8 @@ const GoogleLoginButton = ({ setIsSignedIn }) => {
         baseApiUrl + ENDPOINTS.POST_GenerateToken,
         userData
       );
-      console.log("Token generation successful:", response.data);
+      const { token } = response.data;
+      setUserToken(token);
     } catch (error) {
       console.error("Error during token generation:", error);
     }

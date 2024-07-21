@@ -33,7 +33,13 @@ const DateTimePicker = ({
     setSelectedTime(`${currentHour}:${currentMinutes}`);
 
     console.log(currentDate, currentHour, currentMinutes);
-  }, [currentDate, currentHour, currentMinutes]);
+  }, [
+    currentDate,
+    currentHour,
+    currentMinutes,
+    setSelectedDate,
+    setSelectedTime,
+  ]);
 
   return (
     <div

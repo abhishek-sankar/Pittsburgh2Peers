@@ -1,15 +1,22 @@
-import { Avatar, Button, Input } from "antd";
+import { Button, Input } from "antd";
 import { useContext, useEffect } from "react";
 import { RegistrationContext } from "../../middleware/RegistrationContext";
 import { jwtDecode } from "jwt-decode";
 import { Toaster, toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import {
+  parsePhoneNumber,
+  getCountryCallingCode,
+  formatPhoneNumber,
+} from "react-phone-number-input";
+import axios from "axios";
+import { ENDPOINTS, baseApiUrl } from "../../lib/constants";
+import PhoneInput from "react-phone-number-input";
 
 const Profile = () => {
   const registrationContext = useContext(RegistrationContext);
   const {
     givenName,
-    picture,
     phoneNumber,
     email,
     setPicture,
@@ -17,6 +24,7 @@ const Profile = () => {
     setPhoneNumber,
     setName,
     setEmail,
+    userToken,
   } = registrationContext;
 
   useEffect(() => {
@@ -32,7 +40,35 @@ const Profile = () => {
   }, [setName, setEmail, setGivenName, setPicture]);
   const navigate = useNavigate();
 
+  const updateUserProfile = async () => {
+    const parsedPhoneNumber = parsePhoneNumber(phoneNumber);
+
+    const updateProfileBody = {
+      token: userToken,
+      email: email,
+      name: givenName,
+      phoneNo: formatPhoneNumber(phoneNumber),
+      countryCode: "+" + getCountryCallingCode(parsedPhoneNumber.country),
+    };
+
+    try {
+      const response = await axios.post(
+        baseApiUrl + ENDPOINTS.POST_UpdateUserProfile,
+        updateProfileBody
+      );
+
+      const result =
+        response.errorCode === 0
+          ? "Succesfully updated profile."
+          : "Profile update failed.";
+      toast(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onSave = () => {
+    // Add updateProfileBody here
     const debounce = (func, delay) => {
       let timeout;
       return (...args) => {
@@ -43,7 +79,7 @@ const Profile = () => {
       };
     };
 
-    const saveToast = debounce(() => toast("Saved"), 1000);
+    const saveToast = debounce(() => updateUserProfile(), 1000);
     saveToast();
   };
 
@@ -74,10 +110,12 @@ const Profile = () => {
           // onChange={(e) => setEmail(e.target.value)}
           disabled
         />
-        <Input
-          placeholder="Enter your phone number"
+        <PhoneInput
+          placeholder="Enter phone number"
           value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
+          defaultCountry="US"
+          className="w-full border border-slate-300 p-2 max-w-sm text-sm"
+          onChange={setPhoneNumber}
         />
         <div className="flex flex-row justify-start gap-4 items-center">
           <Button onClick={onSave}>Save</Button>

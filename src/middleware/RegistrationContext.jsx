@@ -1,25 +1,29 @@
 import React, { useState } from "react";
-import { LookingFor, navigation, stages } from "../lib/constants";
+import { ENDPOINTS, LookingFor, navigation, stages } from "../lib/constants";
+import { Toaster, toast } from "sonner";
+import axios from "axios";
+import { baseApiUrl } from "../lib/constants";
 
 const RegistrationContext = React.createContext();
 export const P2PRegistrationContext = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [stage, setStage] = useState(stages.HOMEPAGE);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
-  const [lookingFor, setLookingFor] = useState(LookingFor.RIDE);
-  const [numberOfPeople, setNumberOfPeople] = useState(null);
-  const [numberOfTrolleys, setNumberOfTrolleys] = useState(null);
-  const [service, setService] = useState(null);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [picture, setPicture] = useState("");
-  const [givenName, setGivenName] = useState("");
-  const [source, setSource] = useState("");
-  const [destination, setDestination] = useState("");
-  const [requireDriver, setRequireDriver] = useState(null);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [contactConsent, setContactConsent] = useState(true);
+  const [stage, setStage] = useState(stages.HOMEPAGE); // Where the flow starts
+  const [selectedDate, setSelectedDate] = useState(""); // the date of arrival in Pitt // format - iii d LLL
+  const [selectedTime, setSelectedTime] = useState(""); // the time of arrival in Pitt // format - hh:mm
+  const [lookingFor, setLookingFor] = useState(LookingFor.RIDE); // Whether they are looking for a ride or for passengers
+  const [numberOfPeople, setNumberOfPeople] = useState(null); // Number of people in the party
+  const [numberOfTrolleys, setNumberOfTrolleys] = useState(null); // Number of trolleys in the party
+  const [service, setService] = useState(null); // Whether the user wants a ride or UHaul
+  const [name, setName] = useState(""); // User's name from google oauth
+  const [email, setEmail] = useState(""); // User's email from google oauth
+  const [picture, setPicture] = useState(""); // User's picture url from google oauth
+  const [givenName, setGivenName] = useState(""); // User's given name from google oauth
+  const [source, setSource] = useState(""); // Source location selected by the user
+  const [destination, setDestination] = useState(""); // destination location picked by the user
+  const [requireDriver, setRequireDriver] = useState(null); // whether the user needs a driver for the Uhaul
+  const [phoneNumber, setPhoneNumber] = useState(""); // the user input phone number
+  const [contactConsent, setContactConsent] = useState(true); // consent to share user data
+  const [userToken, setUserToken] = useState(""); // token to make api calls provided by the backend
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -30,7 +34,13 @@ export const P2PRegistrationContext = ({ children }) => {
   };
 
   const handleNext = () => {
-    setStage(navigation[stage].next);
+    switch (stage) {
+      case stages.CONTACT_INFO:
+        registerUserRequest();
+        break;
+      default:
+        setStage(navigation[stage].next);
+    }
   };
 
   const handlePrev = () => {
@@ -39,6 +49,40 @@ export const P2PRegistrationContext = ({ children }) => {
 
   const onLookingForChange = (lookingFor) => {
     setLookingFor(lookingFor);
+  };
+
+  const registerUserRequest = async () => {
+    const carpoolRequestBody = {
+      token: userToken,
+      email: email,
+      date: new Date(
+        new Date(selectedDate).setFullYear(new Date().getFullYear())
+      ).toLocaleDateString("en-US"),
+      time: selectedTime,
+      noOfPassengers: numberOfPeople,
+      noOfTrolleys: numberOfTrolleys,
+      startLocation: source,
+      endLocation: destination,
+    };
+
+    try {
+      const response = await axios.post(
+        baseApiUrl + ENDPOINTS.POST_CarPoolRequest,
+        carpoolRequestBody
+      );
+      const { errorCode } = response.data;
+      console.log(errorCode);
+      const userMessage =
+        errorCode === "0"
+          ? "Succesfully raised a carpool request"
+          : errorCode === "467"
+          ? "Error: Request for this user already exists"
+          : "Error: Oops, something went wrong.";
+      toast(userMessage);
+      setStage(navigation[stage].next);
+    } catch (error) {
+      console.error("Error during token generation:", error);
+    }
   };
 
   return (
@@ -83,9 +127,12 @@ export const P2PRegistrationContext = ({ children }) => {
         setPhoneNumber,
         contactConsent,
         setContactConsent,
+        userToken,
+        setUserToken,
       }}
     >
       {children}
+      <Toaster />
     </RegistrationContext.Provider>
   );
 };
