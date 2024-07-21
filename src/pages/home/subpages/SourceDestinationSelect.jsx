@@ -12,6 +12,8 @@ import {
 import { Image } from "antd";
 import { PittsburghMap } from "../../../assets";
 import { Toaster, toast } from "sonner";
+import mixpanel from "mixpanel-browser";
+import { MixpanelEvents } from "../../../lib/mixpanel";
 
 const SourceDestinationSelect = () => {
   const registrationContext = useContext(RegistrationContext);
@@ -40,6 +42,9 @@ const SourceDestinationSelect = () => {
               onChange={(e) => {
                 if (e.target.value !== otherSourceLocation) {
                   setSource(e.target.value);
+                  mixpanel.track(MixpanelEvents.USER_SELECTED_SOURCE, {
+                    source: source,
+                  });
                   toast("Click on the map to zoom in.");
                 } else {
                   setSource("");
@@ -75,6 +80,9 @@ const SourceDestinationSelect = () => {
               value={source}
               onChange={(e) => {
                 setSource(e.target.value);
+                mixpanel.track(MixpanelEvents.USER_SELECTED_SOURCE, {
+                  source: source,
+                });
                 if (e.target.value !== "" && !mapToastCalled) {
                   toast("Click on the map to zoom in.");
                   setMapToastCalled(true);
@@ -101,6 +109,9 @@ const SourceDestinationSelect = () => {
               onChange={(value) => {
                 if (value !== "Other") {
                   setDestination(value);
+                  mixpanel.track(MixpanelEvents.USER_SELECTED_DESTINATION, {
+                    destination: destination,
+                  });
                 } else {
                   setDestination("");
                 }
@@ -124,7 +135,12 @@ const SourceDestinationSelect = () => {
                   type="text"
                   placeholder="Enter your specific destination"
                   value={destination}
-                  onChange={(e) => setDestination(e.target.value)}
+                  onChange={(e) => {
+                    setDestination(e.target.value);
+                    mixpanel.track(MixpanelEvents.USER_SELECTED_DESTINATION, {
+                      destination: destination,
+                    });
+                  }}
                   className="w-full p-2 border text-sm focus:outline-cmu-red rounded"
                 />
               </div>

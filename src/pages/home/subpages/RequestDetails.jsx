@@ -7,7 +7,6 @@ import {
   peopleCounts,
   trolleyCounts,
 } from "../../../lib/constants";
-import Input from "antd/es/input/Input";
 const RequestDetails = () => {
   const registrationContext = useContext(RegistrationContext);
   const {
@@ -127,7 +126,10 @@ const RequestDetails = () => {
         <Radio.Group
           value={requireDriver}
           buttonStyle="solid"
-          onChange={(e) => setRequireDriver(e.target.value)}
+          onChange={(e) => {
+            setRequireDriver(e.target.value);
+            console.log(e.target.value, e);
+          }}
         >
           <Radio.Button value={true}>Yes</Radio.Button>
           <Radio.Button value={false}>No</Radio.Button>

@@ -12,6 +12,8 @@ import Carpool from "./pages/carpool/Carpool";
 import AboutUs from "./pages/about/AboutUs";
 import Profile from "./pages/profile/Profile";
 import TermsAndConditions from "./pages/termsAndConditions/TermsAndConditions";
+import mixpanel from "mixpanel-browser";
+import { MixpanelEvents } from "./lib/mixpanel";
 
 const App = () => {
   const [, setIsSignedIn] = useState(false);
@@ -36,6 +38,10 @@ const App = () => {
   };
 
   useEffect(() => {
+    mixpanel.init("79ba679db599fb579df03916edc0cadb", {
+      persistence: "localStorage",
+    });
+    mixpanel.track(MixpanelEvents.USER_LANDED);
     checkLocalStorage();
   }, []);
 
@@ -46,7 +52,6 @@ const App = () => {
           token: {
             colorPrimary: "#C41230",
             borderRadius: 2,
-
             // Alias Token
             colorBgContainer: "#fff",
           },

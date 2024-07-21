@@ -5,7 +5,12 @@ import {
 import { Button } from "antd";
 import { AnimatePresence } from "framer-motion";
 import { useContext, useEffect, useCallback } from "react";
-import { P2PServices, stages } from "../../lib/constants";
+import {
+  ENDPOINTS,
+  P2PServices,
+  baseApiUrl,
+  stages,
+} from "../../lib/constants";
 import { RegistrationContext } from "../../middleware/RegistrationContext";
 import {
   ArrivalDetails,
@@ -18,6 +23,9 @@ import {
   SourceDestinationSelect,
 } from "./subpages";
 import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import mixpanel from "mixpanel-browser";
+import { MixpanelEvents } from "../../lib/mixpanel";
 
 const Home = () => {
   const registrationContext = useContext(RegistrationContext);
@@ -40,8 +48,12 @@ const Home = () => {
     numberOfPeople,
     numberOfTrolleys,
     source,
+    requireDriver,
     destination,
     contactConsent,
+    userToken,
+    email,
+    setIsUserEligibleForRequests,
   } = registrationContext || {};
 
   useEffect(() => {
@@ -74,16 +86,40 @@ const Home = () => {
       setGivenName(given_name);
     }
   }, [setName, setEmail, setGivenName, setPicture]);
+
+  useEffect(() => {
+    checkIsUserEligibleForRequests();
+  }, []);
   const validateArrivalDetails = () => {
     return false;
   };
 
   const validateRequestDetails = () => {
-    return !(numberOfPeople && numberOfTrolleys);
+    mixpanel.track(MixpanelEvents.USER_SELECTED_REQUEST_DETAILS, {});
+    const checkCarpoolFlowDisabled = !(numberOfPeople && numberOfTrolleys);
+    const checkUHaulFlowDisabled = requireDriver === null;
+    return checkCarpoolFlowDisabled && checkUHaulFlowDisabled;
   };
 
   const validateSourceDestination = () => {
     return !(source && destination);
+  };
+
+  const checkIsUserEligibleForRequests = async () => {
+    const checkEligibilityBody = {
+      token: localStorage.getItem("p2puserToken"),
+      email: email,
+    };
+    try {
+      const response = await axios.post(
+        baseApiUrl + ENDPOINTS.POST_UserProfileComplete,
+        checkEligibilityBody
+      );
+
+      setIsUserEligibleForRequests(response.data.eligible);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const isNextDisabled = () => {

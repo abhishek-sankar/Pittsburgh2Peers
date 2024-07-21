@@ -1,8 +1,16 @@
 import React, { useState } from "react";
-import { ENDPOINTS, LookingFor, navigation, stages } from "../lib/constants";
+import {
+  ENDPOINTS,
+  LookingFor,
+  P2PServices,
+  navigation,
+  stages,
+} from "../lib/constants";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
 import { baseApiUrl } from "../lib/constants";
+import mixpanel from "mixpanel-browser";
+import { MixpanelEvents } from "../lib/mixpanel";
 
 const RegistrationContext = React.createContext();
 export const P2PRegistrationContext = ({ children }) => {
@@ -24,19 +32,32 @@ export const P2PRegistrationContext = ({ children }) => {
   const [phoneNumber, setPhoneNumber] = useState(""); // the user input phone number
   const [contactConsent, setContactConsent] = useState(true); // consent to share user data
   const [userToken, setUserToken] = useState(""); // token to make api calls provided by the backend
+  const [matchedUsers, setMatchedUsers] = useState([]);
+  const [isUserEligibleForRequests, setIsUserEligibleForRequests] =
+    useState(false);
 
   const handleDateChange = (date) => {
+    mixpanel.track(MixpanelEvents.USER_SELECTED_DATE, {
+      date: new Date(
+        new Date(date).setFullYear(new Date().getFullYear())
+      ).toLocaleDateString("en-GB"),
+    });
     setSelectedDate(date);
   };
 
   const handleTimeChange = (time) => {
+    mixpanel.track(MixpanelEvents.USER_SELECTED_TIME, { time: time });
     setSelectedTime(time);
   };
 
   const handleNext = () => {
     switch (stage) {
       case stages.CONTACT_INFO:
-        registerUserRequest();
+        if (service === P2PServices.FIND_A_RIDE) {
+          registerUserRequest();
+        } else {
+          userUHaulRequest();
+        }
         break;
       default:
         setStage(navigation[stage].next);
@@ -51,13 +72,44 @@ export const P2PRegistrationContext = ({ children }) => {
     setLookingFor(lookingFor);
   };
 
-  const registerUserRequest = async () => {
-    const carpoolRequestBody = {
-      token: userToken,
+  const userUHaulRequest = async () => {
+    const uHaulRequestBody = {
+      token: localStorage.getItem("p2puserToken"),
       email: email,
       date: new Date(
         new Date(selectedDate).setFullYear(new Date().getFullYear())
-      ).toLocaleDateString("en-US"),
+      ).toLocaleDateString("en-GB"),
+      time: selectedTime,
+      startLocation: source,
+      endLocation: destination,
+      driverRequired: requireDriver,
+    };
+
+    try {
+      const response = await axios.put(
+        baseApiUrl + ENDPOINTS.POST_UHaulRequest,
+        uHaulRequestBody
+      );
+
+      const { errorCode } = response.data;
+      const userMessage =
+        errorCode === "0"
+          ? "Succesfully raised a UHaul request"
+          : "Error: Oops, something went wrong.";
+      toast(userMessage);
+      setStage(navigation[stage].next);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const registerUserRequest = async () => {
+    const carpoolRequestBody = {
+      token: localStorage.getItem("p2puserToken"),
+      email: email,
+      date: new Date(
+        new Date(selectedDate).setFullYear(new Date().getFullYear())
+      ).toLocaleDateString("en-GB"),
       time: selectedTime,
       noOfPassengers: numberOfPeople,
       noOfTrolleys: numberOfTrolleys,
@@ -66,7 +118,7 @@ export const P2PRegistrationContext = ({ children }) => {
     };
 
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         baseApiUrl + ENDPOINTS.POST_CarPoolRequest,
         carpoolRequestBody
       );
@@ -128,6 +180,10 @@ export const P2PRegistrationContext = ({ children }) => {
         setContactConsent,
         userToken,
         setUserToken,
+        matchedUsers,
+        setMatchedUsers,
+        isUserEligibleForRequests,
+        setIsUserEligibleForRequests,
       }}
     >
       {children}

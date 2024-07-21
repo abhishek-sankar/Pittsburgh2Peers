@@ -44,7 +44,7 @@ const Profile = () => {
     const parsedPhoneNumber = parsePhoneNumber(phoneNumber);
 
     const updateProfileBody = {
-      token: userToken,
+      token: localStorage.getItem("p2puserToken"),
       email: email,
       name: givenName,
       phoneNo: formatPhoneNumber(phoneNumber),
@@ -52,13 +52,13 @@ const Profile = () => {
     };
 
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         baseApiUrl + ENDPOINTS.POST_UpdateUserProfile,
         updateProfileBody
       );
 
       const result =
-        response.errorCode === 0
+        response.data.errorCode === "0"
           ? "Succesfully updated profile."
           : "Profile update failed.";
       toast(result);
@@ -85,6 +85,7 @@ const Profile = () => {
 
   const logoutFromP2P = () => {
     localStorage.removeItem("pittsburgh2peer");
+    localStorage.removeItem("p2puserToken");
     navigate("/landing");
     toast("Logged out successfully");
   };

@@ -52,7 +52,7 @@ const GoogleLoginButton = ({ setIsSignedIn }) => {
     };
 
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         baseApiUrl + ENDPOINTS.POST_RegistrationSuccess,
         userData
       );
@@ -74,6 +74,7 @@ const GoogleLoginButton = ({ setIsSignedIn }) => {
       );
       const { token } = response.data;
       setUserToken(token);
+      localStorage.setItem("p2puserToken", token);
     } catch (error) {
       console.error("Error during token generation:", error);
     }
