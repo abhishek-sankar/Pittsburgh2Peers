@@ -37,14 +37,14 @@ const Carpool = () => {
   //   }, []);
   return (
     <div className="flex flex-col justify-center items-center p-8">
-      {similarArrivalTimes.length !== 0 ? (
+      {[].length !== 0 ? (
         <div className="flex flex-col w-full justify-center items-center">
           <h3 className="text-lg font-medium pb-8">
             Here's a quick view of folks arriving in a timeslot near you. Click
             any name to get in touch.
           </h3>
           <div className="flex flex-col gap-4 justify-center items-center text-base w-full overflow-auto">
-            {peopleLandingInSameTimeSlot.map(({ fullName, phone }) => (
+            {[].map(({ fullName, phone }) => (
               <a
                 href={`${createWhatsAppLink({ phone, name, source })}`}
                 target="_blank"
