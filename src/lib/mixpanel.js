@@ -1,5 +1,6 @@
 export const MixpanelEvents = {
   USER_LANDED: "User Landed",
+  USER_SIGNED_IN: "Andrew Sign In Success",
   USER_SELECTED_SERVICE: "Selected Service",
   USER_SELECTED_DATE: "Selected Date",
   USER_SELECTED_TIME: "Selected Time",

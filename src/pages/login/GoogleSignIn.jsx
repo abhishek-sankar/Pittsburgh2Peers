@@ -5,6 +5,8 @@ import { RegistrationContext } from "../../middleware/RegistrationContext";
 import axios from "axios";
 import { ENDPOINTS, baseApiUrl } from "../../lib/constants";
 import { useNavigate } from "react-router-dom";
+import { MixpanelEvents } from "../../lib/mixpanel";
+import mixpanel from "mixpanel-browser";
 
 const GoogleLoginButton = ({ setIsSignedIn }) => {
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -26,6 +28,8 @@ const GoogleLoginButton = ({ setIsSignedIn }) => {
     setPicture(picture);
     setGivenName(given_name);
     setIsSignedIn(true);
+
+    mixpanel.track(MixpanelEvents.USER_SIGNED_IN);
 
     try {
       await generateTokenForEmail({ email });
