@@ -11,6 +11,7 @@ import {
 } from "../../../lib/constants";
 import { Image } from "antd";
 import { PittsburghMap } from "../../../assets";
+import { Toaster, toast } from "sonner";
 
 const SourceDestinationSelect = () => {
   const registrationContext = useContext(RegistrationContext);
@@ -19,6 +20,7 @@ const SourceDestinationSelect = () => {
 
   const [sourceLocation, setSourceLocation] = useState(source);
   const [destinationLocation, setDestinationLocation] = useState(destination);
+  const [mapToastCalled, setMapToastCalled] = useState(false);
   return (
     <AnimatePresence>
       <motion.div
@@ -38,6 +40,7 @@ const SourceDestinationSelect = () => {
               onChange={(e) => {
                 if (e.target.value !== otherSourceLocation) {
                   setSource(e.target.value);
+                  toast("Click on the map to zoom in.");
                 } else {
                   setSource("");
                 }
@@ -63,14 +66,20 @@ const SourceDestinationSelect = () => {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="flex flex-col gap-2 w-full max-w-sm"
+            className="flex flex-col gap-2 w-full max-w-sm lg:px-3 lg:pt-4"
           >
             Where would you start from?
             <Input
               type="text"
               placeholder="Enter your starting location"
               value={source}
-              onChange={(e) => setSource(e.target.value)}
+              onChange={(e) => {
+                setSource(e.target.value);
+                if (e.target.value !== "" && !mapToastCalled) {
+                  toast("Click on the map to zoom in.");
+                  setMapToastCalled(true);
+                }
+              }}
               className="p-2 text-sm border focus:outline-cmu-red rounded"
             />
           </motion.div>
@@ -82,12 +91,13 @@ const SourceDestinationSelect = () => {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="flex flex-col gap-2 w-full max-w-sm "
+            className="flex flex-col gap-2 w-full max-w-sm lg:px-3 lg:py-4"
           >
             <div>Where would you like to go?</div>
             <Select
               placeholder="Select your destination"
               value={destinationLocation}
+              showSearch
               onChange={(value) => {
                 if (value !== "Other") {
                   setDestination(value);
@@ -96,14 +106,17 @@ const SourceDestinationSelect = () => {
                 }
                 setDestinationLocation(value);
               }}
+              filterOption={(input, option) =>
+                (option?.label ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              options={destinationLocations.map((location) => ({
+                label: location,
+                value: location,
+              }))}
               className="w-full border text-sm focus:outline-cmu-red rounded"
-            >
-              {destinationLocations.map((location) => (
-                <Select.Option key={location} value={location}>
-                  {location}
-                </Select.Option>
-              ))}
-            </Select>
+            />
             {destinationLocation === "Other" ? (
               <div className="flex flex-col gap-2 w-full max-w-sm">
                 <div>Please specify your destination:</div>
@@ -124,6 +137,8 @@ const SourceDestinationSelect = () => {
           </motion.div>
         ) : null}
       </motion.div>
+      <div className="h-10 lg:h-20"></div>
+      <Toaster />
     </AnimatePresence>
   );
 };
