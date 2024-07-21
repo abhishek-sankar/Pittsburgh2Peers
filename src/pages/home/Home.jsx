@@ -95,9 +95,15 @@ const Home = () => {
   };
 
   const validateRequestDetails = () => {
-    mixpanel.track(MixpanelEvents.USER_SELECTED_REQUEST_DETAILS, {});
     const checkCarpoolFlowDisabled = !(numberOfPeople && numberOfTrolleys);
     const checkUHaulFlowDisabled = requireDriver === null;
+    if (checkCarpoolFlowDisabled && checkUHaulFlowDisabled == false) {
+      mixpanel.track(MixpanelEvents.USER_SELECTED_REQUEST_DETAILS, {
+        people: numberOfPeople,
+        trolleys: numberOfTrolleys,
+        driverNeeded: requireDriver,
+      });
+    }
     return checkCarpoolFlowDisabled && checkUHaulFlowDisabled;
   };
 
