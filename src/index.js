@@ -15,7 +15,7 @@ const renderer = (props) => {
     return (
       <AnimatePresence>
         <div
-          className="h-[100vh] w-[100vw] flex flex-col gap-8 justify-center items-center text-8xl font-bold text-white"
+          className="h-[100vh] w-[100vw] flex flex-col gap-8 justify-center items-center text-7xl md:text-8xl font-bold text-white"
           style={{ background: "linear-gradient(to right, #e53935, #e35d5b)" }}
           key={"countdown-element"}
         >
