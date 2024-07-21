@@ -11,9 +11,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Carpool from "./pages/carpool/Carpool";
 import AboutUs from "./pages/about/AboutUs";
 import Profile from "./pages/profile/Profile";
+import TermsAndConditions from "./pages/termsAndConditions/TermsAndConditions";
 
 const App = () => {
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [, setIsSignedIn] = useState(false);
   const checkLocalStorage = () => {
     const pittsburgh2peer = JSON.parse(localStorage.getItem("pittsburgh2peer"));
     if (pittsburgh2peer) {
@@ -79,6 +80,7 @@ const App = () => {
                 path="/landing"
                 element={<LandingPage setIsSignedIn={setIsSignedIn} />}
               />
+              <Route path="/terms" element={<TermsAndConditions />} />
               <Route
                 path="/carpool"
                 element={

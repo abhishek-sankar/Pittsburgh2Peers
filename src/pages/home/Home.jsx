@@ -163,7 +163,11 @@ const Home = () => {
             key={"homepage-container"}
           >
             {stage !== stages.HOMEPAGE && (
-              <Button onClick={handlePrev} className="rounded-lg">
+              <Button
+                size={"large"}
+                onClick={handlePrev}
+                className="rounded-lg"
+              >
                 <LeftArrow />
                 Previous
               </Button>
@@ -171,7 +175,8 @@ const Home = () => {
             {stage !== stages.CONFIRMATION && (
               <Button
                 onClick={handleNext}
-                className="rounded-lg"
+                size={"large"}
+                className="rounded-lg bg-cmu-red text-white"
                 disabled={isNextDisabled()}
               >
                 Next <RightArrow />

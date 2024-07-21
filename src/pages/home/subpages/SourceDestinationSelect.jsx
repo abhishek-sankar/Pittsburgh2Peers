@@ -1,9 +1,16 @@
 import { AnimatePresence } from "framer-motion";
-import { Radio } from "antd";
+import { Input, Radio, Select } from "antd";
 import { motion } from "framer-motion";
 import { useContext, useState } from "react";
 import { RegistrationContext } from "../../../middleware/RegistrationContext";
-import { P2PServices } from "../../../lib/constants";
+import {
+  P2PServices,
+  destinationLocations,
+  otherSourceLocation,
+  sourceLocations,
+} from "../../../lib/constants";
+import { Image } from "antd";
+import { PittsburghMap } from "../../../assets";
 
 const SourceDestinationSelect = () => {
   const registrationContext = useContext(RegistrationContext);
@@ -11,6 +18,7 @@ const SourceDestinationSelect = () => {
     registrationContext;
 
   const [sourceLocation, setSourceLocation] = useState(source);
+  const [destinationLocation, setDestinationLocation] = useState(destination);
   return (
     <AnimatePresence>
       <motion.div
@@ -22,12 +30,13 @@ const SourceDestinationSelect = () => {
             className="flex flex-col justify-center gap-4 items-center max-w-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            viewport={{ once: true }}
             key={"source-container"}
           >
             <div>Where would you be starting your ride from?</div>
             <Radio.Group
               onChange={(e) => {
-                if (e.target.value !== "I'm getting a bus") {
+                if (e.target.value !== otherSourceLocation) {
                   setSource(e.target.value);
                 } else {
                   setSource("");
@@ -38,48 +47,81 @@ const SourceDestinationSelect = () => {
               buttonStyle="solid"
               className="flex flex-col w-full gap-2"
             >
-              <Radio.Button value="Pittsburgh International Airport">
-                Pittsburgh International Airport
-              </Radio.Button>
-              <Radio.Button value="Allegheny County Airport">
-                Allegheny County Airport
-              </Radio.Button>
-              <Radio.Button value="Pittsburgh Union Station">
-                Pittsburgh Union Station
-              </Radio.Button>
-              <Radio.Button value="Amtrak Station - PGH">
-                Amtrak Station - PGH
-              </Radio.Button>
-              <Radio.Button value="I'm getting a bus">
-                I'm getting a bus
-              </Radio.Button>
+              {sourceLocations.map((location) => (
+                <Radio.Button key={location} value={location}>
+                  {location}
+                </Radio.Button>
+              ))}
             </Radio.Group>
           </motion.div>
         ) : null}
-        {sourceLocation === "I'm getting a bus" ||
+        {sourceLocation === otherSourceLocation ||
         service === P2PServices.REQUEST_A_UHAUL ? (
-          <div className="flex flex-col gap-2 w-full max-w-sm md:px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="flex flex-col gap-2 w-full max-w-sm"
+          >
             Where would you start from?
-            <input
+            <Input
               type="text"
               placeholder="Enter your starting location"
               value={source}
               onChange={(e) => setSource(e.target.value)}
               className="p-2 text-sm border focus:outline-cmu-red rounded"
             />
-          </div>
+          </motion.div>
         ) : null}
-        {source !== "I'm getting a bus" && source !== "" ? (
-          <div className="flex flex-col gap-2 w-full max-w-sm md:px-4">
-            <div>Where would you be going?</div>
-            <input
-              type="text"
-              placeholder="Enter your destination"
-              value={destination}
-              onChange={(e) => setDestination(e.target.value)}
-              className="w-full p-2 border text-sm focus:outline-cmu-red rounded"
-            />
-          </div>
+        {source !== otherSourceLocation && source !== "" ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="flex flex-col gap-2 w-full max-w-sm "
+          >
+            <div>Where would you like to go?</div>
+            <Select
+              placeholder="Select your destination"
+              value={destinationLocation}
+              onChange={(value) => {
+                if (value !== "Other") {
+                  setDestination(value);
+                } else {
+                  setDestination("");
+                }
+                setDestinationLocation(value);
+              }}
+              className="w-full border text-sm focus:outline-cmu-red rounded"
+            >
+              {destinationLocations.map((location) => (
+                <Select.Option key={location} value={location}>
+                  {location}
+                </Select.Option>
+              ))}
+            </Select>
+            {destinationLocation === "Other" ? (
+              <div className="flex flex-col gap-2 w-full max-w-sm">
+                <div>Please specify your destination:</div>
+                <Input
+                  type="text"
+                  placeholder="Enter your specific destination"
+                  value={destination}
+                  onChange={(e) => setDestination(e.target.value)}
+                  className="w-full p-2 border text-sm focus:outline-cmu-red rounded"
+                />
+              </div>
+            ) : null}
+            {sourceLocation ? (
+              <div className="flex flex-col gap-2 w-full max-w-sm">
+                <Image className="w-full max-w-sm" src={PittsburghMap} />
+              </div>
+            ) : null}
+          </motion.div>
         ) : null}
       </motion.div>
     </AnimatePresence>

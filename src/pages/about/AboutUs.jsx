@@ -3,6 +3,7 @@ import {
   AbhishekSankar,
   AdithiDange,
   AnirudhBelwadi,
+  HarshwardhanSinha,
   ShreyasSanghvi,
 } from "../../assets";
 import { LinkedinFilled } from "@ant-design/icons";
@@ -41,6 +42,12 @@ const AboutUs = () => {
       linkedIn: "https://www.linkedin.com/in/shreyas-sanghvi",
       class: "Incoming MSBME Fall 24",
     },
+    {
+      name: "Harshwardhan Sinha",
+      image: HarshwardhanSinha,
+      linkedIn: "https://www.linkedin.com/in/harshwardhansinha/",
+      class: "Incoming MSBA Fall 24",
+    },
   ];
   return (
     <div className="flex flex-col p-8">
@@ -60,7 +67,9 @@ const AboutUs = () => {
             {/* <Skeleton loading={!member.image} avatar active> */}
             <Avatar src={member.image} alt={member.name} size={100} />
             <div className="flex flex-col justify-center items-center gap-2">
-              <p>{member.name}</p>
+              <p className="flex flex-row items-center justofy-center text-center ">
+                {member.name}
+              </p>
               <p className="text-xs">{member.class}</p>
               <a href={member.linkedIn} target="_blank" rel="noreferrer">
                 <LinkedinFilled className="text-xl" />

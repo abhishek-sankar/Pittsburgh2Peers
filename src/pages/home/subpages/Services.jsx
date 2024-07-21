@@ -24,6 +24,7 @@ const Services = ({ service, setStage, setService }) => {
         </div>
         <div className="flex flex-col md:flex-row gap-4 p-4">
           <Button
+            size={"large"}
             className={`${
               service === P2PServices.FIND_A_RIDE
                 ? "text-cmu-red border-cmu-red"
@@ -35,6 +36,7 @@ const Services = ({ service, setStage, setService }) => {
             Find a ride
           </Button>
           <Button
+            size={"large"}
             className={`${
               service === P2PServices.REQUEST_A_UHAUL
                 ? "text-cmu-red border-cmu-red"
