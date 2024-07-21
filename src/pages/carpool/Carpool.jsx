@@ -6,6 +6,8 @@ import {
 } from "../../lib/constants";
 import { RegistrationContext } from "../../middleware/RegistrationContext";
 import { jwtDecode } from "jwt-decode";
+import mixpanel from "mixpanel-browser";
+import { MixpanelEvents } from "../../lib/mixpanel";
 
 const Carpool = () => {
   const registrationContext = useContext(RegistrationContext);
@@ -30,6 +32,9 @@ const Carpool = () => {
       setGivenName(given_name);
     }
   }, [setName, setEmail, setGivenName, setPicture]);
+  useEffect(() => {
+    mixpanel.track(MixpanelEvents.USER_VIEWED_CARPOOL);
+  }, []);
   return (
     <div className="flex flex-col justify-center items-center p-8">
       {similarArrivalTimes.length !== 0 ? (

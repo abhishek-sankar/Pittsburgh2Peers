@@ -26,7 +26,7 @@ const Confirmation = () => {
     service,
   } = registrationContext;
   const shareWithFriends = () => {
-    mixpanel.track(MixpanelEvents.USER_CLICKED_SHARE);
+    mixpanel.track(MixpanelEvents.USER_CLICKED_SHARE, { platform: "Any" });
     if (navigator.share) {
       navigator
         .share({
@@ -94,6 +94,9 @@ const Confirmation = () => {
 
       setMatchedUsers(response.data);
       setMatchedCount(response.data.length);
+      mixpanel.track(MixpanelEvents.USER_GOT_SUCCESS_SCREEN, {
+        matches: response.data.length,
+      });
     } catch (error) {
       console.log(error);
     }

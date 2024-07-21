@@ -11,4 +11,7 @@ export const MixpanelEvents = {
   USER_RATED_PLATFORM: "Rating",
   USER_CLICKED_SHARE: "Shared App",
   USER_VIEWED_ABOUT: "Viewed About Page",
+  USER_COMPLETED_REQUEST: "Completed Request",
+  USER_VIEWED_CARPOOL: "Opened Carpool",
+  USER_GOT_SUCCESS_SCREEN: "Confirmation Screen",
 };

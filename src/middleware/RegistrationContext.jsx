@@ -122,6 +122,9 @@ export const P2PRegistrationContext = ({ children }) => {
         baseApiUrl + ENDPOINTS.POST_CarPoolRequest,
         carpoolRequestBody
       );
+      mixpanel.track(MixpanelEvents.USER_COMPLETED_REQUEST, {
+        service: service,
+      });
       const { errorCode } = response.data;
       const userMessage =
         errorCode === "0"
