@@ -32,11 +32,17 @@ const GoogleLoginButton = ({ setIsSignedIn }) => {
     mixpanel.track(MixpanelEvents.USER_SIGNED_IN);
 
     try {
-      await generateTokenForEmail({ email });
-      navigate("/home");
+      const response = await generateTokenForEmail({ email });
+
+      if (response.data.errorCode === "1") {
+        await registerUser({ name, email, profileImage: picture });
+        navigate("/home");
+      } else {
+        navigate("/home");
+      }
     } catch (error) {
-      await registerUser({ name, email, profileImage: picture });
-      navigate("/home");
+      //   await registerUser({ name, email, profileImage: picture });
+      //   navigate("/home");
     }
   };
 
@@ -62,6 +68,7 @@ const GoogleLoginButton = ({ setIsSignedIn }) => {
       );
       const { token } = response.data;
       setUserToken(token);
+      localStorage.setItem("p2puserToken", token);
     } catch (error) {
       console.error("Error during registration:", error);
     }
@@ -79,6 +86,7 @@ const GoogleLoginButton = ({ setIsSignedIn }) => {
       const { token } = response.data;
       setUserToken(token);
       localStorage.setItem("p2puserToken", token);
+      return response;
     } catch (error) {
       console.error("Error during token generation:", error);
     }
