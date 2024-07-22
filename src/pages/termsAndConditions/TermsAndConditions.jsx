@@ -672,11 +672,12 @@ const TermsAndConditions = () => {
         </h2>
         More information about our data collection and sharing practices can be
         found in this privacy notice. You may contact us by email at
-        cardinal.lca.contact@gmail.com, by visiting cardinallca.com/about.html,
-        or by referring to the contact details at the bottom of this document.
-        If you are using an authorized agent to exercise your right to opt-out
-        we may deny a request if the authorized agent does not submit proof that
-        they have been validly authorized to act on your behalf.
+        ssanghvi@andrew.cmu.edu, by visiting
+        https://pittsburgh2peers.vercel.app/, or by referring to the contact
+        details at the bottom of this document. If you are using an authorized
+        agent to exercise your right to opt-out we may deny a request if the
+        authorized agent does not submit proof that they have been validly
+        authorized to act on your behalf.
         <h2 className="font-medium text-xl">
           Will your information be shared with anyone else?
         </h2>
@@ -778,10 +779,10 @@ const TermsAndConditions = () => {
           </li>
         </ul>
         To exercise these rights, you can contact us by email at
-        cardinal.lca.contact@gmail.com, by visiting cardinallca.com/about.html,
-        or by referring to the contact details at the bottom of this document.
-        If you have a complaint about how we handle your data, we would like to
-        hear from you.
+        ssanghvi@andrew.cmu.edu, by visiting
+        https://pittsburgh2peers.vercel.app/, or by referring to the contact
+        details at the bottom of this document. If you have a complaint about
+        how we handle your data, we would like to hear from you.
         <h2 className="font-medium text-xl">
           11. DO WE MAKE UPDATES TO THIS NOTICE?
         </h2>
