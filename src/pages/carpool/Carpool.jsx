@@ -53,7 +53,6 @@ const Carpool = () => {
         email: email,
         startLocation: pendingRequestDetails?.startLocation,
         date: pendingRequestDetails?.date,
-        endLocation: pendingRequestDetails?.endLocation,
         time: pendingRequestDetails?.time,
         timeRange: timeRange,
       };

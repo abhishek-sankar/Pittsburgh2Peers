@@ -57,7 +57,6 @@ const Confirmation = () => {
       )
         .toLocaleDateString("en-GB")
         .replaceAll(/\//g, "-"),
-      endLocation: destination,
       time: selectedTime,
       timeRange: "3",
     };
