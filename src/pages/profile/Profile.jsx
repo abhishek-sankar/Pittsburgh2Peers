@@ -12,6 +12,7 @@ import {
 import PhoneInput from "react-phone-number-input";
 import axios from "axios";
 import { ENDPOINTS, baseApiUrl } from "../../lib/constants";
+import { formatPhoneNumberIntl } from "react-phone-number-input";
 
 const Profile = () => {
   const registrationContext = useContext(RegistrationContext);
@@ -39,6 +40,33 @@ const Profile = () => {
     }
   }, [setName, setEmail, setGivenName, setPicture]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getUserProfileDetails();
+  }, [userToken]);
+
+  const getUserProfileDetails = async () => {
+    const userProfileDetails = {
+      token: localStorage.getItem("p2puserToken"),
+      email: email,
+    };
+    const response = await axios.post(
+      baseApiUrl + ENDPOINTS.POST_GetUserProfileDetails,
+      userProfileDetails
+    );
+
+    if (
+      response.data?.userDetails?.phoneNo &&
+      response.data?.userDetails?.countryCode
+    ) {
+      setPhoneNumber(
+        formatPhoneNumberIntl(
+          response.data.userDetails?.countryCode +
+            response.data.userDetails?.phoneNo
+        )
+      );
+    }
+  };
 
   const updateUserProfile = async () => {
     const parsedPhoneNumber = parsePhoneNumber(phoneNumber);
