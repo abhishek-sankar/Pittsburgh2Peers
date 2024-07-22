@@ -15,7 +15,11 @@ const TopBar = () => {
     navigate("/about");
   };
   const handleHomeClick = () => {
-    navigate("/home");
+    if (checkLocalStorage()) {
+      navigate("/home");
+    } else {
+      navigate("/landing");
+    }
   };
   const handleProfileClick = () => {
     navigate("/profile");

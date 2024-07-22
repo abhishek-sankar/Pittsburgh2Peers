@@ -136,7 +136,7 @@ const Profile = () => {
         <Input
           placeholder="Enter your name"
           value={name}
-          onChange={(e) => setGivenName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
         />
         <Input
           placeholder="Enter your email"
