@@ -47,8 +47,6 @@ const App = () => {
     checkLocalStorage();
   }, []);
 
-  const { width, height } = useWindowSize();
-
   return (
     <div className="App">
       <ConfigProvider
@@ -62,7 +60,6 @@ const App = () => {
         }}
       >
         <P2PRegistrationContext>
-          <Confetti width={width} height={height} recycle={false} />
           <Router>
             <TopBar />
             <Routes>
