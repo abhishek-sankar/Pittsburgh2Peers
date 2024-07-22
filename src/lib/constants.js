@@ -110,7 +110,7 @@ export const createWhatsAppLink = ({
 }) =>
   `https://wa.me/${phone.replace(/\s+/g, "")}?text=Hi ${
     receiverName.split(" ")[0]
-  }!, I'm ${senderName} and I noticed on P2P that we both arrive in ${source} at about the same time. Would you like to tag along to save money and maybe make new friends?`;
+  }! I'm ${senderName} and I noticed on P2P that we both arrive in ${source} at about the same time. Would you like to tag along to save money and maybe make new friends?`;
 
 export const baseApiUrl = "https://pittsburgh2peers.pythonanywhere.com";
 
