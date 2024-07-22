@@ -214,7 +214,7 @@ const Home = () => {
               <LeftArrow />
               {stage !== stages.CONFIRMATION ? "Previous" : "Back to home"}
             </Button>
-            <span className="text-sm text-cmu-iron-gray">{`Step ${stepNumbers[stage]} / 5`}</span>
+              {stage !== stages.CONFIRMATION ? <span className="text-sm text-cmu-iron-gray">{`Step ${stepNumbers[stage]} / 5`}</span> : null }
             <Button
               onClick={handleNext}
               size={"large"}
