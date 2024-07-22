@@ -27,6 +27,7 @@ const Carpool = () => {
     source,
     matchedUsers,
     setMatchedUsers,
+    pendingRequestDetails,
   } = registrationContext;
   const similarArrivalTimes = matchedUsers;
   const [matchedCount, setMatchedCount] = useState(-1);
@@ -47,14 +48,10 @@ const Carpool = () => {
       const fetchCarpoolRequestBody = {
         token: localStorage.getItem("p2puserToken"),
         email: email,
-        startLocation: source,
-        date: new Date(
-          new Date(selectedDate).setFullYear(new Date().getFullYear())
-        )
-          .toLocaleDateString("en-GB")
-          .replaceAll(/\//g, "-"),
-        endLocation: destination,
-        time: selectedTime,
+        startLocation: pendingRequestDetails.startLocation,
+        date: pendingRequestDetails.date,
+        endLocation: pendingRequestDetails.endLocation,
+        time: pendingRequestDetails.time,
         timeRange: timeRange,
       };
 
@@ -64,8 +61,8 @@ const Carpool = () => {
           fetchCarpoolRequestBody
         );
 
-        setMatchedUsers(response.data);
-        setMatchedCount(response.data.length);
+        setMatchedUsers(response.data.data);
+        setMatchedCount(response.data.data.length);
       } catch (error) {
         console.log(error);
       }
@@ -101,16 +98,23 @@ const Carpool = () => {
             </h3>
             <div className="flex flex-col gap-4 justify-center items-center text-base w-full overflow-auto">
               {similarArrivalTimes.length ? (
-                similarArrivalTimes.map(({ fullName, phone }) => (
-                  <a
-                    href={`${createWhatsAppLink({ phone, name, source })}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-base w-full hover:bg-cmu-red hover:text-white transition-all duration-300 py-2 p-4 max-w-sm border-slate-200 border"
-                  >
-                    {fullName}
-                  </a>
-                ))
+                similarArrivalTimes.map(
+                  ({ name: receiverName, phoneNo, startLocation }) => (
+                    <a
+                      href={`${createWhatsAppLink({
+                        phone: phoneNo,
+                        receiverName: receiverName,
+                        source: startLocation,
+                        senderName: name,
+                      })}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-base w-full hover:bg-cmu-red hover:text-white transition-all duration-300 py-2 p-4 max-w-sm border-slate-200 border"
+                    >
+                      {receiverName}
+                    </a>
+                  )
+                )
               ) : (
                 <div className="flex flex-col gap-2 items-center justify-center h-40 w-full">
                   <Spin size="large" />

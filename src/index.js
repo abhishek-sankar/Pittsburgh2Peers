@@ -10,7 +10,7 @@ import ChromeDinoGame from "react-chrome-dino";
 const renderer = (props) => {
   const urlParams = new URLSearchParams(window.location.search);
   const showPage = urlParams.get("showpage");
-  if (props.completed || showPage === "true") {
+  if (props.completed || showPage === "true" || true) {
     // Render a completed state
     return <App />;
   } else {
@@ -37,7 +37,8 @@ const renderer = (props) => {
 };
 
 ReactDOM.render(
-  <Countdown date={1721651460000} renderer={renderer} zeroPadTime={2} />,
+  <Countdown date={Date.now() + 5000} renderer={renderer} zeroPadTime={2} />,
+  //   <Countdown date={1721651460000} renderer={renderer} zeroPadTime={2} />,
   document.getElementById("root")
 );
 

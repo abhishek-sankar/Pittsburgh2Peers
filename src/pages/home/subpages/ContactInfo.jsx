@@ -5,13 +5,6 @@ import { RegistrationContext } from "../../../middleware/RegistrationContext";
 import "react-phone-number-input/style.css";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { ENDPOINTS, baseApiUrl } from "../../../lib/constants";
-import {
-  parsePhoneNumber,
-  getCountryCallingCode,
-  formatPhoneNumber,
-} from "react-phone-number-input";
 import PhoneInput from "react-phone-number-input";
 
 const ContactInfo = () => {
@@ -59,17 +52,6 @@ const ContactInfo = () => {
     if (phoneError) {
       validatePhone(value);
     }
-    const parsedPhoneNumber = parsePhoneNumber(value);
-    const updateUserProfileBody = {
-      token: localStorage.getItem("p2puserToken"),
-      email: email,
-      phoneNo: formatPhoneNumber(value),
-      countryCode: "+" + getCountryCallingCode(parsedPhoneNumber.country),
-    };
-    const response = await axios.put(
-      baseApiUrl + ENDPOINTS.POST_UpdateUserProfile,
-      updateUserProfileBody
-    );
   };
 
   const linkToTnC = () => {

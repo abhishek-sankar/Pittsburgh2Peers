@@ -20,8 +20,13 @@ const Services = ({ service, setStage, setService }) => {
   };
 
   const registrationContext = useContext(RegistrationContext);
-  const { isUserEligibleForRequests, email, setIsUserEligibleForRequests } =
-    registrationContext;
+  const {
+    isUserEligibleForRequests,
+    email,
+    setIsUserEligibleForRequests,
+    pendingRequestDetails,
+    setPendingRequestDetails,
+  } = registrationContext;
 
   const navigate = useNavigate();
   const handleViewCarpool = () => {
@@ -55,6 +60,8 @@ const Services = ({ service, setStage, setService }) => {
           baseApiUrl + ENDPOINTS.POST_GetMyCarPoolOffers,
           checkEligibilityBody
         );
+
+        setPendingRequestDetails(response.data.pendingRequestDetails);
 
         if (response.data.errorCode === "0") {
           setIsUserEligibleForRequests(true);
@@ -107,7 +114,7 @@ const Services = ({ service, setStage, setService }) => {
             <TruckOutlined />
             Request a UHaul (Coming soon)
           </Button>
-          {isUserEligibleForRequests ? (
+          {pendingRequestDetails ? (
             <div className="border-t w-full max-w-sm border-cmu-red pt-4 md:border-0 md:pt-0">
               <Button
                 size={"large"}

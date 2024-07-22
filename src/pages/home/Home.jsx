@@ -57,6 +57,17 @@ const Home = () => {
   } = registrationContext || {};
 
   useEffect(() => {
+    const pittsburgh2peer = JSON.parse(localStorage.getItem("pittsburgh2peer"));
+    if (pittsburgh2peer) {
+      const decoded = jwtDecode(pittsburgh2peer.credential);
+      const { name, email, picture, given_name } = decoded;
+      setName(name);
+      setEmail(email);
+      setPicture(picture);
+      setGivenName(given_name);
+    }
+  }, [setName, setEmail, setGivenName, setPicture]);
+  useEffect(() => {
     if (stage === stages.FIND_A_RIDE || stage === stages.REQUEST_A_UHAUL) {
       setTimeout(() => {
         setStage(stages.ARRIVAL_DETAILS);
@@ -76,20 +87,8 @@ const Home = () => {
   }, [service, validateServiceSelection]);
 
   useEffect(() => {
-    const pittsburgh2peer = JSON.parse(localStorage.getItem("pittsburgh2peer"));
-    if (pittsburgh2peer) {
-      const decoded = jwtDecode(pittsburgh2peer.credential);
-      const { name, email, picture, given_name } = decoded;
-      setName(name);
-      setEmail(email);
-      setPicture(picture);
-      setGivenName(given_name);
-    }
-  }, [setName, setEmail, setGivenName, setPicture]);
-
-  useEffect(() => {
     checkIsUserEligibleForRequests();
-  }, []);
+  }, [userToken]);
   const validateArrivalDetails = () => {
     return false;
   };
@@ -113,7 +112,7 @@ const Home = () => {
 
   const checkIsUserEligibleForRequests = async () => {
     const checkEligibilityBody = {
-      token: localStorage.getItem("p2puserToken"),
+      token: userToken,
       email: email,
     };
     try {

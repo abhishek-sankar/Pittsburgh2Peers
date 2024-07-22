@@ -102,11 +102,15 @@ export const peopleLandingInSameTimeSlot = [
 ];
 
 export const whatsappTextBaseUrl = "https://api.whatsapp.com/send?text=";
-export const createWhatsAppLink = ({ phone, name, source }) =>
-  `https://wa.me/${phone.replace(
-    /\s+/g,
-    ""
-  )}?text=Hi!, I'm ${name} and I noticed on P2P that we both arrive in ${source} at about the same time. Would you like to tag along to save money and maybe make new friends?`;
+export const createWhatsAppLink = ({
+  phone,
+  senderName,
+  receiverName,
+  source,
+}) =>
+  `https://wa.me/${phone.replace(/\s+/g, "")}?text=Hi ${
+    receiverName.split(" ")[0]
+  }!, I'm ${senderName} and I noticed on P2P that we both arrive in ${source} at about the same time. Would you like to tag along to save money and maybe make new friends?`;
 
 export const baseApiUrl = "https://pittsburgh2peers.pythonanywhere.com";
 
