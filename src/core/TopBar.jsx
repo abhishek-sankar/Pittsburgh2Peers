@@ -52,7 +52,7 @@ const TopBar = () => {
         );
         const { token } = response.data;
         setUserToken(token);
-        localStorage.setItem("p2puserToken", token);
+        if (token) localStorage.setItem("p2puserToken", token);
       } catch (error) {
         console.error("Error during token generation:", error);
       }

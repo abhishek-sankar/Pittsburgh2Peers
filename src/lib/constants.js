@@ -160,3 +160,11 @@ export const destinationLocations = [
   "Upper Hill",
   "West Oakland",
 ];
+
+export const stepNumbers = {
+  [stages.HOMEPAGE]: 1,
+  [stages.ARRIVAL_DETAILS]: 2,
+  [stages.REQUEST_DETAILS]: 3,
+  [stages.SOURCE_DESTINATION]: 4,
+  [stages.CONFIRMATION]: 5,
+};

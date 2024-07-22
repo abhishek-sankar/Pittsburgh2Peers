@@ -20,14 +20,21 @@ const renderer = (props) => {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 1 }}
           className="h-[100vh] w-[100vw] flex flex-col gap-8 justify-center items-center text-7xl md:text-8xl font-bold text-white"
           style={{ background: "linear-gradient(to right, #e53935, #e35d5b)" }}
           key={"countdown-element"}
         >
-          <div className="text-xl font-medium">P2P launching in</div>
-          {props.formatted.hours}:{props.formatted.minutes}:
-          {props.formatted.seconds}
+          <motion.div
+            key={"countdown-label-text"}
+            className="text-xl font-medium"
+          >
+            P2P launching in
+          </motion.div>
+          <motion.div key={"countdown-component"}>
+            {props.formatted.hours}:{props.formatted.minutes}:
+            {props.formatted.seconds}
+          </motion.div>
         </motion.div>
       </AnimatePresence>
     );
