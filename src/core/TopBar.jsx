@@ -93,8 +93,8 @@ const TopBar = () => {
         >
           About
         </p>
+        <Toaster />
       </div>
-      <Toaster />
     </div>
   );
 };

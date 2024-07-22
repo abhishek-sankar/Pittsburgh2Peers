@@ -28,6 +28,9 @@ const Carpool = () => {
     matchedUsers,
     setMatchedUsers,
     pendingRequestDetails,
+    setPendingRequestDetails,
+    setIsUserEligibleForRequests,
+    userToken,
   } = registrationContext;
   const similarArrivalTimes = matchedUsers;
   const [matchedCount, setMatchedCount] = useState(-1);
@@ -46,12 +49,12 @@ const Carpool = () => {
 
     const fetchUsersWithSimilarTimes = async () => {
       const fetchCarpoolRequestBody = {
-        token: localStorage.getItem("p2puserToken"),
+        token: userToken,
         email: email,
-        startLocation: pendingRequestDetails.startLocation,
-        date: pendingRequestDetails.date,
-        endLocation: pendingRequestDetails.endLocation,
-        time: pendingRequestDetails.time,
+        startLocation: pendingRequestDetails?.startLocation,
+        date: pendingRequestDetails?.date,
+        endLocation: pendingRequestDetails?.endLocation,
+        time: pendingRequestDetails?.time,
         timeRange: timeRange,
       };
 
@@ -69,11 +72,38 @@ const Carpool = () => {
     };
 
     fetchUsersWithSimilarTimes();
-  }, [setName, setEmail, setGivenName, setPicture]);
+  }, [
+    setName,
+    setEmail,
+    setGivenName,
+    setPicture,
+    pendingRequestDetails,
+    userToken,
+  ]);
 
-  //   useEffect(() => {
-  //     mixpanel.track(MixpanelEvents.USER_VIEWED_CARPOOL);
-  //   }, []); matchedCount
+  useEffect(() => {
+    const checkIfCarpoolShown = async () => {
+      const checkEligibilityBody = {
+        token: localStorage.getItem("p2puserToken"),
+        email: email,
+      };
+      try {
+        const response = await axios.post(
+          baseApiUrl + ENDPOINTS.POST_GetMyCarPoolOffers,
+          checkEligibilityBody
+        );
+
+        setPendingRequestDetails(response.data.pendingRequestDetails);
+
+        if (response.data.errorCode === "0") {
+          setIsUserEligibleForRequests(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    checkIfCarpoolShown();
+  }, [email, setIsUserEligibleForRequests, userToken]);
 
   return (
     <div className="flex flex-col justify-center items-center p-8">
@@ -88,17 +118,17 @@ const Carpool = () => {
           <div className="flex flex-col w-full justify-center items-center">
             <h3 className="text-lg font-medium pb-8">
               {`${
-                similarArrivalTimes.length ? `Here's` : `Loading`
+                similarArrivalTimes?.length ? `Here's` : `Loading`
               } a quick view of folks arriving in a timeslot near you.
               ${
-                similarArrivalTimes.length
+                similarArrivalTimes?.length
                   ? `Click any name to get in touch.`
                   : ``
               }`}
             </h3>
             <div className="flex flex-col gap-4 justify-center items-center text-base w-full overflow-auto">
-              {similarArrivalTimes.length ? (
-                similarArrivalTimes.map(
+              {similarArrivalTimes?.length ? (
+                similarArrivalTimes?.map(
                   ({ name: receiverName, phoneNo, startLocation }) => (
                     <a
                       href={`${createWhatsAppLink({
