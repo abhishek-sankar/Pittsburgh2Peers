@@ -166,5 +166,5 @@ export const stepNumbers = {
   [stages.ARRIVAL_DETAILS]: 2,
   [stages.REQUEST_DETAILS]: 3,
   [stages.SOURCE_DESTINATION]: 4,
-  [stages.CONTACT_DETAILS]: 5,
+  [stages.CONTACT_INFO]: 5,
 };
