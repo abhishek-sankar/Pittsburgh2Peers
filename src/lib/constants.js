@@ -125,6 +125,7 @@ export const ENDPOINTS = {
   POST_OfferCarPool: "/offerCarPool",
   POST_GetMyCarPoolOffers: "/getMyCarPoolOffers",
   POST_UpdateUserProfile: "/updateUserProfile",
+  POST_GetUserProfileDetails: "/getUserProfileDetails",
 };
 
 export const destinationLocations = [
