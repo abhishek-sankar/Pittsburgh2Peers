@@ -134,7 +134,11 @@ const Confirmation = () => {
           title="Thanks for registering with us."
           className="max-w-sm"
           subTitle={
-            <Skeleton active loading={matchedCount === -1}>
+            <Skeleton
+              active
+              loading={matchedCount === -1}
+              className="w-full max-w-sm"
+            >
               {matchedCount !== 0 ? (
                 <p>
                   We have found {matchedCount} others arriving within a +/- 3
