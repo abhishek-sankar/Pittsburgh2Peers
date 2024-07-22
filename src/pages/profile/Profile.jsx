@@ -17,6 +17,7 @@ import { formatPhoneNumberIntl } from "react-phone-number-input";
 const Profile = () => {
   const registrationContext = useContext(RegistrationContext);
   const {
+    name,
     givenName,
     phoneNumber,
     email,
@@ -65,6 +66,10 @@ const Profile = () => {
             response.data.userDetails?.phoneNo
         )
       );
+
+      if (response.data?.userDetails?.name) {
+        setName(response.data?.userDetails?.name);
+      }
     }
   };
 
@@ -130,7 +135,7 @@ const Profile = () => {
       <div className="flex flex-col items-start max-w-sm w-full gap-4 justify-center">
         <Input
           placeholder="Enter your name"
-          value={givenName}
+          value={name}
           onChange={(e) => setGivenName(e.target.value)}
         />
         <Input
