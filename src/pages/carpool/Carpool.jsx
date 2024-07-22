@@ -105,13 +105,13 @@ const Carpool = () => {
   }, [email, setIsUserEligibleForRequests, userToken]);
 
   return (
-    <div className="flex flex-col justify-center items-center p-8">
+    <div className="flex flex-col justify-center w-full items-center p-8">
       <Skeleton
         title
         active
         rows={4}
         loading={matchedCount === -1}
-        className="w-full max-w-sm h-40 min-w-96"
+        className="w-full max-w-sm h-40"
       >
         {matchedCount !== 0 ? (
           <div className="flex flex-col w-full justify-center items-center">
