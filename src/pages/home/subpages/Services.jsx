@@ -26,6 +26,7 @@ const Services = ({ service, setStage, setService }) => {
     setIsUserEligibleForRequests,
     pendingRequestDetails,
     setPendingRequestDetails,
+    userToken,
   } = registrationContext;
 
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const Services = ({ service, setStage, setService }) => {
   useEffect(() => {
     const checkIfCarpoolShown = async () => {
       const checkEligibilityBody = {
-        token: localStorage.getItem("p2puserToken"),
+        token: userToken,
         email: email,
       };
       try {
@@ -72,7 +73,7 @@ const Services = ({ service, setStage, setService }) => {
     };
 
     checkIfCarpoolShown();
-  }, [email, setIsUserEligibleForRequests]);
+  }, [email, setIsUserEligibleForRequests, userToken]);
 
   return (
     <AnimatePresence>

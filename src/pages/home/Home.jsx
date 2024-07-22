@@ -10,6 +10,7 @@ import {
   P2PServices,
   baseApiUrl,
   stages,
+  stepNumbers,
 } from "../../lib/constants";
 import { RegistrationContext } from "../../middleware/RegistrationContext";
 import {
@@ -96,7 +97,7 @@ const Home = () => {
   const validateRequestDetails = () => {
     const checkCarpoolFlowDisabled = !(numberOfPeople && numberOfTrolleys);
     const checkUHaulFlowDisabled = requireDriver === null;
-    if (checkCarpoolFlowDisabled && checkUHaulFlowDisabled == false) {
+    if (checkCarpoolFlowDisabled && checkUHaulFlowDisabled === false) {
       mixpanel.track(MixpanelEvents.USER_SELECTED_REQUEST_DETAILS, {
         people: numberOfPeople,
         trolleys: numberOfTrolleys,
@@ -199,30 +200,33 @@ const Home = () => {
         {stage !== stages.FIND_A_RIDE && stage !== stages.REQUEST_A_UHAUL && (
           <div
             className={`flex flex-row max-w-screen-lg z-50 bg-white ${
-              stage !== stages.HOMEPAGE ? "justify-between" : "justify-end"
-            } rounded-lg w-full p-4 fixed bottom-8`}
+              stage !== stages.HOMEPAGE ? "justify-between" : "justify-between"
+            } rounded-lg items-center w-full max-w-screen-lg p-4 fixed bottom-8`}
             key={"homepage-container"}
           >
-            {stage !== stages.HOMEPAGE && (
-              <Button
-                size={"large"}
-                onClick={handlePrev}
-                className="rounded-lg"
-              >
-                <LeftArrow />
-                Previous
-              </Button>
-            )}
-            {stage !== stages.CONFIRMATION && (
-              <Button
-                onClick={handleNext}
-                size={"large"}
-                className="rounded-lg bg-cmu-red text-white"
-                disabled={isNextDisabled()}
-              >
-                Next <RightArrow />
-              </Button>
-            )}
+            <Button
+              size={"large"}
+              onClick={handlePrev}
+              className={`rounded-lg ${
+                stage !== stages.HOMEPAGE ? "" : "invisible"
+              }`}
+            >
+              <LeftArrow />
+              {stage !== stages.CONFIRMATION ? "Previous" : "Back to home"}
+            </Button>
+            <span className="text-sm text-cmu-iron-gray">{`Step ${stepNumbers[stage]} / 5`}</span>
+            <Button
+              onClick={handleNext}
+              size={"large"}
+              className={`rounded-lg bg-cmu-red text-white ${
+                stage !== stages.CONFIRMATION ? "" : "invisible"
+              }`}
+              disabled={isNextDisabled()}
+            >
+              {stage !== stages.CONTACT_INFO ? "Next" : "Submit"}
+
+              <RightArrow />
+            </Button>
           </div>
         )}
       </AnimatePresence>

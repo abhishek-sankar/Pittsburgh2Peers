@@ -76,7 +76,13 @@ export const P2PRegistrationContext = ({ children }) => {
   };
 
   const handlePrev = () => {
-    setStage(navigation[stage].prev);
+    switch (stage) {
+      case stages.CONFIRMATION:
+        setStage(stages.HOMEPAGE);
+        break;
+      default:
+        setStage(navigation[stage].prev);
+    }
   };
 
   const onLookingForChange = (lookingFor) => {
