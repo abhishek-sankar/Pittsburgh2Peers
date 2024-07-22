@@ -28,44 +28,44 @@ const Services = ({ service, setStage, setService }) => {
     navigate("/carpool");
   };
 
-  const checkIfCarpoolShown = async () => {
-    const checkEligibilityBody = {
-      token: localStorage.getItem("p2puserToken"),
-      email: email,
-    };
-    try {
-      const response = await axios.post(
-        baseApiUrl + ENDPOINTS.POST_GetMyCarPoolOffers,
-        checkEligibilityBody
-      );
+  //   const checkIsUserEligibleForRequests = async () => {
+  //     const checkEligibilityBody = {
+  //       token: localStorage.getItem("p2puserToken"),
+  //       email: email,
+  //     };
+  //     try {
+  //       const response = await axios.post(
+  //         baseApiUrl + ENDPOINTS.POST_UserProfileComplete,
+  //         checkEligibilityBody
+  //       );
 
-      if (response.data.errorCode === "0") {
-        setIsUserEligibleForRequests(true);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const checkIsUserEligibleForRequests = async () => {
-    const checkEligibilityBody = {
-      token: localStorage.getItem("p2puserToken"),
-      email: email,
-    };
-    try {
-      const response = await axios.post(
-        baseApiUrl + ENDPOINTS.POST_UserProfileComplete,
-        checkEligibilityBody
-      );
-
-      setIsUserEligibleForRequests(response.data.eligible);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //       setIsUserEligibleForRequests(response.data.eligible);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
   useEffect(() => {
+    const checkIfCarpoolShown = async () => {
+      const checkEligibilityBody = {
+        token: localStorage.getItem("p2puserToken"),
+        email: email,
+      };
+      try {
+        const response = await axios.post(
+          baseApiUrl + ENDPOINTS.POST_GetMyCarPoolOffers,
+          checkEligibilityBody
+        );
+
+        if (response.data.errorCode === "0") {
+          setIsUserEligibleForRequests(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     checkIfCarpoolShown();
-  }, [email, checkIfCarpoolShown]);
+  }, [email, setIsUserEligibleForRequests]);
 
   return (
     <AnimatePresence>
