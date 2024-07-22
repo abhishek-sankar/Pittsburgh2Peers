@@ -109,6 +109,7 @@ const App = () => {
                 }
               />
               <Route path="/about" element={<AboutUs />} />
+              <Route path="*" element={<LandingPage />} />
             </Routes>
             <Footer />
           </Router>

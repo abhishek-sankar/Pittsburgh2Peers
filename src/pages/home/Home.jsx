@@ -27,6 +27,7 @@ import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import mixpanel from "mixpanel-browser";
 import { MixpanelEvents } from "../../lib/mixpanel";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const registrationContext = useContext(RegistrationContext);
@@ -57,6 +58,8 @@ const Home = () => {
     setIsUserEligibleForRequests,
   } = registrationContext || {};
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const pittsburgh2peer = JSON.parse(localStorage.getItem("pittsburgh2peer"));
     if (pittsburgh2peer) {
@@ -66,6 +69,8 @@ const Home = () => {
       setEmail(email);
       setPicture(picture);
       setGivenName(given_name);
+    } else {
+      navigate("/landing");
     }
   }, [setName, setEmail, setGivenName, setPicture]);
   useEffect(() => {
