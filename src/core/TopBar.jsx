@@ -5,8 +5,9 @@ import axios from "axios";
 import { ENDPOINTS, baseApiUrl } from "../lib/constants";
 import { Dropdown, Menu } from "antd";
 import { Toaster, toast } from "sonner";
-import mixpanel from "mixpanel-browser";
-import { MixpanelEvents } from "../lib/mixpanel";
+import { jwtDecode } from "jwt-decode";
+// import mixpanel from "mixpanel-browser";
+// import { MixpanelEvents } from "../lib/mixpanel";
 
 const TopBar = () => {
   const navigate = useNavigate();
@@ -28,6 +29,15 @@ const TopBar = () => {
     localStorage.removeItem("p2puserToken");
     navigate("/landing");
     toast("Logged out successfully");
+  };
+
+  const checkLocalStorage = () => {
+    const pittsburgh2peer = JSON.parse(localStorage.getItem("pittsburgh2peer"));
+    if (pittsburgh2peer) {
+      const decoded = jwtDecode(pittsburgh2peer.credential);
+      const { exp } = decoded;
+      return Date.now() < exp * 1000;
+    }
   };
 
   useEffect(() => {
@@ -67,20 +77,22 @@ const TopBar = () => {
         >
           Home
         </p>
-        <Dropdown
-          overlay={
-            <Menu>
-              <Menu.Item key="viewProfile" onClick={handleProfileClick}>
-                View Profile
-              </Menu.Item>
-              <Menu.Item key="logout" onClick={logoutFromP2P}>
-                Logout
-              </Menu.Item>
-            </Menu>
-          }
-        >
-          <p className="cursor-pointer hover:text-cmu-red">Profile</p>
-        </Dropdown>
+        {checkLocalStorage() ? (
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key="viewProfile" onClick={handleProfileClick}>
+                  View Profile
+                </Menu.Item>
+                <Menu.Item key="logout" onClick={logoutFromP2P}>
+                  Logout
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <p className="cursor-pointer hover:text-cmu-red">Profile</p>
+          </Dropdown>
+        ) : null}
         <p
           className="cursor-pointer hover:text-cmu-red"
           onClick={handleAboutClick}

@@ -50,7 +50,9 @@ const Carpool = () => {
         startLocation: source,
         date: new Date(
           new Date(selectedDate).setFullYear(new Date().getFullYear())
-        ).toLocaleDateString("en-GB"),
+        )
+          .toLocaleDateString("en-GB")
+          .replaceAll(/\//g, "-"),
         endLocation: destination,
         time: selectedTime,
         timeRange: timeRange,
@@ -81,6 +83,7 @@ const Carpool = () => {
       <Skeleton
         title
         active
+        rows={4}
         loading={matchedCount === -1}
         className="w-full max-w-sm h-40 min-w-96"
       >

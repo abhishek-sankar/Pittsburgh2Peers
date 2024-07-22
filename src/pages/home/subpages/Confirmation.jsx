@@ -54,7 +54,9 @@ const Confirmation = () => {
       startLocation: source,
       date: new Date(
         new Date(selectedDate).setFullYear(new Date().getFullYear())
-      ).toLocaleDateString("en-GB"),
+      )
+        .toLocaleDateString("en-GB")
+        .replaceAll(/\//g, "-"),
       endLocation: destination,
       time: selectedTime,
       timeRange: "3",
@@ -80,7 +82,9 @@ const Confirmation = () => {
       startLocation: source,
       date: new Date(
         new Date(selectedDate).setFullYear(new Date().getFullYear())
-      ).toLocaleDateString("en-GB"),
+      )
+        .toLocaleDateString("en-GB")
+        .replaceAll(/\//g, "-"),
       endLocation: destination,
       time: selectedTime,
       timeRange: "3",

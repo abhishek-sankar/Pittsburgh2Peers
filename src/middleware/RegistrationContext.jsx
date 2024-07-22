@@ -72,7 +72,9 @@ export const P2PRegistrationContext = ({ children }) => {
       email: email,
       date: new Date(
         new Date(selectedDate).setFullYear(new Date().getFullYear())
-      ).toLocaleDateString("en-GB"),
+      )
+        .toLocaleDateString("en-GB")
+        .replaceAll(/\//g, "-"),
       time: selectedTime,
       startLocation: source,
       endLocation: destination,
@@ -103,7 +105,9 @@ export const P2PRegistrationContext = ({ children }) => {
       email: email,
       date: new Date(
         new Date(selectedDate).setFullYear(new Date().getFullYear())
-      ).toLocaleDateString("en-GB"),
+      )
+        .toLocaleDateString("en-GB")
+        .replaceAll(/\//g, "-"),
       time: selectedTime,
       noOfPassengers: numberOfPeople,
       noOfTrolleys: numberOfTrolleys,

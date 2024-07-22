@@ -29,7 +29,9 @@ const RequestDetails = () => {
     mixpanel.track(MixpanelEvents.USER_SELECTED_DATE, {
       date: new Date(
         new Date(selectedDate).setFullYear(new Date().getFullYear())
-      ).toLocaleDateString("en-GB"),
+      )
+        .toLocaleDateString("en-GB")
+        .replaceAll(/\//g, "-"),
     });
     mixpanel.track(MixpanelEvents.USER_SELECTED_TIME, { time: selectedTime });
   }, []);

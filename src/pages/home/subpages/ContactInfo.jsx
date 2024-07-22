@@ -98,7 +98,7 @@ const ContactInfo = () => {
         <PhoneInput
           placeholder="Enter phone number with country code"
           value={phoneNumber}
-          defaultCountry="US"
+          defaultCountry="IN"
           className="w-full border border-slate-300 p-2 max-w-sm text-sm"
           onChange={handlePhoneChange}
         />
