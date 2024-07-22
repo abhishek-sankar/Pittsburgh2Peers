@@ -5,7 +5,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Countdown from "react-countdown";
 import { AnimatePresence, motion } from "framer-motion";
-import ChromeDinoGame from "react-chrome-dino";
 
 const renderer = (props) => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -30,13 +29,13 @@ const renderer = (props) => {
           {props.formatted.hours}:{props.formatted.minutes}:
           {props.formatted.seconds}
         </motion.div>
-        <ChromeDinoGame />
       </AnimatePresence>
     );
   }
 };
 
 ReactDOM.render(
+  //   <Countdown date={Date.now() + 5000} renderer={renderer} zeroPadTime={2} />,
   <Countdown date={1721651460000} renderer={renderer} zeroPadTime={2} />,
   document.getElementById("root")
 );

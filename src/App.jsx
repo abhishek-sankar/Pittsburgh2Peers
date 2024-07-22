@@ -14,6 +14,8 @@ import Profile from "./pages/profile/Profile";
 import TermsAndConditions from "./pages/termsAndConditions/TermsAndConditions";
 import mixpanel from "mixpanel-browser";
 import { MixpanelEvents } from "./lib/mixpanel";
+import useWindowSize from "react-use/lib/useWindowSize";
+import Confetti from "react-confetti";
 
 const App = () => {
   const [, setIsSignedIn] = useState(false);
@@ -45,6 +47,8 @@ const App = () => {
     checkLocalStorage();
   }, []);
 
+  const { width, height } = useWindowSize();
+
   return (
     <div className="App">
       <ConfigProvider
@@ -58,6 +62,7 @@ const App = () => {
         }}
       >
         <P2PRegistrationContext>
+          <Confetti width={width} height={height} recycle={false} />
           <Router>
             <TopBar />
             <Routes>

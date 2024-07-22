@@ -68,8 +68,8 @@ const Confirmation = () => {
         fetchCarpoolRequestBody
       );
 
-      setMatchedUsers(response.data);
-      setMatchedCount(response.data.length);
+      setMatchedUsers(response.data.data);
+      setMatchedCount(response.data.data.length);
     } catch (error) {
       console.log(error);
     }
@@ -136,7 +136,7 @@ const Confirmation = () => {
           className="max-w-sm"
           subTitle={
             <Skeleton active loading={matchedCount === -1}>
-              {matchedCount === 0 ? (
+              {matchedCount !== 0 ? (
                 <p>
                   We have found {matchedCount} others arriving within a +/- 3
                   hour interval from when you land. Let's get you all connected!
@@ -161,7 +161,7 @@ const Confirmation = () => {
             </Skeleton>
           }
           extra={[
-            matchedCount === 0 ? (
+            matchedCount !== 0 ? (
               <Button
                 type="primary"
                 key="meet-similar-slots"

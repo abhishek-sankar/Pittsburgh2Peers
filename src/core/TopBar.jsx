@@ -58,13 +58,7 @@ const TopBar = () => {
       }
     };
 
-    const interval = setInterval(() => {
-      if (email) {
-        generateTokenForEmail();
-      }
-    }, 30 * 60 * 1000); // 30 minutes
-
-    return () => clearInterval(interval);
+    generateTokenForEmail();
   }, [email, setUserToken]);
 
   return (
@@ -99,8 +93,8 @@ const TopBar = () => {
         >
           About
         </p>
+        <Toaster />
       </div>
-      <Toaster />
     </div>
   );
 };

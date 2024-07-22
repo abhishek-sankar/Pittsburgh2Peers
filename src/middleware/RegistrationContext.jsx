@@ -11,6 +11,11 @@ import axios from "axios";
 import { baseApiUrl } from "../lib/constants";
 import mixpanel from "mixpanel-browser";
 import { MixpanelEvents } from "../lib/mixpanel";
+import {
+  parsePhoneNumber,
+  getCountryCallingCode,
+  formatPhoneNumber,
+} from "react-phone-number-input";
 
 const RegistrationContext = React.createContext();
 export const P2PRegistrationContext = ({ children }) => {
@@ -35,6 +40,7 @@ export const P2PRegistrationContext = ({ children }) => {
   const [matchedUsers, setMatchedUsers] = useState([]);
   const [isUserEligibleForRequests, setIsUserEligibleForRequests] =
     useState(false);
+  const [pendingRequestDetails, setPendingRequestDetails] = useState(null);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -44,7 +50,7 @@ export const P2PRegistrationContext = ({ children }) => {
     setSelectedTime(time);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     switch (stage) {
       case stages.CONTACT_INFO:
         if (service === P2PServices.FIND_A_RIDE) {
@@ -52,6 +58,17 @@ export const P2PRegistrationContext = ({ children }) => {
         } else {
           userUHaulRequest();
         }
+        const parsedPhoneNumber = parsePhoneNumber(phoneNumber);
+        const updateUserProfileBody = {
+          token: localStorage.getItem("p2puserToken"),
+          email: email,
+          phoneNo: formatPhoneNumber(phoneNumber),
+          countryCode: "+" + getCountryCallingCode(parsedPhoneNumber.country),
+        };
+        const response = await axios.put(
+          baseApiUrl + ENDPOINTS.POST_UpdateUserProfile,
+          updateUserProfileBody
+        );
         break;
       default:
         setStage(navigation[stage].next);
@@ -185,6 +202,8 @@ export const P2PRegistrationContext = ({ children }) => {
         setMatchedUsers,
         isUserEligibleForRequests,
         setIsUserEligibleForRequests,
+        pendingRequestDetails,
+        setPendingRequestDetails,
       }}
     >
       {children}
