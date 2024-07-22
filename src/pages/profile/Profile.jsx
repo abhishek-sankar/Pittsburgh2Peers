@@ -79,7 +79,7 @@ const Profile = () => {
     const updateProfileBody = {
       token: localStorage.getItem("p2puserToken"),
       email: email,
-      name: givenName,
+      name: name,
       phoneNo: formatPhoneNumber(phoneNumber),
       countryCode: "+" + getCountryCallingCode(parsedPhoneNumber.country),
     };
