@@ -6,7 +6,7 @@ import {
   HarshwardhanSinha,
   ShreyasSanghvi,
 } from "../../assets";
-import { LinkedinFilled } from "@ant-design/icons";
+import { LinkedinFilled, GlobalOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 
 const AboutUs = () => {
@@ -23,12 +23,14 @@ const AboutUs = () => {
       image: AbhishekSankar,
       linkedIn: "https://www.linkedin.com/in/abhishek-sankar-in",
       class: "Incoming MSAII Fall 24",
+      website: "https://abhisheksankar.com/",
     },
     {
       name: "Anirudh Belwadi",
       image: AnirudhBelwadi,
       linkedIn: "https://www.linkedin.com/in/anirudh-srinath-belwadi/",
       class: "Incoming MISM Fall 24",
+      website: "https://anirudhbelwadi.com/",
     },
     {
       name: "Adithi Dange",
@@ -41,6 +43,7 @@ const AboutUs = () => {
       image: ShreyasSanghvi,
       linkedIn: "https://www.linkedin.com/in/shreyas-sanghvi",
       class: "Incoming MSBME Fall 24",
+      website: "https://shreyassanghvi.github.io/",
     },
     {
       name: "Harshwardhan Sinha",
@@ -71,9 +74,16 @@ const AboutUs = () => {
                 {member.name}
               </p>
               <p className="text-xs">{member.class}</p>
-              <a href={member.linkedIn} target="_blank" rel="noreferrer">
-                <LinkedinFilled className="text-xl" />
-              </a>
+              <div className="flex items-center gap-2">
+                <a href={member.linkedIn} target="_blank" rel="noreferrer">
+                  <LinkedinFilled className="text-xl" />
+                </a>
+                {member.website && (
+                  <a href={member.website} target="_blank" rel="noreferrer">
+                    <GlobalOutlined className="text-xl" />
+                  </a>
+                )}
+              </div>
             </div>
             {/* </Skeleton> */}
           </motion.div>
