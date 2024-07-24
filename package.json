@@ -38,7 +38,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --port 1729",
     "build": "react-scripts build && npm run generate:serve",
     "generate:serve": "echo '{\"rewrites\": [{\"source\": \"**\", \"destination\": \"/index.html\"}]}' > build/serve.json",
     "test": "react-scripts test",
