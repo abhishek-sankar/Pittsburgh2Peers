@@ -143,7 +143,7 @@ const Carpool = () => {
                 })}{" "}
                 -{" "}
                 {new Date(pendingRequestDetails?.date).toLocaleDateString(
-                  "en-GB",
+                  "en-US",
                   {
                     day: "2-digit",
                     month: "short",
