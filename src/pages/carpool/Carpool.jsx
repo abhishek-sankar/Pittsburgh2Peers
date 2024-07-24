@@ -9,6 +9,15 @@ import { jwtDecode } from "jwt-decode";
 import { Skeleton, Spin } from "antd";
 import axios from "axios";
 import { ENDPOINTS, baseApiUrl } from "../../lib/constants";
+import moment from "moment";
+import {
+  ManOutlined,
+  ShoppingCartOutlined,
+  ShoppingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { motion } from "framer-motion";
+
 // import mixpanel from "mixpanel-browser";
 // import { MixpanelEvents } from "../../lib/mixpanel";
 
@@ -35,6 +44,19 @@ const Carpool = () => {
   const similarArrivalTimes = matchedUsers;
   const [matchedCount, setMatchedCount] = useState(-1);
   const [timeRange, setTimeRange] = useState(3);
+
+  const convertStringToDateWithMoment = (dateString) => {
+    // Parse the string into a moment object
+    let date = moment(dateString, "DD/MM/YYYY");
+    // Format it to 'dd-mmm-yyyy'
+    return date.format("DD MMM");
+  };
+
+  const addHours = ({ dateString, timeString, hours }) => {
+    const dateTime = moment(dateString + " " + timeString, "DD/MM/YYYY h:m");
+    dateTime.add(hours, "hours");
+    return dateTime.format("DD MMM");
+  };
 
   useEffect(() => {
     const pittsburgh2peer = JSON.parse(localStorage.getItem("pittsburgh2peer"));
@@ -104,6 +126,11 @@ const Carpool = () => {
     checkIfCarpoolShown();
   }, [email, setIsUserEligibleForRequests, userToken]);
 
+  //   const selectedTime1 = `${hour1}:${minute1} ${period1}`;
+  //   const parsedTime1 = moment(selectedTime1, "h:mm A").format("HH:mm");
+  //   const selectedTime2 = `${hour2}:${minute2} ${period2}`;
+  //   const parsedTime2 = moment(selectedTime2, "h:mm A").format("HH:mm");
+
   return (
     <div className="flex flex-col justify-center w-full items-center p-8">
       <Skeleton
@@ -115,54 +142,30 @@ const Carpool = () => {
       >
         {matchedCount !== 0 ? (
           <div className="flex flex-col w-full justify-center items-center">
-            <h3 className="text-lg font-light pb-8 flex flex-col md:items-center md:justify-center gap-4">
+            <h3 className="text-lg font-light pb-4 flex flex-col md:items-center md:justify-center gap-4">
               {`${
                 similarArrivalTimes?.length ? `Here's` : `Loading`
               } a quick view of folks arriving in a timeslot near you.`}{" "}
               <div className="font-medium">
-                {new Date(pendingRequestDetails?.date).toLocaleDateString(
-                  "en-GB",
-                  {
-                    day: "2-digit",
-                    month: "short",
-                  }
-                )}
-                ,{" "}
-                {new Date(
-                  new Date(
-                    `1970-01-01T${pendingRequestDetails?.time}:00`
-                  ).setHours(
-                    new Date(
-                      `1970-01-01T${pendingRequestDetails?.time}:00`
-                    ).getHours() - 3
-                  )
-                ).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: true,
-                })}{" "}
-                -{" "}
-                {new Date(pendingRequestDetails?.date).toLocaleDateString(
-                  "en-US",
-                  {
-                    day: "2-digit",
-                    month: "short",
-                  }
-                )}{" "}
-                at{" "}
-                {new Date(
-                  new Date(
-                    `1970-01-01T${pendingRequestDetails?.time}:00`
-                  ).setHours(
-                    new Date(
-                      `1970-01-01T${pendingRequestDetails?.time}:00`
-                    ).getHours() + 3
-                  )
-                ).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: true,
+                {addHours({
+                  dateString: pendingRequestDetails?.date,
+                  timeString: pendingRequestDetails?.time,
+                  hours: timeRange,
                 })}
+                ,{" "}
+                {moment(pendingRequestDetails?.time, "HH:mm")
+                  .subtract(3, "hours")
+                  .format("hh:mm A")}{" "}
+                -{" "}
+                {addHours({
+                  dateString: pendingRequestDetails?.date,
+                  timeString: pendingRequestDetails?.time,
+                  hours: -1 * timeRange,
+                })}
+                ,{" "}
+                {moment(pendingRequestDetails?.time, "HH:mm")
+                  .add(3, "hours")
+                  .format("hh:mm A")}
               </div>
               {`
               ${
@@ -171,11 +174,20 @@ const Carpool = () => {
                   : ``
               }`}
             </h3>
-            <div className="flex flex-col gap-4 justify-center items-center text-base w-full overflow-auto">
+            <div className="flex flex-col gap-4 justify-center items-center text-base w-full overflow-auto p-4">
               {similarArrivalTimes?.length ? (
                 similarArrivalTimes?.map(
-                  ({ name: receiverName, phoneNo, startLocation }) => (
-                    <a
+                  ({
+                    name: receiverName,
+                    phoneNo,
+                    startLocation,
+                    noOfTrolleys,
+                    noOfPassengers,
+                    endLocation,
+                    time,
+                    date,
+                  }) => (
+                    <motion.a
                       href={`${createWhatsAppLink({
                         phone: phoneNo,
                         receiverName: receiverName,
@@ -184,10 +196,26 @@ const Carpool = () => {
                       })}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-base w-full hover:bg-cmu-red hover:text-white transition-all duration-300 py-2 p-4 max-w-sm border-slate-200 border"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.5, ease: "easeIn" }}
+                      className="text-base w-full rounded hover:shadow-lg hover:bg-transparent transition-all duration-300 py-2 p-4 max-w-sm border-slate-200 border"
                     >
-                      {receiverName}
-                    </a>
+                      <div>{receiverName}</div>
+                      <div className="flex flex-row gap-1 pt-2 p-1 pl-0 text-xs">
+                        {Array.from({ length: noOfPassengers }, (_, i) => (
+                          <UserOutlined key={i} />
+                        ))}{" "}
+                        /
+                        {Array.from({ length: noOfTrolleys }, (_, i) => (
+                          <ShoppingOutlined key={i} />
+                        ))}
+                        / <p>{endLocation}</p>/{" "}
+                        <p className="uppercase">
+                          {moment(time, "H:m").format("h:m a")}
+                        </p>
+                      </div>
+                    </motion.a>
                   )
                 )
               ) : (

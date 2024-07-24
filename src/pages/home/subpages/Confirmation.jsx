@@ -8,6 +8,7 @@ import { ENDPOINTS, P2PServices, baseApiUrl } from "../../../lib/constants";
 import axios from "axios";
 import mixpanel from "mixpanel-browser";
 import { MixpanelEvents } from "../../../lib/mixpanel";
+import moment from "moment";
 
 const Confirmation = () => {
   const navigate = useNavigate();
@@ -146,21 +147,11 @@ const Confirmation = () => {
                     We have found {matchedCount} others arriving within a +/- 3
                     hour interval from when you land.{" "}
                   </p>
-                  <p className="font-medium">
-                    {" "}
-                    {new Date(selectedDate).toLocaleDateString("en-US", {
-                      day: "numeric",
-                      month: "short",
-                      weekday: "short",
-                    })}
-                    , at{" "}
-                    {new Date(
-                      `1970-01-01T${selectedTime}:00`
-                    ).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: true,
-                    })}
+                  <p className="font-semibold text-black pb-2">
+                    {"[ "}
+                    {moment(selectedDate).format("ddd, MMM D")}, at{" "}
+                    {moment(selectedTime, "HH:mm").format("h:mm A")}
+                    {" ]"}
                   </p>
                   <p>Let's get you all connected!</p>
                 </div>
@@ -199,7 +190,7 @@ const Confirmation = () => {
             <Flex gap="middle" vertical className="pt-8">
               <p className="text-base">How was your experience?</p>
               <Rate
-                defaultValue={3}
+                defaultValue={5}
                 character={({ index = 0 }) => customIcons[index + 1]}
                 onChange={updateRating}
               />
