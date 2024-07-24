@@ -115,10 +115,48 @@ const Carpool = () => {
       >
         {matchedCount !== 0 ? (
           <div className="flex flex-col w-full justify-center items-center">
-            <h3 className="text-lg font-medium pb-8">
+            <h3 className="text-lg font-light pb-8 flex flex-col md:items-center md:justify-center gap-4">
               {`${
                 similarArrivalTimes?.length ? `Here's` : `Loading`
-              } a quick view of folks arriving in a timeslot near you.
+              } a quick view of folks arriving in a timeslot near you.`}{" "}
+              <div className="font-medium">
+                {new Date(
+                  new Date(selectedDate).setHours(
+                    new Date(selectedDate).getHours() - 3
+                  )
+                ).toLocaleDateString("en-US", {
+                  day: "numeric",
+                  month: "short",
+                  weekday: "short",
+                })}
+                , from{" "}
+                {new Date(
+                  new Date(`1970-01-01T${selectedTime}:00`).setHours(
+                    new Date(`1970-01-01T${selectedTime}:00`).getHours() - 3
+                  )
+                ).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })}{" "}
+                to{" "}
+                {new Date(selectedDate).toLocaleDateString("en-US", {
+                  day: "numeric",
+                  month: "short",
+                  weekday: "short",
+                })}{" "}
+                at{" "}
+                {new Date(
+                  new Date(`1970-01-01T${selectedTime}:00`).setHours(
+                    new Date(`1970-01-01T${selectedTime}:00`).getHours() + 3
+                  )
+                ).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })}
+              </div>
+              {`
               ${
                 similarArrivalTimes?.length
                   ? `Click any name to get in touch.`

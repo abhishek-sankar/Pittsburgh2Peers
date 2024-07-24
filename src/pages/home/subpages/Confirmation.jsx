@@ -140,10 +140,30 @@ const Confirmation = () => {
               className="w-full max-w-sm"
             >
               {matchedCount !== 0 ? (
-                <p>
-                  We have found {matchedCount} others arriving within a +/- 3
-                  hour interval from when you land. Let's get you all connected!
-                </p>
+                <div>
+                  <p>
+                    {" "}
+                    We have found {matchedCount} others arriving within a +/- 3
+                    hour interval from when you land.{" "}
+                  </p>
+                  <p className="font-medium">
+                    {" "}
+                    {new Date(selectedDate).toLocaleDateString("en-US", {
+                      day: "numeric",
+                      month: "short",
+                      weekday: "short",
+                    })}
+                    , at{" "}
+                    {new Date(
+                      `1970-01-01T${selectedTime}:00`
+                    ).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    })}
+                  </p>
+                  <p>Let's get you all connected!</p>
+                </div>
               ) : (
                 <p>
                   {`We couldn't find anyone in the same timeslot as you yet. Check again in a couple of hours. `}
