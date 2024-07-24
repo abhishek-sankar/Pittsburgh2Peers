@@ -155,7 +155,7 @@ const Carpool = () => {
                 ,{" "}
                 {moment(pendingRequestDetails?.time, "HH:mm")
                   .subtract(3, "hours")
-                  .format("hh:mm A")}{" "}
+                  .format("h:mm A")}{" "}
                 -{" "}
                 {addHours({
                   dateString: pendingRequestDetails?.date,
@@ -165,7 +165,7 @@ const Carpool = () => {
                 ,{" "}
                 {moment(pendingRequestDetails?.time, "HH:mm")
                   .add(3, "hours")
-                  .format("hh:mm A")}
+                  .format("h:mm A")}
               </div>
               {`
               ${
@@ -174,7 +174,7 @@ const Carpool = () => {
                   : ``
               }`}
             </h3>
-            <div className="flex flex-col gap-4 justify-center items-center text-base w-full overflow-auto p-4">
+            <div className="flex flex-col gap-4 justify-center items-center text-base w-full overflow-auto md:p-4">
               {similarArrivalTimes?.length ? (
                 similarArrivalTimes?.map(
                   ({
@@ -202,17 +202,20 @@ const Carpool = () => {
                       className="text-base w-full rounded hover:shadow-lg hover:bg-transparent transition-all duration-300 py-2 p-4 max-w-sm border-slate-200 border"
                     >
                       <div>{receiverName}</div>
-                      <div className="flex flex-row gap-1 pt-2 p-1 pl-0 text-xs">
-                        {Array.from({ length: noOfPassengers }, (_, i) => (
-                          <UserOutlined key={i} />
-                        ))}{" "}
-                        /
-                        {Array.from({ length: noOfTrolleys }, (_, i) => (
-                          <ShoppingOutlined key={i} />
-                        ))}
-                        / <p>{endLocation}</p>/{" "}
-                        <p className="uppercase">
-                          {moment(time, "H:m").format("h:m a")}
+                      <div className="flex flex-col gap-1 pt-2 p-1 pl-0 text-xs">
+                        <p>{endLocation}</p>{" "}
+                        <p className="flex flex-row gap-2 items-center justify-start">
+                          <div>
+                            <UserOutlined /> x {noOfPassengers} /
+                          </div>
+                          <div>
+                            <ShoppingOutlined /> x {noOfTrolleys} /
+                          </div>
+                          <p className="uppercase">
+                            {moment(date + " " + time, "DD-MM-yyyy H:m").format(
+                              "DD MMM h:mm A"
+                            )}
+                          </p>
                         </p>
                       </div>
                     </motion.a>
