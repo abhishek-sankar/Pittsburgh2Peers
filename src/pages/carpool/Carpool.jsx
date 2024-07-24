@@ -120,35 +120,43 @@ const Carpool = () => {
                 similarArrivalTimes?.length ? `Here's` : `Loading`
               } a quick view of folks arriving in a timeslot near you.`}{" "}
               <div className="font-medium">
+                {new Date(pendingRequestDetails?.date).toLocaleDateString(
+                  "en-GB",
+                  {
+                    day: "2-digit",
+                    month: "short",
+                  }
+                )}
+                ,{" "}
                 {new Date(
-                  new Date(selectedDate).setHours(
-                    new Date(selectedDate).getHours() - 3
-                  )
-                ).toLocaleDateString("en-US", {
-                  day: "numeric",
-                  month: "short",
-                  weekday: "short",
-                })}
-                , from{" "}
-                {new Date(
-                  new Date(`1970-01-01T${selectedTime}:00`).setHours(
-                    new Date(`1970-01-01T${selectedTime}:00`).getHours() - 3
+                  new Date(
+                    `1970-01-01T${pendingRequestDetails?.time}:00`
+                  ).setHours(
+                    new Date(
+                      `1970-01-01T${pendingRequestDetails?.time}:00`
+                    ).getHours() - 3
                   )
                 ).toLocaleTimeString([], {
                   hour: "2-digit",
                   minute: "2-digit",
                   hour12: true,
                 })}{" "}
-                to{" "}
-                {new Date(selectedDate).toLocaleDateString("en-US", {
-                  day: "numeric",
-                  month: "short",
-                  weekday: "short",
-                })}{" "}
+                -{" "}
+                {new Date(pendingRequestDetails?.date).toLocaleDateString(
+                  "en-GB",
+                  {
+                    day: "2-digit",
+                    month: "short",
+                  }
+                )}{" "}
                 at{" "}
                 {new Date(
-                  new Date(`1970-01-01T${selectedTime}:00`).setHours(
-                    new Date(`1970-01-01T${selectedTime}:00`).getHours() + 3
+                  new Date(
+                    `1970-01-01T${pendingRequestDetails?.time}:00`
+                  ).setHours(
+                    new Date(
+                      `1970-01-01T${pendingRequestDetails?.time}:00`
+                    ).getHours() + 3
                   )
                 ).toLocaleTimeString([], {
                   hour: "2-digit",
