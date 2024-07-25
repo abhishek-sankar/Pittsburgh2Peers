@@ -78,7 +78,7 @@ const ContactInfo = () => {
         />
         {phoneError && <div className="text-red-500 text-xs">{phoneError}</div>} */}
         <PhoneInput
-          placeholder="Enter phone number with country code"
+          placeholder="Enter phone number with country code (Whatsapp)"
           value={phoneNumber}
           defaultCountry="IN"
           className="w-full border border-slate-300 p-2 max-w-sm text-sm"

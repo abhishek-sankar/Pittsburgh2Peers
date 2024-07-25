@@ -11,6 +11,7 @@ import axios from "axios";
 import { ENDPOINTS, baseApiUrl } from "../../lib/constants";
 import moment from "moment";
 import {
+  ArrowRightOutlined,
   ManOutlined,
   ShoppingCartOutlined,
   ShoppingOutlined,
@@ -142,30 +143,34 @@ const Carpool = () => {
       >
         {matchedCount !== 0 ? (
           <div className="flex flex-col w-full justify-center items-center">
-            <h3 className="text-lg font-light pb-4 flex flex-col md:items-center md:justify-center gap-4">
-              {`${
-                similarArrivalTimes?.length ? `Here's` : `Loading`
-              } a quick view of folks arriving in a timeslot near you.`}{" "}
-              <div className="font-medium">
-                {addHours({
-                  dateString: pendingRequestDetails?.date,
-                  timeString: pendingRequestDetails?.time,
-                  hours: timeRange,
-                })}
-                ,{" "}
-                {moment(pendingRequestDetails?.time, "HH:mm")
-                  .subtract(3, "hours")
-                  .format("h:mm A")}{" "}
-                -{" "}
-                {addHours({
-                  dateString: pendingRequestDetails?.date,
-                  timeString: pendingRequestDetails?.time,
-                  hours: -1 * timeRange,
-                })}
-                ,{" "}
-                {moment(pendingRequestDetails?.time, "HH:mm")
-                  .add(3, "hours")
-                  .format("h:mm A")}
+            <h3 className="text-base font-light pb-4 flex flex-col md:items-center md:justify-center gap-4">
+              <div className="border-b border-cmu-red pb-2">
+                {`${
+                  similarArrivalTimes?.length ? `Here's` : `Loading`
+                } a quick view of folks arriving in a timeslot near you.`}{" "}
+              </div>
+              <div className="flex flex-col items-start md:items-center w-full gap-2 border-b border-cmu-red pb-4">
+                Your requested for:
+                <div className="font-normal text-xs flex flex-row items-start gap-2">
+                  {moment(
+                    pendingRequestDetails?.date +
+                      " " +
+                      pendingRequestDetails?.time,
+                    "DD-MM-yyyy H:m"
+                  ).format("DD MMM h:mm A")}
+                  <div>/</div>
+                  <div>
+                    <UserOutlined /> x {pendingRequestDetails?.noOfPassengers}
+                  </div>
+                  <div>/</div>
+                  <div>
+                    <ShoppingOutlined /> x {pendingRequestDetails?.noOfTrolleys}
+                  </div>
+                </div>
+                <div className="flex flex-row gap-2 items-start text-xs ">
+                  {pendingRequestDetails?.startLocation} <ArrowRightOutlined />{" "}
+                  {pendingRequestDetails?.endLocation}
+                </div>
               </div>
               {`
               ${
