@@ -69,6 +69,7 @@ const TopBar = () => {
     <div className="sticky flex flex-row items-center justify-between w-full px-8 py-4 bg-white border-b border-gray-200 max-w-screen-lg">
       <h1 className="text-2xl text-cmu-red font-bold logo-text">P2P</h1>
       <div className="flex flex-row items-center justify-end gap-4">
+        <Toaster />
         <p
           className="cursor-pointer hover:text-cmu-red"
           onClick={handleHomeClick}
@@ -97,7 +98,6 @@ const TopBar = () => {
         >
           About
         </p>
-        <Toaster />
       </div>
     </div>
   );

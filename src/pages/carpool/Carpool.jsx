@@ -18,6 +18,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { motion } from "framer-motion";
+import { Toaster, toast } from "sonner";
 
 // import mixpanel from "mixpanel-browser";
 // import { MixpanelEvents } from "../../lib/mixpanel";
@@ -132,6 +133,32 @@ const Carpool = () => {
   //   const selectedTime2 = `${hour2}:${minute2} ${period2}`;
   //   const parsedTime2 = moment(selectedTime2, "h:mm A").format("HH:mm");
 
+  const handleViewMyRequest = () => {
+    toast(
+      <div className="flex flex-col items-start md:items-center w-full gap-2 pb-4">
+        <div className="font-thin">Your request </div>
+        <div className="font-normal text-xs flex flex-row items-start gap-2">
+          {moment(
+            pendingRequestDetails?.date + " " + pendingRequestDetails?.time,
+            "DD-MM-yyyy H:m"
+          ).format("DD MMM h:mm A")}
+          <div>/</div>
+          <div>
+            <UserOutlined /> x {pendingRequestDetails?.noOfPassengers}
+          </div>
+          <div>/</div>
+          <div>
+            <ShoppingOutlined /> x {pendingRequestDetails?.noOfTrolleys}
+          </div>
+        </div>
+        <div className="flex flex-row gap-2 items-start text-xs ">
+          {pendingRequestDetails?.startLocation} <ArrowRightOutlined />{" "}
+          {pendingRequestDetails?.endLocation}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="flex flex-col justify-center w-full items-center p-8">
       <Skeleton
@@ -144,40 +171,20 @@ const Carpool = () => {
         {matchedCount !== 0 ? (
           <div className="flex flex-col w-full justify-center items-center">
             <h3 className="text-base font-light pb-4 flex flex-col md:items-center md:justify-center gap-4">
-              <div className="border-b border-cmu-red pb-2">
+              <div className="border-b border-cmu-red pb-4">
                 {`${
                   similarArrivalTimes?.length ? `Here's` : `Loading`
-                } a quick view of folks arriving in a timeslot near you.`}{" "}
+                } a quick view of folks arriving around the same time as you.`}{" "}
               </div>
-              <div className="flex flex-col items-start md:items-center w-full gap-2 border-b border-cmu-red pb-4">
-                Your requested for:
-                <div className="font-normal text-xs flex flex-row items-start gap-2">
-                  {moment(
-                    pendingRequestDetails?.date +
-                      " " +
-                      pendingRequestDetails?.time,
-                    "DD-MM-yyyy H:m"
-                  ).format("DD MMM h:mm A")}
-                  <div>/</div>
-                  <div>
-                    <UserOutlined /> x {pendingRequestDetails?.noOfPassengers}
-                  </div>
-                  <div>/</div>
-                  <div>
-                    <ShoppingOutlined /> x {pendingRequestDetails?.noOfTrolleys}
+
+              {similarArrivalTimes?.length ? (
+                <div className="text-sm inline" onClick={handleViewMyRequest}>
+                  <div className="inline">Click any name to get in touch</div>{" "}
+                  <div className="text-cmu-iron-gray cursor-pointer inline">
+                    or View your request
                   </div>
                 </div>
-                <div className="flex flex-row gap-2 items-start text-xs ">
-                  {pendingRequestDetails?.startLocation} <ArrowRightOutlined />{" "}
-                  {pendingRequestDetails?.endLocation}
-                </div>
-              </div>
-              {`
-              ${
-                similarArrivalTimes?.length
-                  ? `Click any name to get in touch.`
-                  : ``
-              }`}
+              ) : null}
             </h3>
             <div className="flex flex-col gap-4 justify-center items-center text-base w-full overflow-auto md:p-4">
               {similarArrivalTimes?.length ? (
