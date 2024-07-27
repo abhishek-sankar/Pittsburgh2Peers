@@ -27,6 +27,10 @@ const Services = ({ service, setStage, setService }) => {
     pendingRequestDetails,
     setPendingRequestDetails,
     userToken,
+    carPoolRequested,
+    setCarpoolRequested,
+    uHaulRequested,
+    setUHaulRequested,
   } = registrationContext;
 
   const navigate = useNavigate();
@@ -75,6 +79,28 @@ const Services = ({ service, setStage, setService }) => {
     checkIfCarpoolShown();
   }, [email, setIsUserEligibleForRequests, userToken]);
 
+  useEffect(() => {
+    const checkFlags = async () => {
+      try {
+        const getFlagsRequestBody = {
+          token: userToken,
+          email: email,
+        };
+        const response = await axios.post(
+          baseApiUrl + ENDPOINTS.POST_GetFlags,
+          getFlagsRequestBody
+        );
+
+        setCarpoolRequested(response.data.carPoolRequested);
+        setUHaulRequested(response.data.uHualRequested);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    checkFlags();
+  }, [userToken]);
+
   return (
     <AnimatePresence>
       <motion.div
@@ -89,33 +115,9 @@ const Services = ({ service, setStage, setService }) => {
           Welcome to Pittsburgh. Let's take some weight off those shoulders. How
           can we help?
         </div>
+
         <div className="flex flex-col md:flex-row gap-4 p-4">
-          <Button
-            size={"large"}
-            className={`${
-              service === P2PServices.FIND_A_RIDE
-                ? "text-cmu-red border-cmu-red"
-                : "hover:text-cmu-red hover:border-cmu-red"
-            }`}
-            onClick={() => handleServiceClick(P2PServices.FIND_A_RIDE)}
-          >
-            <CarOutlined />
-            Find a ride
-          </Button>
-          <Button
-            size={"large"}
-            disabled
-            className={`${
-              service === P2PServices.REQUEST_A_UHAUL
-                ? "text-cmu-red border-cmu-red"
-                : "hover:text-cmu-red hover:border-cmu-red"
-            }`}
-            onClick={() => handleServiceClick(P2PServices.REQUEST_A_UHAUL)}
-          >
-            <TruckOutlined />
-            Request a UHaul (Coming soon)
-          </Button>
-          {pendingRequestDetails ? (
+          {carPoolRequested ? (
             <div className="border-t w-full max-w-sm border-cmu-red pt-4 md:border-0 md:pt-0">
               <Button
                 size={"large"}
@@ -126,7 +128,45 @@ const Services = ({ service, setStage, setService }) => {
                 View Carpool Mates
               </Button>
             </div>
-          ) : null}
+          ) : (
+            <Button
+              size={"large"}
+              className={`${
+                service === P2PServices.FIND_A_RIDE
+                  ? "text-cmu-red border-cmu-red"
+                  : "hover:text-cmu-red hover:border-cmu-red"
+              }`}
+              onClick={() => handleServiceClick(P2PServices.FIND_A_RIDE)}
+            >
+              <CarOutlined />
+              Find a ride
+            </Button>
+          )}
+          {uHaulRequested ? (
+            <div className="border-t w-full max-w-sm border-cmu-red pt-4 md:border-0 md:pt-0">
+              <Button
+                size={"large"}
+                className="w-full max-w-sm"
+                onClick={() => handleViewCarpool()}
+              >
+                <UsergroupAddOutlined />
+                View matched UHaul Requests
+              </Button>
+            </div>
+          ) : (
+            <Button
+              size={"large"}
+              className={`${
+                service === P2PServices.REQUEST_A_UHAUL
+                  ? "text-cmu-red border-cmu-red"
+                  : "hover:text-cmu-red hover:border-cmu-red"
+              }`}
+              onClick={() => handleServiceClick(P2PServices.REQUEST_A_UHAUL)}
+            >
+              <TruckOutlined />
+              Request a UHaul
+            </Button>
+          )}
         </div>
       </motion.div>
     </AnimatePresence>

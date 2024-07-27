@@ -16,6 +16,7 @@ import {
   getCountryCallingCode,
   formatPhoneNumber,
 } from "react-phone-number-input";
+import moment from "moment";
 
 const RegistrationContext = React.createContext();
 export const P2PRegistrationContext = ({ children }) => {
@@ -41,6 +42,8 @@ export const P2PRegistrationContext = ({ children }) => {
   const [isUserEligibleForRequests, setIsUserEligibleForRequests] =
     useState(false);
   const [pendingRequestDetails, setPendingRequestDetails] = useState(null);
+  const [carPoolRequested, setCarPoolRequested] = useState(false); // State to track if a carpool has been requested
+  const [uHaulRequested, setUHaulRequested] = useState(false); // State to track if a UHaul has been requested
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -93,15 +96,13 @@ export const P2PRegistrationContext = ({ children }) => {
     const uHaulRequestBody = {
       token: localStorage.getItem("p2puserToken"),
       email: email,
-      date: new Date(
-        new Date(selectedDate).setFullYear(new Date().getFullYear())
-      )
-        .toLocaleDateString("en-GB")
-        .replaceAll(/\//g, "-"),
-      time: selectedTime,
+      date: moment(selectedDate)
+        .set("year", moment().year())
+        .format("DD-MM-YYYY"),
+      time: moment(selectedTime, "h:m").format("hh:mm"),
       startLocation: source,
       endLocation: destination,
-      driverRequired: requireDriver,
+      canDrive: requireDriver,
     };
 
     try {
@@ -126,12 +127,10 @@ export const P2PRegistrationContext = ({ children }) => {
     const carpoolRequestBody = {
       token: localStorage.getItem("p2puserToken"),
       email: email,
-      date: new Date(
-        new Date(selectedDate).setFullYear(new Date().getFullYear())
-      )
-        .toLocaleDateString("en-GB")
-        .replaceAll(/\//g, "-"),
-      time: selectedTime,
+      date: moment(selectedDate)
+        .set("year", moment().year())
+        .format("DD-MM-YYYY"),
+      time: moment(selectedTime, "h:m").format("hh:mm"),
       noOfPassengers: numberOfPeople,
       noOfTrolleys: numberOfTrolleys,
       startLocation: source,
@@ -210,6 +209,10 @@ export const P2PRegistrationContext = ({ children }) => {
         setIsUserEligibleForRequests,
         pendingRequestDetails,
         setPendingRequestDetails,
+        carPoolRequested,
+        setCarPoolRequested,
+        uHaulRequested,
+        setUHaulRequested,
       }}
     >
       {children}

@@ -24,6 +24,7 @@ const Confirmation = () => {
     selectedDate,
     selectedTime,
     setMatchedUsers,
+    requireDriver,
     service,
   } = registrationContext;
   const shareWithFriends = () => {
@@ -53,12 +54,10 @@ const Confirmation = () => {
       token: localStorage.getItem("p2puserToken"),
       email: email,
       startLocation: source,
-      date: new Date(
-        new Date(selectedDate).setFullYear(new Date().getFullYear())
-      )
-        .toLocaleDateString("en-GB")
-        .replaceAll(/\//g, "-"),
-      time: selectedTime,
+      date: moment(selectedDate)
+        .set("year", moment().year())
+        .format("DD-MM-YYYY"),
+      time: moment(selectedTime, "h:m").format("hh:mm"),
       timeRange: "3",
     };
 
@@ -79,15 +78,14 @@ const Confirmation = () => {
     const fetchUHaulRequestBody = {
       token: localStorage.getItem("p2puserToken"),
       email: email,
+      date: moment(selectedDate)
+        .set("year", moment().year())
+        .format("DD-MM-YYYY"),
+      time: moment(selectedTime, "h:m").format("hh:mm"),
       startLocation: source,
-      date: new Date(
-        new Date(selectedDate).setFullYear(new Date().getFullYear())
-      )
-        .toLocaleDateString("en-GB")
-        .replaceAll(/\//g, "-"),
+      canDrive: requireDriver,
       endLocation: destination,
-      time: selectedTime,
-      timeRange: "3",
+      dayRange: "2",
     };
 
     try {
