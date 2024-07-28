@@ -21,8 +21,10 @@ const RegistrationContext = React.createContext();
 export const P2PRegistrationContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [stage, setStage] = useState(stages.HOMEPAGE); // Where the flow starts
-  const [selectedDate, setSelectedDate] = useState(""); // the date of arrival in Pitt // format - iii d LLL
-  const [selectedTime, setSelectedTime] = useState(""); // the time of arrival in Pitt // format - hh:mm
+  const [selectedDate, setSelectedDate] = useState(
+    moment().format("YYYY-MM-DD")
+  ); // the date of arrival in Pitt // format - iii d LLL
+  const [selectedTime, setSelectedTime] = useState(moment().format("HH:mm")); // the time of arrival in Pitt // format - hh:mm
   const [lookingFor, setLookingFor] = useState(LookingFor.RIDE); // Whether they are looking for a ride or for passengers
   const [numberOfPeople, setNumberOfPeople] = useState(null); // Number of people in the party
   const [numberOfTrolleys, setNumberOfTrolleys] = useState(null); // Number of trolleys in the party

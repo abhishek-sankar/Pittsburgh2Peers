@@ -43,6 +43,7 @@ const ArrivalDetails = ({
           selectedTime={selectedTime}
           setSelectedTime={handleTimeChange}
           setSelectedDate={handleDateChange}
+          service={service}
         />
       </motion.div>
     </motion.div>

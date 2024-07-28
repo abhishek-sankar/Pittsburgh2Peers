@@ -4,12 +4,14 @@ import Wheel from "./Wheel";
 import "./styles.css";
 import { Input } from "antd";
 import { motion } from "framer-motion";
+import { P2PServices } from "../../lib/constants";
 
 const DateTimePicker = ({
   selectedTime,
   selectedDate,
   setSelectedTime,
   setSelectedDate,
+  service,
 }) => {
   const [currentHour, setCurrentHour] = useState(
     selectedTime ? parseInt(selectedTime.split(":")[0]) : 0
@@ -43,7 +45,9 @@ const DateTimePicker = ({
 
   return (
     <div className="flex flex-col gap-4 w-full max-w-sm p-4">
-      <div>On what date do you reach?</div>
+      <div>{`On what date do you ${
+        service === P2PServices.FIND_A_RIDE ? "reach?" : "need a UHaul?"
+      } `}</div>
       <Input
         type="date"
         value={selectedDate}
@@ -63,7 +67,9 @@ const DateTimePicker = ({
       >
         {selectedDate ? (
           <div className="flex flex-col items-start gap-4 max-w-sm justify-center">
-            <div>What time do you reach?</div>
+            <div>{`What time do you ${
+              service === P2PServices.FIND_A_RIDE ? "reach?" : "need it?"
+            }`}</div>
             <Input
               type="time"
               value={selectedTime}
