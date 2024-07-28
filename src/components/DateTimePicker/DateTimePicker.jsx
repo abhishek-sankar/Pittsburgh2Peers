@@ -62,7 +62,7 @@ const DateTimePicker = ({
         transition={{ duration: 0.5 }}
       >
         {selectedDate ? (
-          <div className="flex flex-col items-center max-w-sm justify-center">
+          <div className="flex flex-col items-start gap-4 max-w-sm justify-center">
             <div>What time do you reach?</div>
             <Input
               type="time"
