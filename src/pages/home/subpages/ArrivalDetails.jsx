@@ -12,7 +12,7 @@ const ArrivalDetails = ({
   return (
     <motion.div className="p-4">
       <motion.div
-        className="flex flex-col items-center p-4 gap-4"
+        className="flex flex-col items-center gap-4"
         key="arrival-time-container"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

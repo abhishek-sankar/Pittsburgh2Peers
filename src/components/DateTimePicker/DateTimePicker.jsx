@@ -42,7 +42,7 @@ const DateTimePicker = ({
   //   ]);
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-sm p-8">
+    <div className="flex flex-col gap-4 w-full max-w-sm p-4">
       <div>On what date do you reach?</div>
       <Input
         type="date"

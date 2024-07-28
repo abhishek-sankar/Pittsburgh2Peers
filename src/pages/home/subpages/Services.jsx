@@ -111,19 +111,19 @@ const Services = ({ service, setStage, setService }) => {
   return (
     <AnimatePresence>
       <motion.div
-        className="flex flex-col items-center p-4"
+        className="flex flex-col w-full max-w-sm items-center p-4"
         key="services-container"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] }}
       >
-        <div className="flex flex-row items-center p-4">
+        <div className="flex flex-row w-full items-center p-4">
           Welcome to Pittsburgh. Let's take some weight off those shoulders. How
           can we help?
         </div>
 
-        <div className="flex flex-col md:flex-row gap-4 p-4">
+        <div className="flex flex-col w-full md:flex-row gap-4 p-4">
           {carPoolRequested ? (
             <div className=" w-full max-w-sm  pt-4 md:border-0 md:pt-0">
               <Button
