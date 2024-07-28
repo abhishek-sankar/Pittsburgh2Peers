@@ -12,8 +12,11 @@ import moment from "moment";
 
 const Confirmation = () => {
   const navigate = useNavigate();
-  const handleGo = () => {
+  const handleGoCarpool = () => {
     navigate("/carpool");
+  };
+  const handleGoUHaul = () => {
+    navigate("/uhaul");
   };
   const registrationContext = useContext(RegistrationContext);
   const [matchedCount, setMatchedCount] = useState(-1);
@@ -69,6 +72,7 @@ const Confirmation = () => {
       );
 
       setMatchedUsers(response.data.data);
+      console.log(response.data.data.length);
       setMatchedCount(response.data.data.length);
     } catch (error) {
       console.log(error);
@@ -95,8 +99,8 @@ const Confirmation = () => {
         fetchUHaulRequestBody
       );
 
-      setMatchedUsers(response.data);
-      setMatchedCount(response.data.length);
+      setMatchedUsers(response.data.data);
+      setMatchedCount(response.data.data.length);
       mixpanel.track(MixpanelEvents.USER_GOT_SUCCESS_SCREEN, {
         matches: response.data.length,
       });
@@ -178,7 +182,7 @@ const Confirmation = () => {
               <Button
                 type="primary"
                 key="meet-similar-slots"
-                onClick={handleGo}
+                onClick={handleGoCarpool}
               >
                 Let's go
               </Button>
@@ -214,17 +218,33 @@ const Confirmation = () => {
           className="max-w-sm"
           subTitle={
             <Skeleton active loading={matchedCount === -1}>
-              {matchedCount === 0 ? (
-                <p>
-                  We have found {matchedCount} others arriving within a +/- 3
-                  hour interval from when you land. Let's get you all connected!
-                </p>
+              {matchedCount !== 0 ? (
+                <div>
+                  <p>
+                    {`We have found ${matchedCount} other ${
+                      matchedCount > 1 ? "s" : " user"
+                    } requesting a UHaul within a +/- 2
+                    day interval from when you land.`}
+                  </p>
+                  <p className="font-semibold text-black pb-2">
+                    {"[ "}
+                    {moment(selectedDate).format("ddd, MMM D")}, at{" "}
+                    {moment(selectedTime, "HH:mm").format("h:mm A")}
+                    {" ]"}
+                  </p>
+                  <p>Let's get you all connected!</p>
+                </div>
               ) : (
                 <p>
                   {`We couldn't find anyone in the same timeslot as you yet. Check again in a couple of hours. `}
                   <a
                     className="text-cmu-red hover:text-cmu-red hover:border-b hover:border-cmu-red "
-                    href="https://api.whatsapp.com/send?text=https://pittsburgh2peers.vercel.app//"
+                    href="https://api.whatsapp.com/send?text=https://pittsburgh2peers.vercel.app/"
+                    onClick={() =>
+                      mixpanel.track(MixpanelEvents.USER_CLICKED_SHARE, {
+                        platform: "Whatsapp",
+                      })
+                    }
                   >
                     Consider sharing the app
                   </a>
@@ -234,11 +254,11 @@ const Confirmation = () => {
             </Skeleton>
           }
           extra={[
-            matchedCount === 0 ? (
+            matchedCount !== 0 ? (
               <Button
                 type="primary"
                 key="meet-similar-slots"
-                onClick={handleGo}
+                onClick={handleGoUHaul}
               >
                 Let's go
               </Button>
@@ -249,7 +269,7 @@ const Confirmation = () => {
             <Flex gap="middle" vertical className="pt-8">
               <p className="text-base">How was your experience?</p>
               <Rate
-                defaultValue={3}
+                defaultValue={5}
                 character={({ index = 0 }) => customIcons[index + 1]}
               />
             </Flex>,

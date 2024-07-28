@@ -6,7 +6,7 @@ import {
 import { Button } from "antd";
 import { AnimatePresence, motion } from "framer-motion";
 import { ENDPOINTS, P2PServices } from "../../../lib/constants";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RegistrationContext } from "../../../middleware/RegistrationContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -32,7 +32,7 @@ const Services = ({ service, setStage, setService }) => {
     uHaulRequested,
     setUHaulRequested,
   } = registrationContext;
-
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const handleViewCarpool = () => {
     navigate("/carpool");
@@ -85,6 +85,7 @@ const Services = ({ service, setStage, setService }) => {
 
   useEffect(() => {
     const checkFlags = async () => {
+      setLoading(true);
       try {
         const getFlagsRequestBody = {
           token: userToken,
@@ -97,8 +98,10 @@ const Services = ({ service, setStage, setService }) => {
 
         setCarPoolRequested(response.data.carPoolRequested);
         setUHaulRequested(response.data.uHaulRequested);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     };
 
@@ -122,11 +125,12 @@ const Services = ({ service, setStage, setService }) => {
 
         <div className="flex flex-col md:flex-row gap-4 p-4">
           {carPoolRequested ? (
-            <div className="border-t w-full max-w-sm border-cmu-red pt-4 md:border-0 md:pt-0">
+            <div className=" w-full max-w-sm  pt-4 md:border-0 md:pt-0">
               <Button
                 size={"large"}
                 className="w-full max-w-sm"
                 onClick={() => handleViewCarpool()}
+                loading={loading}
               >
                 <UsergroupAddOutlined />
                 View Carpool Mates
@@ -140,18 +144,20 @@ const Services = ({ service, setStage, setService }) => {
                   ? "text-cmu-red border-cmu-red"
                   : "hover:text-cmu-red hover:border-cmu-red"
               }`}
+              loading={loading}
               onClick={() => handleServiceClick(P2PServices.FIND_A_RIDE)}
             >
               <CarOutlined />
               Find a ride
             </Button>
           )}
-          {uHaulRequested ? (
-            <div className="border-t w-full max-w-sm border-cmu-red pt-4 md:border-0 md:pt-0">
+          {!uHaulRequested ? (
+            <div className=" w-full max-w-sm  pt-4 md:border-0 md:pt-0">
               <Button
                 size={"large"}
                 className="w-full max-w-sm"
                 onClick={() => handleViewUHaul()}
+                loading={loading}
               >
                 <UsergroupAddOutlined />
                 View matched UHaul Requests
@@ -165,6 +171,7 @@ const Services = ({ service, setStage, setService }) => {
                   ? "text-cmu-red border-cmu-red"
                   : "hover:text-cmu-red hover:border-cmu-red"
               }`}
+              loading={loading}
               onClick={() => handleServiceClick(P2PServices.REQUEST_A_UHAUL)}
             >
               <TruckOutlined />
