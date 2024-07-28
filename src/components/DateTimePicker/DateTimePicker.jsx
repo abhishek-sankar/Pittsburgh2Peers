@@ -45,12 +45,13 @@ const DateTimePicker = ({
       <Input
         type="date"
         value={selectedDate}
-        className="p-2"
+        className="p-2 w-full max-w-sm"
         onChange={(e) => setSelectedDate(e.target.value)}
       />
       <Input
         type="time"
         value={selectedTime}
+        className="p-2 w-full max-w-sm"
         onChange={(e) => setSelectedTime(e.target.value)}
       />
     </div>

@@ -151,7 +151,7 @@ const Services = ({ service, setStage, setService }) => {
               Find a ride
             </Button>
           )}
-          {!uHaulRequested ? (
+          {uHaulRequested ? (
             <div className=" w-full max-w-sm  pt-4 md:border-0 md:pt-0">
               <Button
                 size={"large"}
