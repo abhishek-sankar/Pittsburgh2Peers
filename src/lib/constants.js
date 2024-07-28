@@ -128,6 +128,8 @@ export const ENDPOINTS = {
   POST_UpdateUserProfile: "/updateUserProfile",
   POST_GetUserProfileDetails: "/getUserProfileDetails",
   POST_GetFlags: "/getFlags",
+  POST_GetAllUHaulRequests: "/getAllUHaulRequests",
+  POST_GetMyUHaulOffers: "/getMyUHaulOffers",
 };
 
 export const areasAroundCarnegieMellonUniversity = [

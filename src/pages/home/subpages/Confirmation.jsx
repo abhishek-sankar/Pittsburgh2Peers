@@ -4,7 +4,7 @@ import { RegistrationContext } from "../../../middleware/RegistrationContext";
 import { Result, Button, Flex, Rate, Skeleton } from "antd";
 import { useNavigate } from "react-router-dom";
 import { FrownOutlined, MehOutlined, SmileOutlined } from "@ant-design/icons";
-import { ENDPOINTS, P2PServices, baseApiUrl } from "../../../lib/constants";
+import { ENDPOINTS, P2PServices } from "../../../lib/constants";
 import axios from "axios";
 import mixpanel from "mixpanel-browser";
 import { MixpanelEvents } from "../../../lib/mixpanel";
@@ -58,12 +58,13 @@ const Confirmation = () => {
         .set("year", moment().year())
         .format("DD-MM-YYYY"),
       time: moment(selectedTime, "h:m").format("hh:mm"),
-      timeRange: "3",
+      timeRange: 3,
     };
 
     try {
       const response = await axios.post(
-        baseApiUrl + ENDPOINTS.POST_GetAllCarPoolRequests,
+        process.env.REACT_APP_BASE_API_URL +
+          ENDPOINTS.POST_GetAllCarPoolRequests,
         fetchCarpoolRequestBody
       );
 
@@ -90,7 +91,7 @@ const Confirmation = () => {
 
     try {
       const response = await axios.post(
-        baseApiUrl + ENDPOINTS.POST_GetAllCarPoolRequests,
+        process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_GetAllUHaulRequests,
         fetchUHaulRequestBody
       );
 

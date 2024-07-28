@@ -14,8 +14,7 @@ import Profile from "./pages/profile/Profile";
 import TermsAndConditions from "./pages/termsAndConditions/TermsAndConditions";
 import mixpanel from "mixpanel-browser";
 import { MixpanelEvents } from "./lib/mixpanel";
-import useWindowSize from "react-use/lib/useWindowSize";
-import Confetti from "react-confetti";
+import UHaul from "./pages/uHaul/UHaul";
 
 const App = () => {
   const [, setIsSignedIn] = useState(false);
@@ -40,7 +39,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    mixpanel.init("79ba679db599fb579df03916edc0cadb", {
+    mixpanel.init(process.env.REACT_APP_MIXPANEL_TOKEN, {
       persistence: "localStorage",
     });
     mixpanel.track(MixpanelEvents.USER_LANDED);
@@ -93,6 +92,16 @@ const App = () => {
                 element={
                   checkIsSignedIn() ? (
                     <Carpool />
+                  ) : (
+                    <LandingPage setIsSignedIn={setIsSignedIn} />
+                  )
+                }
+              />
+              <Route
+                path="/uhaul"
+                element={
+                  checkIsSignedIn() ? (
+                    <UHaul />
                   ) : (
                     <LandingPage setIsSignedIn={setIsSignedIn} />
                   )

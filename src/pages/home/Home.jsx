@@ -8,7 +8,6 @@ import { useContext, useEffect, useCallback } from "react";
 import {
   ENDPOINTS,
   P2PServices,
-  baseApiUrl,
   stages,
   stepNumbers,
 } from "../../lib/constants";
@@ -123,7 +122,7 @@ const Home = () => {
     };
     try {
       const response = await axios.post(
-        baseApiUrl + ENDPOINTS.POST_UserProfileComplete,
+        process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_UserProfileComplete,
         checkEligibilityBody
       );
 

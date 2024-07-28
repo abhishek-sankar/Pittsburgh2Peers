@@ -83,7 +83,8 @@ const Carpool = () => {
 
       try {
         const response = await axios.post(
-          baseApiUrl + ENDPOINTS.POST_GetAllCarPoolRequests,
+          process.env.REACT_APP_BASE_API_URL +
+            ENDPOINTS.POST_GetAllCarPoolRequests,
           fetchCarpoolRequestBody
         );
 
@@ -112,7 +113,8 @@ const Carpool = () => {
       };
       try {
         const response = await axios.post(
-          baseApiUrl + ENDPOINTS.POST_GetMyCarPoolOffers,
+          process.env.REACT_APP_BASE_API_URL +
+            ENDPOINTS.POST_GetMyCarPoolOffers,
           checkEligibilityBody
         );
 

@@ -8,7 +8,6 @@ import {
 } from "../lib/constants";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
-import { baseApiUrl } from "../lib/constants";
 import mixpanel from "mixpanel-browser";
 import { MixpanelEvents } from "../lib/mixpanel";
 import {
@@ -69,7 +68,7 @@ export const P2PRegistrationContext = ({ children }) => {
           countryCode: "+" + getCountryCallingCode(parsedPhoneNumber.country),
         };
         const response = await axios.put(
-          baseApiUrl + ENDPOINTS.POST_UpdateUserProfile,
+          process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_UpdateUserProfile,
           updateUserProfileBody
         );
         break;
@@ -105,9 +104,12 @@ export const P2PRegistrationContext = ({ children }) => {
       canDrive: requireDriver,
     };
 
+    console.log(selectedTime);
+    console.log(moment(selectedTime, "h:m").format("HH:mm"));
+
     try {
       const response = await axios.put(
-        baseApiUrl + ENDPOINTS.POST_UHaulRequest,
+        process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_UHaulRequest,
         uHaulRequestBody
       );
 
@@ -139,7 +141,7 @@ export const P2PRegistrationContext = ({ children }) => {
 
     try {
       const response = await axios.put(
-        baseApiUrl + ENDPOINTS.POST_CarPoolRequest,
+        process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_CarPoolRequest,
         carpoolRequestBody
       );
       mixpanel.track(MixpanelEvents.USER_COMPLETED_REQUEST, {

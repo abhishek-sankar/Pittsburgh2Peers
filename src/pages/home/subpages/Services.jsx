@@ -5,7 +5,7 @@ import {
 } from "@ant-design/icons";
 import { Button } from "antd";
 import { AnimatePresence, motion } from "framer-motion";
-import { ENDPOINTS, P2PServices, baseApiUrl } from "../../../lib/constants";
+import { ENDPOINTS, P2PServices } from "../../../lib/constants";
 import { useContext, useEffect } from "react";
 import { RegistrationContext } from "../../../middleware/RegistrationContext";
 import { useNavigate } from "react-router-dom";
@@ -28,7 +28,7 @@ const Services = ({ service, setStage, setService }) => {
     setPendingRequestDetails,
     userToken,
     carPoolRequested,
-    setCarpoolRequested,
+    setCarPoolRequested,
     uHaulRequested,
     setUHaulRequested,
   } = registrationContext;
@@ -36,6 +36,9 @@ const Services = ({ service, setStage, setService }) => {
   const navigate = useNavigate();
   const handleViewCarpool = () => {
     navigate("/carpool");
+  };
+  const handleViewUHaul = () => {
+    navigate("/uhaul");
   };
 
   //   const checkIsUserEligibleForRequests = async () => {
@@ -62,7 +65,8 @@ const Services = ({ service, setStage, setService }) => {
       };
       try {
         const response = await axios.post(
-          baseApiUrl + ENDPOINTS.POST_GetMyCarPoolOffers,
+          process.env.REACT_APP_BASE_API_URL +
+            ENDPOINTS.POST_GetMyCarPoolOffers,
           checkEligibilityBody
         );
 
@@ -87,12 +91,12 @@ const Services = ({ service, setStage, setService }) => {
           email: email,
         };
         const response = await axios.post(
-          baseApiUrl + ENDPOINTS.POST_GetFlags,
+          process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_GetFlags,
           getFlagsRequestBody
         );
 
-        setCarpoolRequested(response.data.carPoolRequested);
-        setUHaulRequested(response.data.uHualRequested);
+        setCarPoolRequested(response.data.carPoolRequested);
+        setUHaulRequested(response.data.uHaulRequested);
       } catch (error) {
         console.error(error);
       }
@@ -147,7 +151,7 @@ const Services = ({ service, setStage, setService }) => {
               <Button
                 size={"large"}
                 className="w-full max-w-sm"
-                onClick={() => handleViewCarpool()}
+                onClick={() => handleViewUHaul()}
               >
                 <UsergroupAddOutlined />
                 View matched UHaul Requests

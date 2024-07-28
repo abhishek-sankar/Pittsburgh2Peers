@@ -52,7 +52,7 @@ const Profile = () => {
       email: email,
     };
     const response = await axios.post(
-      baseApiUrl + ENDPOINTS.POST_GetUserProfileDetails,
+      process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_GetUserProfileDetails,
       userProfileDetails
     );
 
@@ -86,7 +86,7 @@ const Profile = () => {
 
     try {
       const response = await axios.put(
-        baseApiUrl + ENDPOINTS.POST_UpdateUserProfile,
+        process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_UpdateUserProfile,
         updateProfileBody
       );
 
