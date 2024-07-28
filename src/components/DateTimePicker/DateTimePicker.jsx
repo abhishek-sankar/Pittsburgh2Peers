@@ -3,6 +3,7 @@ import { format, subDays, differenceInCalendarDays } from "date-fns";
 import Wheel from "./Wheel";
 import "./styles.css";
 import { Input } from "antd";
+import { motion } from "framer-motion";
 
 const DateTimePicker = ({
   selectedTime,
@@ -41,12 +42,13 @@ const DateTimePicker = ({
   //   ]);
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-sm">
+    <div className="flex flex-col gap-4 w-full max-w-sm p-8">
+      <div>On what date do you reach?</div>
       <Input
         type="date"
         value={selectedDate}
         placeholder="On what date do you reach Pittsburgh?"
-        className="p-2 w-full max-w-sm appearance-none h-8"
+        className="p-2 w-full max-w-sm appearance-none h-10"
         onChange={(e) => setSelectedDate(e.target.value)}
         style={{
           WebkitAppearance: "none",
@@ -54,18 +56,29 @@ const DateTimePicker = ({
           appearance: "none",
         }}
       />
-      <Input
-        type="time"
-        value={selectedTime}
-        placeholder="What time do you reach Pittsburgh?"
-        className="p-2 w-full max-w-sm appearance-none h-8"
-        onChange={(e) => setSelectedTime(e.target.value)}
-        style={{
-          WebkitAppearance: "none",
-          MozAppearance: "none",
-          appearance: "none",
-        }}
-      />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        {selectedDate ? (
+          <div className="flex flex-col items-center max-w-sm justify-center">
+            <div>What time do you reach?</div>
+            <Input
+              type="time"
+              value={selectedTime}
+              placeholder="What time do you reach Pittsburgh?"
+              className="p-2 w-full max-w-sm appearance-none h-10"
+              onChange={(e) => setSelectedTime(e.target.value)}
+              style={{
+                WebkitAppearance: "none",
+                MozAppearance: "none",
+                appearance: "none",
+              }}
+            />
+          </div>
+        ) : null}
+      </motion.div>
     </div>
     // <div
     //   style={{
