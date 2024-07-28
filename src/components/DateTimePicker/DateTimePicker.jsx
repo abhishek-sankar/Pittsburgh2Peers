@@ -46,7 +46,7 @@ const DateTimePicker = ({
         type="date"
         value={selectedDate}
         placeholder="On what date do you reach Pittsburgh?"
-        className="p-2 w-full max-w-sm appearance-none"
+        className="p-2 w-full max-w-sm appearance-none h-8"
         onChange={(e) => setSelectedDate(e.target.value)}
         style={{
           WebkitAppearance: "none",
@@ -58,7 +58,7 @@ const DateTimePicker = ({
         type="time"
         value={selectedTime}
         placeholder="What time do you reach Pittsburgh?"
-        className="p-2 w-full max-w-sm appearance-none"
+        className="p-2 w-full max-w-sm appearance-none h-8"
         onChange={(e) => setSelectedTime(e.target.value)}
         style={{
           WebkitAppearance: "none",
