@@ -11,7 +11,7 @@ import {
 } from "react-phone-number-input";
 import PhoneInput from "react-phone-number-input";
 import axios from "axios";
-import { ENDPOINTS, baseApiUrl } from "../../lib/constants";
+import { ENDPOINTS } from "../../lib/constants";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 
 const Profile = () => {
