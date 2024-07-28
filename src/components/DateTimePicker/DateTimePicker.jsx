@@ -45,14 +45,26 @@ const DateTimePicker = ({
       <Input
         type="date"
         value={selectedDate}
-        className="p-2 w-full max-w-sm"
+        placeholder="On what date do you reach Pittsburgh?"
+        className="p-2 w-full max-w-sm appearance-none"
         onChange={(e) => setSelectedDate(e.target.value)}
+        style={{
+          WebkitAppearance: "none",
+          MozAppearance: "none",
+          appearance: "none",
+        }}
       />
       <Input
         type="time"
         value={selectedTime}
-        className="p-2 w-full max-w-sm"
+        placeholder="What time do you reach Pittsburgh?"
+        className="p-2 w-full max-w-sm appearance-none"
         onChange={(e) => setSelectedTime(e.target.value)}
+        style={{
+          WebkitAppearance: "none",
+          MozAppearance: "none",
+          appearance: "none",
+        }}
       />
     </div>
     // <div
