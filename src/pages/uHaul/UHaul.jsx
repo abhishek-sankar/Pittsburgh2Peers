@@ -13,6 +13,8 @@ const Uhaul = () => {
   const {
     userToken,
     email,
+    name,
+    phoneNo,
     selectedDate,
     selectedTime,
     destination,
@@ -41,7 +43,7 @@ const Uhaul = () => {
       const fetchUHaulRequestBody = {
         token: userToken,
         email: email,
-        date: moment(pendingRequestDetails?.selectedDate)
+        date: moment(pendingRequestDetails?.date)
           .set("year", moment().year())
           .format("DD-MM-YYYY"),
         time: moment(pendingRequestDetails?.time, "HH:mm").format("HH:mm"),
@@ -58,7 +60,7 @@ const Uhaul = () => {
           fetchUHaulRequestBody
         );
 
-        setMatchedUsers(response.data);
+        setMatchedUsers(response.data.data);
         setUHaulMatches(response.data);
         setMatchedCount(response.data.length);
         mixpanel.track(MixpanelEvents.USER_GOT_SUCCESS_SCREEN, {
@@ -100,26 +102,62 @@ const Uhaul = () => {
     fetchMyUHaulRequests();
   }, [userToken]);
   return (
-    <div className="flex flex-col justify-center w-full items-center p-8">
-      <div>
-        Here's a list of people who requested UHauls close to your request date.
+    <div className="flex flex-col justify-center w-full gap-2 items-center p-8">
+      <div className="flex flex-col items-center w-full">
+        <UHaulCard
+          startLocation={pendingRequestDetails?.startLocation}
+          endLocation={pendingRequestDetails?.endLocation}
+          time={moment(pendingRequestDetails?.time, "HH:mm").format("HH:mm")}
+          driverRequired={pendingRequestDetails?.personWillingToDrive}
+          date={moment(pendingRequestDetails?.selectedDate)
+            .set("year", moment().year())
+            .format("DD-MM-YYYY")}
+          receiverName={name}
+          phoneNo={phoneNo}
+          isSelf
+        />
       </div>
-      <div className="flex flex-col items-center-max-w-sm gap-2">
-        {uHaulMatches.length
-          ? uHaulMatches.map(
-              (name, startLocation, endLocation, time, driverNeeded) => {
-                return (
-                  <UHaulCard
-                    name={name}
-                    startLocation={startLocation}
-                    endLocation={endLocation}
-                    time={time}
-                    driverRequired={driverNeeded}
-                  />
-                );
-              }
-            )
-          : null}
+      <div className="flex items-center max-w-sm py-4 font-bold">
+        Matched Requests
+      </div>
+      <div className="flex flex-col w-full items-center max-w-sm gap-2">
+        {matchedUsers?.length ? (
+          matchedUsers.map(
+            ({
+              name: receiverName,
+              startLocation,
+              endLocation,
+              time,
+              personWillingtoDrive,
+              date,
+              phoneNo,
+            }) => {
+              return (
+                <UHaulCard
+                  name={name}
+                  startLocation={startLocation}
+                  endLocation={endLocation}
+                  time={time}
+                  driverRequired={personWillingtoDrive}
+                  date={date}
+                  receiverName={receiverName}
+                  phoneNo={phoneNo}
+                />
+              );
+            }
+          )
+        ) : (
+          <div className="text-lg font-medium">
+            <p>
+              Keep calm and be patient. Nobody has signed up with this slot yet.
+              🤞
+            </p>
+            <p className="text-sm font-light py-4">
+              Please check back in a day. We're working on solutions to notify
+              you in the meanwhile.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

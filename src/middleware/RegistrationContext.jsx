@@ -98,14 +98,11 @@ export const P2PRegistrationContext = ({ children }) => {
       date: moment(selectedDate)
         .set("year", moment().year())
         .format("DD-MM-YYYY"),
-      time: moment(selectedTime, "h:m").format("hh:mm"),
+      time: moment(selectedTime, "H:m").format("HH:mm"),
       startLocation: source,
       endLocation: destination,
       canDrive: requireDriver,
     };
-
-    console.log(selectedTime);
-    console.log(moment(selectedTime, "h:m").format("HH:mm"));
 
     try {
       const response = await axios.put(

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { format, subDays, differenceInCalendarDays } from "date-fns";
 import Wheel from "./Wheel";
 import "./styles.css";
+import { Input } from "antd";
 
 const DateTimePicker = ({
   selectedTime,
@@ -28,58 +29,71 @@ const DateTimePicker = ({
     return format(subDays(new Date(), absolute), "iii d LLL");
   }
 
-  useEffect(() => {
-    setSelectedDate(currentDate);
-    setSelectedTime(`${currentHour}:${currentMinutes}`);
-  }, [
-    currentDate,
-    currentHour,
-    currentMinutes,
-    setSelectedDate,
-    setSelectedTime,
-  ]);
+  //   useEffect(() => {
+  //     setSelectedDate(currentDate);
+  //     setSelectedTime(`${currentHour}:${currentMinutes}`);
+  //   }, [
+  //     currentDate,
+  //     currentHour,
+  //     currentMinutes,
+  //     setSelectedDate,
+  //     setSelectedTime,
+  //   ]);
 
   return (
-    <div
-      style={{
-        height: "240px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#fff",
-      }}
-    >
-      <div style={{ width: 180, height: 180 }}>
-        <Wheel
-          loop
-          length={24}
-          width={140}
-          perspective="right"
-          setValue={formateDate}
-          setWheelAbsolute={updateCurrentDate}
-          initIdx={initialDateIndex}
-        />
-      </div>
-      <div style={{ width: 70, height: 180 }}>
-        <Wheel
-          loop
-          length={24}
-          width={23}
-          setWheelAbsolute={setCurrentHour}
-          initIdx={currentHour}
-        />
-      </div>
-      <div style={{ width: 70, height: 180 }}>
-        <Wheel
-          loop
-          length={60}
-          width={23}
-          perspective="left"
-          setWheelAbsolute={setCurrentMinutes}
-          initIdx={currentMinutes}
-        />
-      </div>
+    <div className="flex flex-col gap-4 w-full max-w-sm">
+      <Input
+        type="date"
+        value={selectedDate}
+        className="p-2"
+        onChange={(e) => setSelectedDate(e.target.value)}
+      />
+      <Input
+        type="time"
+        value={selectedTime}
+        onChange={(e) => setSelectedTime(e.target.value)}
+      />
     </div>
+    // <div
+    //   style={{
+    //     height: "240px",
+    //     display: "flex",
+    //     justifyContent: "center",
+    //     alignItems: "center",
+    //     background: "#fff",
+    //   }}
+    // >
+    //   <div style={{ width: 180, height: 180 }}>
+    //     <Wheel
+    //       loop
+    //       length={24}
+    //       width={140}
+    //       perspective="right"
+    //       setValue={formateDate}
+    //       setWheelAbsolute={updateCurrentDate}
+    //       initIdx={initialDateIndex}
+    //     />
+    //   </div>
+    //   <div style={{ width: 70, height: 180 }}>
+    //     <Wheel
+    //       loop
+    //       length={24}
+    //       width={23}
+    //       setWheelAbsolute={setCurrentHour}
+    //       initIdx={currentHour}
+    //     />
+    //   </div>
+    //   <div style={{ width: 70, height: 180 }}>
+    //     <Wheel
+    //       loop
+    //       length={60}
+    //       width={23}
+    //       perspective="left"
+    //       setWheelAbsolute={setCurrentMinutes}
+    //       initIdx={currentMinutes}
+    //     />
+    //   </div>
+    // </div>
   );
 };
 

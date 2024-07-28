@@ -71,7 +71,7 @@ const SourceDestinationSelect = () => {
             viewport={{ once: true }}
             className="flex flex-col gap-2 w-full max-w-sm lg:px-3 lg:py-4"
           >
-            <div>Where would you like to go?</div>
+            <div>Where would you be starting your ride from?</div>
             <Select
               placeholder="Select your destination"
               value={sourceLocation}
