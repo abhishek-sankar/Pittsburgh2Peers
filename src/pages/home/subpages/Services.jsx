@@ -166,7 +166,6 @@ const Services = ({ service, setStage, setService }) => {
           ) : (
             <Button
               size={"large"}
-              disabled
               className={`${
                 service === P2PServices.REQUEST_A_UHAUL
                   ? "text-cmu-red border-cmu-red"
