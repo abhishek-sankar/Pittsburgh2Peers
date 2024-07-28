@@ -132,7 +132,7 @@ const RequestDetails = () => {
   if (service === P2PServices.REQUEST_A_UHAUL) {
     return (
       <motion.div
-        className="flex flex-col items-center p-4 gap-4"
+        className="flex flex-col items-center p-8 gap-4"
         key="request-details-container"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

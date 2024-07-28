@@ -8,7 +8,6 @@ import {
 } from "../lib/constants";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
-import { baseApiUrl } from "../lib/constants";
 import mixpanel from "mixpanel-browser";
 import { MixpanelEvents } from "../lib/mixpanel";
 import {
@@ -16,13 +15,16 @@ import {
   getCountryCallingCode,
   formatPhoneNumber,
 } from "react-phone-number-input";
+import moment from "moment";
 
 const RegistrationContext = React.createContext();
 export const P2PRegistrationContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [stage, setStage] = useState(stages.HOMEPAGE); // Where the flow starts
-  const [selectedDate, setSelectedDate] = useState(""); // the date of arrival in Pitt // format - iii d LLL
-  const [selectedTime, setSelectedTime] = useState(""); // the time of arrival in Pitt // format - hh:mm
+  const [selectedDate, setSelectedDate] = useState(
+    moment().format("YYYY-MM-DD")
+  ); // the date of arrival in Pitt // format - iii d LLL
+  const [selectedTime, setSelectedTime] = useState(moment().format("HH:mm")); // the time of arrival in Pitt // format - hh:mm
   const [lookingFor, setLookingFor] = useState(LookingFor.RIDE); // Whether they are looking for a ride or for passengers
   const [numberOfPeople, setNumberOfPeople] = useState(null); // Number of people in the party
   const [numberOfTrolleys, setNumberOfTrolleys] = useState(null); // Number of trolleys in the party
@@ -41,6 +43,8 @@ export const P2PRegistrationContext = ({ children }) => {
   const [isUserEligibleForRequests, setIsUserEligibleForRequests] =
     useState(false);
   const [pendingRequestDetails, setPendingRequestDetails] = useState(null);
+  const [carPoolRequested, setCarPoolRequested] = useState(false); // State to track if a carpool has been requested
+  const [uHaulRequested, setUHaulRequested] = useState(false); // State to track if a UHaul has been requested
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -66,7 +70,7 @@ export const P2PRegistrationContext = ({ children }) => {
           countryCode: "+" + getCountryCallingCode(parsedPhoneNumber.country),
         };
         const response = await axios.put(
-          baseApiUrl + ENDPOINTS.POST_UpdateUserProfile,
+          process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_UpdateUserProfile,
           updateUserProfileBody
         );
         break;
@@ -93,20 +97,18 @@ export const P2PRegistrationContext = ({ children }) => {
     const uHaulRequestBody = {
       token: localStorage.getItem("p2puserToken"),
       email: email,
-      date: new Date(
-        new Date(selectedDate).setFullYear(new Date().getFullYear())
-      )
-        .toLocaleDateString("en-GB")
-        .replaceAll(/\//g, "-"),
-      time: selectedTime,
+      date: moment(selectedDate)
+        .set("year", moment().year())
+        .format("DD-MM-YYYY"),
+      time: moment(selectedTime, "H:m").format("HH:mm"),
       startLocation: source,
       endLocation: destination,
-      driverRequired: requireDriver,
+      canDrive: requireDriver,
     };
 
     try {
       const response = await axios.put(
-        baseApiUrl + ENDPOINTS.POST_UHaulRequest,
+        process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_UHaulRequest,
         uHaulRequestBody
       );
 
@@ -126,12 +128,10 @@ export const P2PRegistrationContext = ({ children }) => {
     const carpoolRequestBody = {
       token: localStorage.getItem("p2puserToken"),
       email: email,
-      date: new Date(
-        new Date(selectedDate).setFullYear(new Date().getFullYear())
-      )
-        .toLocaleDateString("en-GB")
-        .replaceAll(/\//g, "-"),
-      time: selectedTime,
+      date: moment(selectedDate)
+        .set("year", moment().year())
+        .format("DD-MM-YYYY"),
+      time: moment(selectedTime, "h:m").format("hh:mm"),
       noOfPassengers: numberOfPeople,
       noOfTrolleys: numberOfTrolleys,
       startLocation: source,
@@ -140,7 +140,7 @@ export const P2PRegistrationContext = ({ children }) => {
 
     try {
       const response = await axios.put(
-        baseApiUrl + ENDPOINTS.POST_CarPoolRequest,
+        process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_CarPoolRequest,
         carpoolRequestBody
       );
       mixpanel.track(MixpanelEvents.USER_COMPLETED_REQUEST, {
@@ -210,6 +210,10 @@ export const P2PRegistrationContext = ({ children }) => {
         setIsUserEligibleForRequests,
         pendingRequestDetails,
         setPendingRequestDetails,
+        carPoolRequested,
+        setCarPoolRequested,
+        uHaulRequested,
+        setUHaulRequested,
       }}
     >
       {children}

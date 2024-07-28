@@ -3,7 +3,7 @@ import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { RegistrationContext } from "../../middleware/RegistrationContext";
 import axios from "axios";
-import { ENDPOINTS, baseApiUrl } from "../../lib/constants";
+import { ENDPOINTS } from "../../lib/constants";
 import { useNavigate } from "react-router-dom";
 import { MixpanelEvents } from "../../lib/mixpanel";
 import mixpanel from "mixpanel-browser";
@@ -35,6 +35,7 @@ const GoogleLoginButton = ({ setIsSignedIn }) => {
       const response = await generateTokenForEmail({ email });
 
       if (response.data.errorCode === "1") {
+        console.log("Registering user");
         await registerUser({ name, email, profileImage: picture });
         navigate("/home");
       } else {
@@ -63,7 +64,7 @@ const GoogleLoginButton = ({ setIsSignedIn }) => {
 
     try {
       const response = await axios.put(
-        baseApiUrl + ENDPOINTS.POST_RegistrationSuccess,
+        process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_RegistrationSuccess,
         userData
       );
       const { token } = response.data;
@@ -80,7 +81,7 @@ const GoogleLoginButton = ({ setIsSignedIn }) => {
     };
     try {
       const response = await axios.post(
-        baseApiUrl + ENDPOINTS.POST_GenerateToken,
+        process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_GenerateToken,
         userData
       );
       const { token } = response.data;

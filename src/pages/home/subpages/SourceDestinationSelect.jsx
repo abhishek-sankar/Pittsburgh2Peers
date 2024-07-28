@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { RegistrationContext } from "../../../middleware/RegistrationContext";
 import {
   P2PServices,
-  destinationLocations,
+  areasAroundCarnegieMellonUniversity,
   otherSourceLocation,
   sourceLocations,
 } from "../../../lib/constants";
@@ -62,9 +62,67 @@ const SourceDestinationSelect = () => {
               ))}
             </Radio.Group>
           </motion.div>
-        ) : null}
-        {sourceLocation === otherSourceLocation ||
-        service === P2PServices.REQUEST_A_UHAUL ? (
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="flex flex-col gap-2 w-full max-w-sm lg:px-3 lg:py-4"
+          >
+            <div>Where would you be starting your ride from?</div>
+            <Select
+              placeholder="Select your destination"
+              value={sourceLocation}
+              showSearch
+              onChange={(value) => {
+                if (value !== "Other") {
+                  setSource(value);
+                  mixpanel.track(MixpanelEvents.USER_SELECTED_SOURCE, {
+                    source: source,
+                  });
+                } else {
+                  setSource("");
+                }
+                setSourceLocation(value);
+              }}
+              filterOption={(input, option) =>
+                (option?.label ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              options={areasAroundCarnegieMellonUniversity.map((location) => ({
+                label: location,
+                value: location,
+              }))}
+              className="w-full border text-sm focus:outline-cmu-red rounded"
+            />
+            {sourceLocation === "Other" ? (
+              <div className="flex flex-col gap-2 w-full max-w-sm">
+                <div>Please specify your start point:</div>
+                <Input
+                  type="text"
+                  placeholder="Enter your specific destination"
+                  value={source}
+                  onChange={(e) => {
+                    setDestination(e.target.value);
+                    mixpanel.track(MixpanelEvents.USER_SELECTED_SOURCE, {
+                      source: source,
+                    });
+                  }}
+                  className="w-full p-2 border text-sm focus:outline-cmu-red rounded"
+                />
+              </div>
+            ) : null}
+            {!sourceLocation ? (
+              <div className="flex flex-col gap-2 w-full max-w-sm">
+                <Image className="w-full max-w-sm" src={PittsburghMap} />
+              </div>
+            ) : null}
+          </motion.div>
+        )}
+        {sourceLocation === otherSourceLocation ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -122,7 +180,7 @@ const SourceDestinationSelect = () => {
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
-              options={destinationLocations.map((location) => ({
+              options={areasAroundCarnegieMellonUniversity.map((location) => ({
                 label: location,
                 value: location,
               }))}

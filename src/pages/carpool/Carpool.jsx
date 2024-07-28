@@ -83,7 +83,8 @@ const Carpool = () => {
 
       try {
         const response = await axios.post(
-          baseApiUrl + ENDPOINTS.POST_GetAllCarPoolRequests,
+          process.env.REACT_APP_BASE_API_URL +
+            ENDPOINTS.POST_GetAllCarPoolRequests,
           fetchCarpoolRequestBody
         );
 
@@ -112,7 +113,8 @@ const Carpool = () => {
       };
       try {
         const response = await axios.post(
-          baseApiUrl + ENDPOINTS.POST_GetMyCarPoolOffers,
+          process.env.REACT_APP_BASE_API_URL +
+            ENDPOINTS.POST_GetMyCarPoolOffers,
           checkEligibilityBody
         );
 
@@ -250,6 +252,12 @@ const Carpool = () => {
               Please check back in a day. We're working on solutions to notify
               you in the meanwhile.
             </p>
+            <div className="text-sm inline" onClick={handleViewMyRequest}>
+              <div className="inline">Click any name to get in touch</div>{" "}
+              <div className="text-cmu-iron-gray cursor-pointer inline">
+                or View your request
+              </div>
+            </div>
           </div>
         )}
       </Skeleton>

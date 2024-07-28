@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { RegistrationContext } from "../middleware/RegistrationContext";
 import axios from "axios";
-import { ENDPOINTS, baseApiUrl } from "../lib/constants";
+import { ENDPOINTS } from "../lib/constants";
 import { Dropdown, Menu } from "antd";
 import { Toaster, toast } from "sonner";
 import { jwtDecode } from "jwt-decode";
@@ -51,7 +51,7 @@ const TopBar = () => {
       };
       try {
         const response = await axios.post(
-          baseApiUrl + ENDPOINTS.POST_GenerateToken,
+          process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_GenerateToken,
           userData
         );
         const { token } = response.data;

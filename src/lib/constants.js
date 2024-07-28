@@ -112,7 +112,8 @@ export const createWhatsAppLink = ({
     receiverName.split(" ")[0]
   }! I'm ${senderName} and I noticed on P2P that we both arrive in ${source} at about the same time. Would you like to tag along to save money and maybe make new friends?`;
 
-export const baseApiUrl = "https://pittsburgh2peers.pythonanywhere.com";
+// export const baseApiUrl = "https://pittsburgh2peers.pythonanywhere.com";
+export const baseApiUrl = process.env.BASE_API_URL;
 
 export const ENDPOINTS = {
   POST_RegistrationSuccess: "/registrationSuccess",
@@ -126,9 +127,12 @@ export const ENDPOINTS = {
   POST_GetMyCarPoolOffers: "/getMyCarPoolOffers",
   POST_UpdateUserProfile: "/updateUserProfile",
   POST_GetUserProfileDetails: "/getUserProfileDetails",
+  POST_GetFlags: "/getFlags",
+  POST_GetAllUHaulRequests: "/getAllUHaulRequests",
+  POST_GetMyUHaulOffers: "/getMyUHaulOffers",
 };
 
-export const destinationLocations = [
+export const areasAroundCarnegieMellonUniversity = [
   "Bedford Dwellings",
   "Bloomfield",
   "Bluff",
@@ -163,9 +167,8 @@ export const destinationLocations = [
 ];
 
 export const stepNumbers = {
-  [stages.HOMEPAGE]: 1,
-  [stages.ARRIVAL_DETAILS]: 2,
-  [stages.REQUEST_DETAILS]: 3,
-  [stages.SOURCE_DESTINATION]: 4,
-  [stages.CONTACT_INFO]: 5,
+  [stages.ARRIVAL_DETAILS]: 1,
+  [stages.REQUEST_DETAILS]: 2,
+  [stages.SOURCE_DESTINATION]: 3,
+  [stages.CONTACT_INFO]: 4,
 };

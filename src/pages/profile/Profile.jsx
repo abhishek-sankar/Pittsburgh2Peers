@@ -11,7 +11,7 @@ import {
 } from "react-phone-number-input";
 import PhoneInput from "react-phone-number-input";
 import axios from "axios";
-import { ENDPOINTS, baseApiUrl } from "../../lib/constants";
+import { ENDPOINTS } from "../../lib/constants";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 
 const Profile = () => {
@@ -52,7 +52,7 @@ const Profile = () => {
       email: email,
     };
     const response = await axios.post(
-      baseApiUrl + ENDPOINTS.POST_GetUserProfileDetails,
+      process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_GetUserProfileDetails,
       userProfileDetails
     );
 
@@ -86,7 +86,7 @@ const Profile = () => {
 
     try {
       const response = await axios.put(
-        baseApiUrl + ENDPOINTS.POST_UpdateUserProfile,
+        process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_UpdateUserProfile,
         updateProfileBody
       );
 
