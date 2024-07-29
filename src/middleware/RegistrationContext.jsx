@@ -100,7 +100,7 @@ export const P2PRegistrationContext = ({ children }) => {
       date: moment(selectedDate)
         .set("year", moment().year())
         .format("DD-MM-YYYY"),
-      time: moment(selectedTime, "H:m").format("HH:mm"),
+      time: moment(selectedTime, "HH:mm").format("HH:mm"),
       startLocation: source,
       endLocation: destination,
       canDrive: requireDriver,
@@ -131,7 +131,7 @@ export const P2PRegistrationContext = ({ children }) => {
       date: moment(selectedDate)
         .set("year", moment().year())
         .format("DD-MM-YYYY"),
-      time: moment(selectedTime, "h:m").format("hh:mm"),
+      time: moment(selectedTime, "HH:mm").format("HH:mm"),
       noOfPassengers: numberOfPeople,
       noOfTrolleys: numberOfTrolleys,
       startLocation: source,
