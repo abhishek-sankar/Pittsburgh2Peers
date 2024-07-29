@@ -50,13 +50,15 @@ const TopBar = () => {
         email: email,
       };
       try {
-        const response = await axios.post(
-          process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_GenerateToken,
-          userData
-        );
-        const { token } = response.data;
-        setUserToken(token);
-        if (token) localStorage.setItem("p2puserToken", token);
+        if (email) {
+          const response = await axios.post(
+            process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_GenerateToken,
+            userData
+          );
+          const { token } = response.data;
+          setUserToken(token);
+          if (token) localStorage.setItem("p2puserToken", token);
+        }
       } catch (error) {
         console.error("Error during token generation:", error);
       }

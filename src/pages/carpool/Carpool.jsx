@@ -1,24 +1,18 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  createWhatsAppLink,
-  peopleLandingInSameTimeSlot,
-  sampleNames,
-} from "../../lib/constants";
+import { createWhatsAppLink } from "../../lib/constants";
 import { RegistrationContext } from "../../middleware/RegistrationContext";
 import { jwtDecode } from "jwt-decode";
 import { Skeleton, Spin } from "antd";
 import axios from "axios";
-import { ENDPOINTS, baseApiUrl } from "../../lib/constants";
+import { ENDPOINTS } from "../../lib/constants";
 import moment from "moment";
 import {
   ArrowRightOutlined,
-  ManOutlined,
-  ShoppingCartOutlined,
   ShoppingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { motion } from "framer-motion";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 // import mixpanel from "mixpanel-browser";
 // import { MixpanelEvents } from "../../lib/mixpanel";
@@ -28,14 +22,10 @@ const Carpool = () => {
   const {
     name,
     email,
-    destination,
-    selectedTime,
-    selectedDate,
     setPicture,
     setGivenName,
     setName,
     setEmail,
-    source,
     matchedUsers,
     setMatchedUsers,
     pendingRequestDetails,
@@ -45,20 +35,7 @@ const Carpool = () => {
   } = registrationContext;
   const similarArrivalTimes = matchedUsers;
   const [matchedCount, setMatchedCount] = useState(-1);
-  const [timeRange, setTimeRange] = useState(3);
-
-  const convertStringToDateWithMoment = (dateString) => {
-    // Parse the string into a moment object
-    let date = moment(dateString, "DD/MM/YYYY");
-    // Format it to 'dd-mmm-yyyy'
-    return date.format("DD MMM");
-  };
-
-  const addHours = ({ dateString, timeString, hours }) => {
-    const dateTime = moment(dateString + " " + timeString, "DD/MM/YYYY h:m");
-    dateTime.add(hours, "hours");
-    return dateTime.format("DD MMM");
-  };
+  const [timeRange] = useState(3);
 
   useEffect(() => {
     const pittsburgh2peer = JSON.parse(localStorage.getItem("pittsburgh2peer"));
@@ -103,6 +80,9 @@ const Carpool = () => {
     setPicture,
     pendingRequestDetails,
     userToken,
+    email,
+    setMatchedUsers,
+    timeRange,
   ]);
 
   useEffect(() => {

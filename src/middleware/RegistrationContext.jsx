@@ -73,6 +73,11 @@ export const P2PRegistrationContext = ({ children }) => {
           process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_UpdateUserProfile,
           updateUserProfileBody
         );
+        if (response.data.errorCode === 0) {
+          toast("Succesfully updated profile!");
+        } else {
+          toast("Failed to update profile!");
+        }
         break;
       default:
         setStage(navigation[stage].next);

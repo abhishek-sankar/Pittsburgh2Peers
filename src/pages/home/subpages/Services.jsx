@@ -64,16 +64,18 @@ const Services = ({ service, setStage, setService }) => {
         email: email,
       };
       try {
-        const response = await axios.post(
-          process.env.REACT_APP_BASE_API_URL +
-            ENDPOINTS.POST_GetMyCarPoolOffers,
-          checkEligibilityBody
-        );
+        if (email && userToken) {
+          const response = await axios.post(
+            process.env.REACT_APP_BASE_API_URL +
+              ENDPOINTS.POST_GetMyCarPoolOffers,
+            checkEligibilityBody
+          );
 
-        setPendingRequestDetails(response.data.pendingRequestDetails);
+          setPendingRequestDetails(response.data.pendingRequestDetails);
 
-        if (response.data.errorCode === "0") {
-          setIsUserEligibleForRequests(true);
+          if (response.data.errorCode === "0") {
+            setIsUserEligibleForRequests(true);
+          }
         }
       } catch (error) {
         console.log(error);
@@ -87,18 +89,20 @@ const Services = ({ service, setStage, setService }) => {
     const checkFlags = async () => {
       setLoading(true);
       try {
-        const getFlagsRequestBody = {
-          token: userToken,
-          email: email,
-        };
-        const response = await axios.post(
-          process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_GetFlags,
-          getFlagsRequestBody
-        );
+        if (email && userToken) {
+          const getFlagsRequestBody = {
+            token: userToken,
+            email: email,
+          };
+          const response = await axios.post(
+            process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_GetFlags,
+            getFlagsRequestBody
+          );
 
-        setCarPoolRequested(response.data.carPoolRequested);
-        setUHaulRequested(response.data.uHaulRequested);
-        setLoading(false);
+          setCarPoolRequested(response.data.carPoolRequested);
+          setUHaulRequested(response.data.uHaulRequested);
+          setLoading(false);
+        }
       } catch (error) {
         console.error(error);
         setLoading(false);
