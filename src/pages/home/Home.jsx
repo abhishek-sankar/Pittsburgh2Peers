@@ -121,12 +121,14 @@ const Home = () => {
       email: email,
     };
     try {
-      const response = await axios.post(
-        process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_UserProfileComplete,
-        checkEligibilityBody
-      );
-
-      setIsUserEligibleForRequests(response.data.eligible);
+      if (email && userToken) {
+        const response = await axios.post(
+          process.env.REACT_APP_BASE_API_URL +
+            ENDPOINTS.POST_UserProfileComplete,
+          checkEligibilityBody
+        );
+        setIsUserEligibleForRequests(response.data.eligible);
+      }
     } catch (error) {
       console.log(error);
     }

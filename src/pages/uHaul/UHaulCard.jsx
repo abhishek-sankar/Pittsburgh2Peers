@@ -1,4 +1,3 @@
-import { UserOutlined } from "@ant-design/icons";
 import { createWhatsAppLink } from "../../lib/constants";
 import { motion } from "framer-motion";
 import moment from "moment";
