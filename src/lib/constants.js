@@ -119,18 +119,23 @@ export const createWhatsAppLinkForUhaul = ({
   senderName,
   receiverName,
   date,
+  receiverDate,
 }) =>
   `https://wa.me/${phone.replace(/\s+/g, "")}?text=Hi ${
     receiverName.split(" ")[0]
-  }! I'm ${senderName} and I noticed on P2P that we both seem to need a UHaul at about the same time (${moment(
+  }! I'm ${senderName} and I noticed on P2P that we both seem to need a UHaul at about the same time (I was looking to rent it on ${moment(
     date,
     "DD-MM-YYYY"
-  ).format(
-    "Do MMMM YYYY"
-  )}). Would you like to tag along to save money and maybe make new friends?`;
-
-// export const baseApiUrl = "https://pittsburgh2peers.pythonanywhere.com";
-export const baseApiUrl = process.env.BASE_API_URL;
+  ).format("Do MMM")} 
+ 	${
+    date === receiverDate
+      ? `and noticed you wanted it on ${moment(
+          receiverDate,
+          "DD-MM-YYYY"
+        ).format("Do MMM")})`
+      : `and noticed you wanted it on the same day too!`
+  } 
+  . Would you like to tag along to save money and maybe make new friends?`;
 
 export const ENDPOINTS = {
   POST_RegistrationSuccess: "/registrationSuccess",
