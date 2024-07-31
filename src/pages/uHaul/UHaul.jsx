@@ -109,7 +109,7 @@ const Uhaul = () => {
           endLocation={pendingRequestDetails?.endLocation}
           time={moment(pendingRequestDetails?.time, "HH:mm").format("HH:mm")}
           driverRequired={pendingRequestDetails?.personWillingToDrive}
-          date={pendingRequestDetails?.date}
+          senderDate={pendingRequestDetails?.date}
           receiverName={name}
           phoneNo={phoneNo}
           isSelf
@@ -137,9 +137,10 @@ const Uhaul = () => {
                   endLocation={endLocation}
                   time={time}
                   driverRequired={personWillingtoDrive}
-                  date={date}
+                  receiverDate={date}
                   receiverName={receiverName}
                   phoneNo={phoneNo}
+                  senderDate={pendingRequestDetails?.date}
                 />
               );
             }

@@ -9,7 +9,8 @@ const UHaulCard = ({
   driverRequired,
   phoneNo,
   receiverName,
-  date,
+  senderDate,
+  receiverDate,
   name,
   isSelf = false,
 }) => {
@@ -20,7 +21,8 @@ const UHaulCard = ({
           ? createWhatsAppLinkForUhaul({
               phone: phoneNo,
               receiverName: receiverName,
-              date: date,
+              date: senderDate,
+              receiverDate: receiverDate,
               senderName: name,
             })
           : "#"
@@ -51,7 +53,7 @@ const UHaulCard = ({
         </div>
         <p className="flex flex-row gap-2 items-center justify-start">
           <p className="">
-            {moment(date + " " + time, "DD-MM-yyyy HH:m").format(
+            {moment(receiverDate + " " + time, "DD-MM-yyyy HH:m").format(
               "DD MMM - h:mm A"
             )}
           </p>
