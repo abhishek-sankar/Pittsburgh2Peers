@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { RegistrationContext } from "../middleware/RegistrationContext";
 import axios from "axios";
-import { ENDPOINTS } from "../lib/constants";
+import { ENDPOINTS, stages } from "../lib/constants";
 import { Dropdown, Menu } from "antd";
 import { Toaster, toast } from "sonner";
 import { jwtDecode } from "jwt-decode";
@@ -12,6 +12,9 @@ import { jwtDecode } from "jwt-decode";
 const TopBar = () => {
   const navigate = useNavigate();
   const handleAboutClick = () => {
+    if (stage === stages.CONFIRMATION) {
+      setStage(stages.HOMEPAGE);
+    }
     navigate("/about");
   };
   const handleHomeClick = () => {
@@ -22,11 +25,14 @@ const TopBar = () => {
     }
   };
   const handleProfileClick = () => {
+    if (stage === stages.CONFIRMATION) {
+      setStage(stages.HOMEPAGE);
+    }
     navigate("/profile");
   };
 
   const registrationContext = useContext(RegistrationContext);
-  const { setUserToken, email } = registrationContext;
+  const { setUserToken, email, stage, setStage } = registrationContext;
 
   const logoutFromP2P = () => {
     localStorage.removeItem("pittsburgh2peer");

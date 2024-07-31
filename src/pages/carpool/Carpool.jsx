@@ -160,7 +160,7 @@ const Carpool = () => {
                     pendingRequestDetails?.date +
                       " " +
                       pendingRequestDetails?.time,
-                    "DD-MM-yyyy H:m"
+                    "DD-MM-yyyy HH:m"
                   ).format("DD MMM h:mm A")}
                   <div>/</div>
                   <div>
@@ -254,8 +254,8 @@ const Carpool = () => {
                   pendingRequestDetails?.date +
                     " " +
                     pendingRequestDetails?.time,
-                  "DD-MM-yyyy H:m"
-                ).format("DD MMM h:mm A")}
+                  "DD-MM-yyyy HH:m"
+                ).format("DD MMM HH:mm A")}
                 <div>/</div>
                 <div>
                   <UserOutlined /> x {pendingRequestDetails?.noOfPassengers}

@@ -72,16 +72,21 @@ export const P2PRegistrationContext = ({ children }) => {
           phoneNo: formatPhoneNumber(phoneNumber),
           countryCode: "+" + getCountryCallingCode(parsedPhoneNumber.country),
         };
-        const response = await axios.put(
-          process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_UpdateUserProfile,
-          updateUserProfileBody
-        );
-        if (response.data.errorCode === 0) {
-          toast("Succesfully updated profile!");
-        } else {
-          toast("Failed to update profile!");
+
+        if (!profileHasPhoneNumber) {
+          const response = await axios.put(
+            process.env.REACT_APP_BASE_API_URL +
+              ENDPOINTS.POST_UpdateUserProfile,
+            updateUserProfileBody
+          );
+          if (response.data.errorCode === 0) {
+            toast("Succesfully updated profile!");
+          } else {
+            toast("Failed to update profile!");
+          }
+          break;
         }
-        break;
+
       default:
         setStage(navigation[stage].next);
     }
