@@ -53,9 +53,10 @@ const UHaulCard = ({
         </div>
         <p className="flex flex-row gap-2 items-center justify-start">
           <p className="">
-            {moment(receiverDate + " " + time, "DD-MM-yyyy HH:m").format(
-              "DD MMM - h:mm A"
-            )}
+            {moment(
+              isSelf ? senderDate : receiverDate + " " + time,
+              "DD-MM-yyyy HH:m"
+            ).format("DD MMM - h:mm A")}
           </p>
         </p>
       </div>
