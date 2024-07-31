@@ -107,6 +107,7 @@ const Uhaul = () => {
         <UHaulCard
           startLocation={pendingRequestDetails?.startLocation}
           endLocation={pendingRequestDetails?.endLocation}
+          senderTime={pendingRequestDetails?.time}
           time={moment(pendingRequestDetails?.time, "HH:mm").format("HH:mm")}
           driverRequired={pendingRequestDetails?.personWillingToDrive}
           senderDate={pendingRequestDetails?.date}
@@ -139,6 +140,7 @@ const Uhaul = () => {
                   driverRequired={personWillingtoDrive}
                   receiverDate={date}
                   receiverName={receiverName}
+                  senderTime={pendingRequestDetails?.time}
                   phoneNo={phoneNo}
                   senderDate={pendingRequestDetails?.date}
                 />

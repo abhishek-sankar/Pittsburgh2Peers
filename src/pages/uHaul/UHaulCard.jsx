@@ -10,6 +10,7 @@ const UHaulCard = ({
   phoneNo,
   receiverName,
   senderDate,
+  senderTime,
   receiverDate,
   name,
   isSelf = false,
@@ -54,7 +55,9 @@ const UHaulCard = ({
         <p className="flex flex-row gap-2 items-center justify-start">
           <p className="">
             {moment(
-              isSelf ? senderDate : receiverDate + " " + time,
+              (isSelf ? senderDate : receiverDate) +
+                " " +
+                (isSelf ? senderTime : time),
               "DD-MM-yyyy HH:m"
             ).format("DD MMM - h:mm A")}
           </p>
