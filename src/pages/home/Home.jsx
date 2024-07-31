@@ -28,6 +28,7 @@ import mixpanel from "mixpanel-browser";
 import { MixpanelEvents } from "../../lib/mixpanel";
 import { useNavigate } from "react-router-dom";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
+import "./home.css";
 
 const Home = () => {
   const registrationContext = useContext(RegistrationContext);

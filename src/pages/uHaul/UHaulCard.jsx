@@ -51,8 +51,8 @@ const UHaulCard = ({
         </div>
         <p className="flex flex-row gap-2 items-center justify-start">
           <p className="">
-            {moment(date + " " + time, "DD-MM-yyyy hh:m").format(
-              "DD MMM h:mm A"
+            {moment(date + " " + time, "DD-MM-yyyy HH:m").format(
+              "DD MMM - h:mm A"
             )}
           </p>
         </p>

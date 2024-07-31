@@ -83,7 +83,9 @@ const ContactInfo = () => {
           value={phoneNumber}
           disabled={profileHasPhoneNumber}
           defaultCountry="IN"
-          className="w-full border border-slate-300 p-2 max-w-sm text-sm"
+          className={`w-full border border-slate-300 p-2 max-w-sm text-sm ${
+            profileHasPhoneNumber ? "disabled-grey-background" : ""
+          }`}
           onChange={handlePhoneChange}
         />
         <Input
