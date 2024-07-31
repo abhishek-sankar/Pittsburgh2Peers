@@ -1,4 +1,4 @@
-import { createWhatsAppLink } from "../../lib/constants";
+import { createWhatsAppLinkForUhaul } from "../../lib/constants";
 import { motion } from "framer-motion";
 import moment from "moment";
 
@@ -17,15 +17,15 @@ const UHaulCard = ({
     <motion.a
       href={`${
         !isSelf && name
-          ? createWhatsAppLink({
+          ? createWhatsAppLinkForUhaul({
               phone: phoneNo,
               receiverName: receiverName,
-              source: startLocation,
+              date: date,
               senderName: name,
             })
           : "#"
       }`}
-      target="_blank"
+      target={!isSelf && name ? "_blank" : ""}
       rel="noreferrer"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

@@ -16,6 +16,7 @@ const ContactInfo = () => {
     setPhoneNumber,
     contactConsent,
     setContactConsent,
+    profileHasPhoneNumber,
   } = registrationContext;
   const [phoneError, setPhoneError] = useState("");
   const [emailError] = useState("");
@@ -80,6 +81,7 @@ const ContactInfo = () => {
         <PhoneInput
           placeholder="Enter phone number with country code (Whatsapp)"
           value={phoneNumber}
+          disabled={profileHasPhoneNumber}
           defaultCountry="IN"
           className="w-full border border-slate-300 p-2 max-w-sm text-sm"
           onChange={handlePhoneChange}
