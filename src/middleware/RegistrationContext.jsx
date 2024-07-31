@@ -45,6 +45,8 @@ export const P2PRegistrationContext = ({ children }) => {
   const [pendingRequestDetails, setPendingRequestDetails] = useState(null);
   const [carPoolRequested, setCarPoolRequested] = useState(false); // State to track if a carpool has been requested
   const [uHaulRequested, setUHaulRequested] = useState(false); // State to track if a UHaul has been requested
+  const [isBetaUser, setIsBetaUser] = useState(false);
+  const [isUHaulEnabledForAll, setIsUHaulEnabledForAll] = useState(false); // State to track if UHaul service is enabled for all users
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -219,6 +221,10 @@ export const P2PRegistrationContext = ({ children }) => {
         setCarPoolRequested,
         uHaulRequested,
         setUHaulRequested,
+        isBetaUser,
+        setIsBetaUser,
+        isUHaulEnabledForAll,
+        setIsUHaulEnabledForAll,
       }}
     >
       {children}

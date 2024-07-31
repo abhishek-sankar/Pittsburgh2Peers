@@ -160,11 +160,11 @@ const Carpool = () => {
               </div>
 
               {similarArrivalTimes?.length ? (
-                <div className="text-sm inline" onClick={handleViewMyRequest}>
+                <div className="text-sm inline">
                   <div className="inline">Click any name to get in touch</div>{" "}
-                  <div className="text-cmu-iron-gray cursor-pointer inline">
+                  {/* <div className="text-cmu-iron-gray cursor-pointer inline">
                     or View your request
-                  </div>
+                  </div> */}
                 </div>
               ) : null}
             </h3>
@@ -232,10 +232,27 @@ const Carpool = () => {
               Please check back in a day. We're working on solutions to notify
               you in the meanwhile.
             </p>
-            <div className="text-sm inline" onClick={handleViewMyRequest}>
-              <div className="inline">Click any name to get in touch</div>{" "}
-              <div className="text-cmu-iron-gray cursor-pointer inline">
-                or View your request
+            <div className="flex flex-col border-cmu-iron-gray border-t p-2 items-start md:items-center w-full gap-2 pb-4">
+              <div className="font-thin text-base">Your request </div>
+              <div className="font-normal text-xs flex flex-row items-start gap-2">
+                {moment(
+                  pendingRequestDetails?.date +
+                    " " +
+                    pendingRequestDetails?.time,
+                  "DD-MM-yyyy H:m"
+                ).format("DD MMM h:mm A")}
+                <div>/</div>
+                <div>
+                  <UserOutlined /> x {pendingRequestDetails?.noOfPassengers}
+                </div>
+                <div>/</div>
+                <div>
+                  <ShoppingOutlined /> x {pendingRequestDetails?.noOfTrolleys}
+                </div>
+              </div>
+              <div className="flex flex-row gap-2 items-start text-xs ">
+                {pendingRequestDetails?.startLocation} <ArrowRightOutlined />{" "}
+                {pendingRequestDetails?.endLocation}
               </div>
             </div>
           </div>
