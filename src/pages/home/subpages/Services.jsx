@@ -183,7 +183,7 @@ const Services = ({ service, setStage, setService }) => {
                 </Button>
               </div>
             ) : null}
-            {!uHaulRequested ? (
+            {uHaulRequested ? (
               <div className="w-full max-w-sm md:border-0 md:pt-0">
                 <Button
                   size={"large"}
