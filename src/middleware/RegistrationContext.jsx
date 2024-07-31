@@ -47,6 +47,7 @@ export const P2PRegistrationContext = ({ children }) => {
   const [uHaulRequested, setUHaulRequested] = useState(false); // State to track if a UHaul has been requested
   const [isBetaUser, setIsBetaUser] = useState(false);
   const [isUHaulEnabledForAll, setIsUHaulEnabledForAll] = useState(false); // State to track if UHaul service is enabled for all users
+  const [profileHasPhoneNumber, setProfileHasPhoneNumber] = useState(false);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -225,6 +226,8 @@ export const P2PRegistrationContext = ({ children }) => {
         setIsBetaUser,
         isUHaulEnabledForAll,
         setIsUHaulEnabledForAll,
+        profileHasPhoneNumber,
+        setProfileHasPhoneNumber,
       }}
     >
       {children}

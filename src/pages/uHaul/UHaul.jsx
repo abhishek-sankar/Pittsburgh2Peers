@@ -109,7 +109,7 @@ const Uhaul = () => {
           endLocation={pendingRequestDetails?.endLocation}
           time={moment(pendingRequestDetails?.time, "HH:mm").format("HH:mm")}
           driverRequired={pendingRequestDetails?.personWillingToDrive}
-          date={moment(pendingRequestDetails?.selectedDate)
+          date={moment(pendingRequestDetails?.date)
             .set("year", moment().year())
             .format("DD-MM-YYYY")}
           receiverName={name}

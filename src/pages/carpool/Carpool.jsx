@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { createWhatsAppLink } from "../../lib/constants";
+import { createWhatsAppLinkForCarpool } from "../../lib/constants";
 import { RegistrationContext } from "../../middleware/RegistrationContext";
 import { jwtDecode } from "jwt-decode";
 import { Skeleton, Spin } from "antd";
@@ -153,6 +153,29 @@ const Carpool = () => {
         {matchedCount !== 0 ? (
           <div className="flex flex-col w-full justify-center items-center">
             <h3 className="text-base font-light pb-4 flex flex-col md:items-center md:justify-center gap-4">
+              <div className="flex flex-col border-cmu-red border-b p-2 items-start md:items-center w-full gap-2 pb-4">
+                <div className="font-thin text-base">Your request </div>
+                <div className="font-normal text-xs flex flex-row items-start gap-2">
+                  {moment(
+                    pendingRequestDetails?.date +
+                      " " +
+                      pendingRequestDetails?.time,
+                    "DD-MM-yyyy H:m"
+                  ).format("DD MMM h:mm A")}
+                  <div>/</div>
+                  <div>
+                    <UserOutlined /> x {pendingRequestDetails?.noOfPassengers}
+                  </div>
+                  <div>/</div>
+                  <div>
+                    <ShoppingOutlined /> x {pendingRequestDetails?.noOfTrolleys}
+                  </div>
+                </div>
+                <div className="flex flex-row gap-2 items-start text-xs ">
+                  {pendingRequestDetails?.startLocation} <ArrowRightOutlined />{" "}
+                  {pendingRequestDetails?.endLocation}
+                </div>
+              </div>
               <div className="border-b border-cmu-red pb-4">
                 {`${
                   similarArrivalTimes?.length ? `Here's` : `Loading`
@@ -182,7 +205,7 @@ const Carpool = () => {
                     date,
                   }) => (
                     <motion.a
-                      href={`${createWhatsAppLink({
+                      href={`${createWhatsAppLinkForCarpool({
                         phone: phoneNo,
                         receiverName: receiverName,
                         source: startLocation,
@@ -224,15 +247,7 @@ const Carpool = () => {
           </div>
         ) : (
           <div className="text-lg font-medium">
-            <p>
-              Keep calm and be patient. Nobody has signed up with this slot yet.
-              🤞
-            </p>
-            <p className="text-sm font-light py-4">
-              Please check back in a day. We're working on solutions to notify
-              you in the meanwhile.
-            </p>
-            <div className="flex flex-col border-cmu-iron-gray border-t p-2 items-start md:items-center w-full gap-2 pb-4">
+            <div className="flex flex-col bg-cmu-iron-gray text-white py-2 p-4  border-b mb-4 items-start md:items-center w-full gap-2 pb-4">
               <div className="font-thin text-base">Your request </div>
               <div className="font-normal text-xs flex flex-row items-start gap-2">
                 {moment(
@@ -250,11 +265,21 @@ const Carpool = () => {
                   <ShoppingOutlined /> x {pendingRequestDetails?.noOfTrolleys}
                 </div>
               </div>
-              <div className="flex flex-row gap-2 items-start text-xs ">
-                {pendingRequestDetails?.startLocation} <ArrowRightOutlined />{" "}
+              <div className="inline flex-row gap-2 items-start text-xs ">
+                {pendingRequestDetails?.startLocation} {"  "}{" "}
+                <ArrowRightOutlined />
+                {"  "}
                 {pendingRequestDetails?.endLocation}
               </div>
             </div>
+            <p>
+              Keep calm and be patient. Nobody has signed up with this slot yet.
+              🤞
+            </p>
+            <p className="text-sm font-light py-4">
+              Please check back in a day. We're working on solutions to notify
+              you in the meanwhile.
+            </p>
           </div>
         )}
       </Skeleton>
