@@ -122,22 +122,6 @@ const Services = ({ service, setStage, setService }) => {
     }
   };
 
-  //   const checkIsUserEligibleForRequests = async () => {
-  //     const checkEligibilityBody = {
-  //       token: localStorage.getItem("p2puserToken"),
-  //       email: email,
-  //     };
-  //     try {
-  //       const response = await axios.post(
-  //         baseApiUrl + ENDPOINTS.POST_UserProfileComplete,
-  //         checkEligibilityBody
-  //       );
-
-  //       setIsUserEligibleForRequests(response.data.eligible);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
   useEffect(() => {
     const checkIfCarpoolShown = async () => {
       const checkEligibilityBody = {
@@ -285,7 +269,7 @@ const Services = ({ service, setStage, setService }) => {
               onClick={() => handleServiceClick(P2PServices.FIND_A_RIDE)}
             >
               <CarOutlined />
-              Find a ride
+              {carPoolRequested ? `Modify your ride request` : `Find a ride`}
             </Button>
             <Button
               size={"large"}
@@ -299,7 +283,9 @@ const Services = ({ service, setStage, setService }) => {
               onClick={() => handleServiceClick(P2PServices.REQUEST_A_UHAUL)}
             >
               <TruckOutlined />
-              Request a UHaul
+              {uHaulRequested
+                ? `Modify your U-Haul request`
+                : `Request a U-Haul`}
             </Button>
           </div>
           <div
@@ -331,7 +317,7 @@ const Services = ({ service, setStage, setService }) => {
                   loading={loading}
                 >
                   <UsergroupAddOutlined />
-                  View matched UHaul Requests
+                  View matched U-Haul Requests
                 </Button>
               </div>
             ) : null}

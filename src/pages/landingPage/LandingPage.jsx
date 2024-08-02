@@ -39,7 +39,7 @@ const LandingPage = ({ setIsSignedIn }) => {
           <motion.span>
             <TruckOutlined className="pr-4" />
           </motion.span>
-          Request a UHaul
+          Request a U-Haul
         </motion.p>
       </div>
     </div>
