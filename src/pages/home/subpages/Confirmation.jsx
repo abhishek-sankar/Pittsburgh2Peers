@@ -243,6 +243,12 @@ const Confirmation = () => {
               ) : (
                 <p>
                   {`We couldn't find anyone in the same timeslot as you yet. Check again in a couple of hours. `}
+                  <p className="font-semibold text-black pb-2">
+                    {"[ "}
+                    {moment(selectedDate).format("ddd, MMM D")}, at{" "}
+                    {moment(selectedTime, "HH:mm").format("h:mm A")}
+                    {" ]"}
+                  </p>
                   <a
                     className="text-cmu-red hover:text-cmu-red hover:border-b hover:border-cmu-red "
                     href="https://api.whatsapp.com/send?text=https://pittsburgh2peers.vercel.app/"

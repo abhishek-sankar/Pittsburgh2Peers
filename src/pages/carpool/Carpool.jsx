@@ -248,9 +248,9 @@ const Carpool = () => {
             </div>
           </div>
         ) : (
-          <div className="text-lg font-medium">
-            <div className="flex flex-col bg-cmu-iron-gray text-white py-2 p-4  border-b mb-4 items-start md:items-center w-full gap-2 pb-4">
-              <div className="font-thin text-base">Your request </div>
+          <div className="text-lg font-medium max-w-sm flex flex-col gap-2 justify-center">
+            <div className="flex flex-col bg-cmu-iron-gray text-white py-2 p-4 border-b mb-4 items-start w-full gap-2 pb-4">
+              <div className="font-thin text-base">Your request: {name} </div>
               <div className="font-normal text-xs flex flex-row items-start gap-2">
                 {moment(
                   pendingRequestDetails?.date +
@@ -274,6 +274,9 @@ const Carpool = () => {
                 {pendingRequestDetails?.endLocation}
               </div>
             </div>
+            <p className="font-bold text-base flex justify-center">
+              Matched Requests
+            </p>
             <p>
               Keep calm and be patient. Nobody has signed up with this slot yet.
               🤞

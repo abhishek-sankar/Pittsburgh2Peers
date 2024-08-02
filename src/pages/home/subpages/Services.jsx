@@ -15,11 +15,6 @@ import { MixpanelEvents } from "../../../lib/mixpanel";
 import moment from "moment";
 
 const Services = ({ service, setStage, setService }) => {
-  const handleServiceClick = (service) => {
-    mixpanel.track(MixpanelEvents.USER_SELECTED_SERVICE, { service: service });
-    setService(service);
-  };
-
   const registrationContext = useContext(RegistrationContext);
   const {
     isUserEligibleForRequests,
@@ -51,6 +46,80 @@ const Services = ({ service, setStage, setService }) => {
   };
   const handleViewUHaul = () => {
     navigate("/uhaul");
+  };
+
+  const fetchMyCarpoolRequests = async () => {
+    const checkEligibilityBody = {
+      token: userToken,
+      email: email,
+    };
+    try {
+      const response = await axios.post(
+        process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_GetMyCarPoolOffers,
+        checkEligibilityBody
+      );
+      console.log(response);
+      setSelectedDate(
+        moment(response.data.pendingRequestDetails?.date, "DD-MM-YYYY").format(
+          "YYYY-MM-DD"
+        )
+      );
+      setSelectedTime(
+        moment(response.data.pendingRequestDetails?.time, "HH:mm").format(
+          "HH:mm"
+        )
+      );
+      setNumberOfPeople(response.data.pendingRequestDetails?.noOfPassengers);
+      setNumberOfTrolleys(response.data.pendingRequestDetails?.noOfTrolleys);
+      setSource(response.data.pendingRequestDetails?.startLocation);
+      setDestination(response.data.pendingRequestDetails?.endLocation);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchMyUHaulRequests = async () => {
+    const fetchMyUhaulRequestsBody = {
+      token: userToken,
+      email: email,
+    };
+
+    try {
+      const response = await axios.post(
+        process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_GetMyUHaulOffers,
+        fetchMyUhaulRequestsBody
+      );
+      setSelectedDate(
+        moment(response.data.pendingRequestDetails?.date, "DD-MM-YYYY").format(
+          "YYYY-MM-DD"
+        )
+      );
+      setSelectedTime(
+        moment(response.data.pendingRequestDetails?.time, "HH:mm").format(
+          "HH:mm"
+        )
+      );
+      setRequireDriver(
+        !response.data.pendingRequestDetails?.personWillingToDrive
+      );
+      setSource(response.data.pendingRequestDetails?.startLocation);
+      setDestination(response.data.pendingRequestDetails?.endLocation);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleServiceClick = (service) => {
+    mixpanel.track(MixpanelEvents.USER_SELECTED_SERVICE, { service: service });
+    setService(service);
+
+    switch (service) {
+      case P2PServices.FIND_A_RIDE:
+        fetchMyCarpoolRequests();
+        break;
+      case P2PServices.REQUEST_A_UHAUL:
+        fetchMyUHaulRequests();
+        break;
+    }
   };
 
   //   const checkIsUserEligibleForRequests = async () => {

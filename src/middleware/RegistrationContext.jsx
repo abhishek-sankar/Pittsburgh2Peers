@@ -116,7 +116,7 @@ export const P2PRegistrationContext = ({ children }) => {
       time: moment(selectedTime, "H:m").format("HH:mm"),
       startLocation: source,
       endLocation: destination,
-      canDrive: requireDriver,
+      canDrive: !requireDriver,
     };
 
     try {
