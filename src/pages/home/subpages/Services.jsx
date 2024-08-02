@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import mixpanel from "mixpanel-browser";
 import { MixpanelEvents } from "../../../lib/mixpanel";
+import moment from "moment";
 
 const Services = ({ service, setStage, setService }) => {
   const handleServiceClick = (service) => {
@@ -35,6 +36,13 @@ const Services = ({ service, setStage, setService }) => {
     setIsBetaUser,
     isUHaulEnabledForAll,
     setIsUHaulEnabledForAll,
+    setSource,
+    setDestination,
+    setNumberOfPeople,
+    setNumberOfTrolleys,
+    setRequireDriver,
+    setSelectedDate,
+    setSelectedTime,
   } = registrationContext;
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -117,6 +125,68 @@ const Services = ({ service, setStage, setService }) => {
 
     checkFlags();
   }, [userToken]);
+
+  useEffect(() => {
+    const fetchMyCarpoolRequests = async () => {
+      const checkEligibilityBody = {
+        token: userToken,
+        email: email,
+      };
+      try {
+        const response = await axios.post(
+          process.env.REACT_APP_BASE_API_URL +
+            ENDPOINTS.POST_GetMyCarPoolOffers,
+          checkEligibilityBody
+        );
+        setSelectedDate(
+          moment(response.pendingRequestDetails?.date).format("DD-MM-YYYY")
+        );
+        setSelectedTime(
+          moment(response.pendingRequestDetails?.time).format("HH:mm")
+        );
+        setNumberOfPeople(response.pendingRequestDetails?.noOfPassengers);
+        setNumberOfTrolleys(response.pendingRequestDetails?.noOfTrolleys);
+        setSource(response.pendingRequestDetails?.startLocation);
+        setDestination(response.pendingRequestDetails?.endLocation);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const fetchMyUHaulRequests = async () => {
+      const fetchMyUhaulRequestsBody = {
+        token: userToken,
+        email: email,
+      };
+
+      try {
+        const response = await axios.post(
+          process.env.REACT_APP_BASE_API_URL + ENDPOINTS.POST_GetMyUHaulOffers,
+          fetchMyUhaulRequestsBody
+        );
+        setSelectedDate(
+          moment(response.pendingRequestDetails?.date).format("DD-MM-YYYY")
+        );
+        setSelectedTime(
+          moment(response.pendingRequestDetails?.time).format("HH:mm")
+        );
+        setRequireDriver(response.pendingRequestDetails?.personWillingToDrive);
+        setSource(response.pendingRequestDetails?.startLocation);
+        setDestination(response.pendingRequestDetails?.endLocation);
+      } catch (error) {
+        console.error(error);
+      }
+
+      switch (service) {
+        case P2PServices.FIND_A_RIDE:
+          fetchMyCarpoolRequests();
+          break;
+        case P2PServices.REQUEST_A_UHAUL:
+          fetchMyUHaulRequests();
+          break;
+      }
+    };
+  }, [service, userToken]);
 
   return (
     <AnimatePresence>
