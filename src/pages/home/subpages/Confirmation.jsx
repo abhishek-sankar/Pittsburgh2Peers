@@ -229,7 +229,7 @@ const Confirmation = () => {
                   <p>
                     {`We have found ${matchedCount} other ${
                       matchedCount > 1 ? "s" : " user"
-                    } requesting a UHaul within a +/- 2
+                    } requesting a U-Haul within a +/- 2
                     day interval from when you land.`}
                   </p>
                   <p className="font-semibold text-black pb-2">

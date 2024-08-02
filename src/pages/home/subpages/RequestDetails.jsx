@@ -141,7 +141,7 @@ const RequestDetails = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] }}
       >
-        <div>Would you require someone to drive the UHaul?</div>
+        <div>Would you require someone to drive the U-Haul?</div>
         <Radio.Group
           value={requireDriver}
           buttonStyle="solid"
